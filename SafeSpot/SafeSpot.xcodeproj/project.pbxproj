@@ -14,8 +14,7 @@
 		014B583E18C908A0005BCBE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B583D18C908A0005BCBE2 /* main.m */; };
 		014B584218C908A0005BCBE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B584118C908A0005BCBE2 /* AppDelegate.m */; };
 		014B584518C908A0005BCBE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 014B584318C908A0005BCBE2 /* Main.storyboard */; };
-		014B584818C908A0005BCBE2 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B584718C908A0005BCBE2 /* FirstViewController.m */; };
-		014B584B18C908A0005BCBE2 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B584A18C908A0005BCBE2 /* SecondViewController.m */; };
+		014B584818C908A0005BCBE2 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B584718C908A0005BCBE2 /* MapViewController.m */; };
 		014B584D18C908A0005BCBE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 014B584C18C908A0005BCBE2 /* Images.xcassets */; };
 		014B585418C908A0005BCBE2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 014B585318C908A0005BCBE2 /* XCTest.framework */; };
 		014B585518C908A0005BCBE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 014B583118C908A0005BCBE2 /* Foundation.framework */; };
@@ -25,6 +24,9 @@
 		014B586A18C90919005BCBE2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 014B586918C90918005BCBE2 /* CoreData.framework */; };
 		014B586F18C90A12005BCBE2 /* SafeSpot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 014B586D18C90A12005BCBE2 /* SafeSpot.xcdatamodeld */; };
 		014B587218C90AF1005BCBE2 /* Datastore.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B587118C90AF1005BCBE2 /* Datastore.m */; };
+		01D4D7F918F64FEC0009C8AE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4D7F818F64FEC0009C8AE /* MapKit.framework */; };
+		01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */; };
+		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,10 +51,8 @@
 		014B584018C908A0005BCBE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		014B584118C908A0005BCBE2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		014B584418C908A0005BCBE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		014B584618C908A0005BCBE2 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		014B584718C908A0005BCBE2 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		014B584918C908A0005BCBE2 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		014B584A18C908A0005BCBE2 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		014B584618C908A0005BCBE2 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		014B584718C908A0005BCBE2 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		014B584C18C908A0005BCBE2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		014B585218C908A0005BCBE2 /* SafeSpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeSpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		014B585318C908A0005BCBE2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -63,6 +63,11 @@
 		014B586E18C90A12005BCBE2 /* SafeSpot.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SafeSpot.xcdatamodel; sourceTree = "<group>"; };
 		014B587018C90AF1005BCBE2 /* Datastore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datastore.h; sourceTree = "<group>"; };
 		014B587118C90AF1005BCBE2 /* Datastore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Datastore.m; sourceTree = "<group>"; };
+		01D4D7F818F64FEC0009C8AE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		01D4D7FA18F66F250009C8AE /* FavoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesTableViewController.h; sourceTree = "<group>"; };
+		01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesTableViewController.m; sourceTree = "<group>"; };
+		01D4D7FD18F67B780009C8AE /* NearbyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyTableViewController.h; sourceTree = "<group>"; };
+		01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D4D7F918F64FEC0009C8AE /* MapKit.framework in Frameworks */,
 				014B586A18C90919005BCBE2 /* CoreData.framework in Frameworks */,
 				014B583418C908A0005BCBE2 /* CoreGraphics.framework in Frameworks */,
 				014B583618C908A0005BCBE2 /* UIKit.framework in Frameworks */,
@@ -112,6 +118,7 @@
 		014B583018C908A0005BCBE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01D4D7F818F64FEC0009C8AE /* MapKit.framework */,
 				014B586918C90918005BCBE2 /* CoreData.framework */,
 				014B583118C908A0005BCBE2 /* Foundation.framework */,
 				014B583318C908A0005BCBE2 /* CoreGraphics.framework */,
@@ -169,10 +176,12 @@
 			isa = PBXGroup;
 			children = (
 				014B584318C908A0005BCBE2 /* Main.storyboard */,
-				014B584618C908A0005BCBE2 /* FirstViewController.h */,
-				014B584718C908A0005BCBE2 /* FirstViewController.m */,
-				014B584918C908A0005BCBE2 /* SecondViewController.h */,
-				014B584A18C908A0005BCBE2 /* SecondViewController.m */,
+				01D4D7FA18F66F250009C8AE /* FavoritesTableViewController.h */,
+				01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */,
+				014B584618C908A0005BCBE2 /* MapViewController.h */,
+				014B584718C908A0005BCBE2 /* MapViewController.m */,
+				01D4D7FD18F67B780009C8AE /* NearbyTableViewController.h */,
+				01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -229,7 +238,7 @@
 		014B582618C908A0005BCBE2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "2.5 Asian Dudes";
 				TargetAttributes = {
 					014B585118C908A0005BCBE2 = {
@@ -282,11 +291,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				014B584B18C908A0005BCBE2 /* SecondViewController.m in Sources */,
 				014B587218C90AF1005BCBE2 /* Datastore.m in Sources */,
+				01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */,
 				014B586F18C90A12005BCBE2 /* SafeSpot.xcdatamodeld in Sources */,
 				014B584218C908A0005BCBE2 /* AppDelegate.m in Sources */,
-				014B584818C908A0005BCBE2 /* FirstViewController.m in Sources */,
+				01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */,
+				014B584818C908A0005BCBE2 /* MapViewController.m in Sources */,
 				014B583E18C908A0005BCBE2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +351,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -380,7 +389,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -438,7 +446,6 @@
 		014B586718C908A0005BCBE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SafeSpot.app/SafeSpot";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -461,7 +468,6 @@
 		014B586818C908A0005BCBE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SafeSpot.app/SafeSpot";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -496,6 +502,7 @@
 				014B586518C908A0005BCBE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		014B586618C908A0005BCBE2 /* Build configuration list for PBXNativeTarget "SafeSpotTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +511,7 @@
 				014B586818C908A0005BCBE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

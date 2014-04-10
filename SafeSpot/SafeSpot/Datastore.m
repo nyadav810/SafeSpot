@@ -128,9 +128,10 @@
 - (void)updateFromServerWithCompletion:(void (^)(void))completionHandler
 {
     // JSON Datasoure: http://data.seattle.gov/resource/ge96-bmdn.json
+    // Parking signs: http://data.seattle.gov/resource/it8u-sznv.json
     NSError *error;
     
-    NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/ge96-bmdn.json"]];
+    NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/it8u-sznv.json"]];
     
     NSArray *completeArray = [NSJSONSerialization JSONObjectWithData:rawData
                                                              options:kNilOptions

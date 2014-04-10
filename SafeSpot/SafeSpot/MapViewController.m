@@ -1,19 +1,19 @@
 //
-//  FirstViewController.m
+//  MapViewController.m
 //  SafeSpot
 //
 //  Created by Naveen Yadav on 3/6/14.
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "MapViewController.h"
 #import "AppDelegate.h"
 
-@interface FirstViewController ()
+@interface MapViewController ()
 
 @end
 
-@implementation FirstViewController
+@implementation MapViewController
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -23,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //NSParameterAssert(self.managedObjectContext);
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     self.datastore = appDelegate.datastore;
@@ -40,4 +41,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)centerMapOnUserButtonClicked:(id)sender {
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+}
 @end
