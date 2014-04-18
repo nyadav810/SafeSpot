@@ -41,6 +41,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
+    
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Webcams" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
@@ -182,6 +183,9 @@
         "block_id" : "NE11-47"
      }
     */
+    
+    
+    
     NSLog(@"Logging key-value pairs for first element in JSON file:");
     for (id key in firstCategory)
     {
