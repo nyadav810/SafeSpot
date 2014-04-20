@@ -12,6 +12,19 @@
 
 @implementation Restrictions
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<Post %@ %@>", self.date, self.comment];
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _date = [NSDate date];
+    }
+    return self;
+}
+
 + (instancetype)postWithTitle:(NSString *)title comment:(NSString *)comment latitude:(double)latitude longitude:(double)longitude
 {
     

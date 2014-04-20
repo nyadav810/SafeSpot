@@ -37,23 +37,29 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
+    [self test];
     [self hourComparator];
     
     // - - - - - Notes about signs database - - -
     // "No parking" is good because it uses hours 0-23:59 aka all day.
     // Categories mention restricted parking zones
-    // Stand rate
     // lat/long and start day/end day are going to be used
+    // Stand rate
     // Use custom text or stand rate, they seem the same
     
+    
+    // - - - Zoom Notes
     // maybe at a certain zoom level we COULD use categories to make the lines?
     // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
+    // http://www.galloway.me.uk/tutorials/singleton-classes/
+    // if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
     
+    
+    // - - - Bug Notes
     // Regularly scheduled maintenance occurs on the 3rd Saturday of every month.
     // http://status.socrata.com/
     
-    // http://www.galloway.me.uk/tutorials/singleton-classes/
-    // if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
+   
 }
 
 
@@ -63,7 +69,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-// compares current time to start/end time
+
+// debug method
+- (void) test{
+    
+    Restrictions *test = [[Restrictions alloc] init];
+    test.comment = @"eee";
+    
+    CLLocation *location = [[CLLocation alloc]init ];
+    CLLocationCoordinate2D coordinate = [location coordinate];
+    
+    test.location = location;
+    //fiddle with location/coordinate
+    NSLog(@"eeeee");
+    
+    [self.mapView addAnnotation: test];
+    
+}
+
+
+
+// This method will compares current time to start/end time
 - (NSInteger)hourComparator {//:(NSInteger)startHour {
     
     // get current time as an int
@@ -86,11 +112,26 @@
     return 0;
 }
 
+// This method will change the current time to the correct timezone/time
+// not sure what to return, maybe Date instead
 - (NSInteger) correctTimezone{
     //http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
     
     return 0;
 }
+
+// This method will add annotations to map
+// addAnnotations, built in
+
+
+
+// This method will remove annotations on map
+//removeAnnotations
+
+
+
+// need to make the annotations in something I can clear
+
 
 
 //
