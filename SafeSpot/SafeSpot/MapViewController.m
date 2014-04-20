@@ -45,6 +45,8 @@
     // lat/long and start day/end day
     // Use custom text/ or stand rate, they seem the same
     
+    // maybe at a certain zoom level we COULD use categories to make the lines?
+    // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
     
 }
 
@@ -86,6 +88,20 @@
     return 0;
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
+{
+    NSString *reuseIdentifier = @"purplePin";
+    
+    
+    MKPinAnnotationView *result = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
+    if (!result) {
+        result =
+        [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+    }
+    result.pinColor = MKPinAnnotationColorPurple;
+    
+    return result;
+}
 
 
 - (IBAction)centerMapOnUserButtonClicked:(id)sender {
