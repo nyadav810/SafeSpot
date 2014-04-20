@@ -28,6 +28,7 @@
 		01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */; };
 		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
 		49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725A1902490C00F7BE6A /* Restrictions.m */; };
+		49EB725F190377C700F7BE6A /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725E190377C700F7BE6A /* DebugViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,8 @@
 		01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyTableViewController.m; sourceTree = "<group>"; };
 		49EB72591902490C00F7BE6A /* Restrictions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restrictions.h; sourceTree = "<group>"; };
 		49EB725A1902490C00F7BE6A /* Restrictions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Restrictions.m; sourceTree = "<group>"; };
+		49EB725D190377C700F7BE6A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
+		49EB725E190377C700F7BE6A /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				014B584318C908A0005BCBE2 /* Main.storyboard */,
+				49EB725D190377C700F7BE6A /* DebugViewController.h */,
+				49EB725E190377C700F7BE6A /* DebugViewController.m */,
 				01D4D7FA18F66F250009C8AE /* FavoritesTableViewController.h */,
 				01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */,
 				014B584618C908A0005BCBE2 /* MapViewController.h */,
@@ -312,6 +317,7 @@
 				01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */,
 				014B584818C908A0005BCBE2 /* MapViewController.m in Sources */,
 				014B583E18C908A0005BCBE2 /* main.m in Sources */,
+				49EB725F190377C700F7BE6A /* DebugViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

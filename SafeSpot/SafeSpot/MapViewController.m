@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
+#import "Restrictions.h"
 
 @interface MapViewController ()
 
@@ -36,18 +37,23 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 
-    [self hourConversion];
+    [self hourComparator];
     
-    // notes about signs database;
-    // no parking is good because it uses hours 0-23:59 aka all day.
-    // categories mention restricted parking/
+    // - - - - - Notes about signs database - - -
+    // "No parking" is good because it uses hours 0-23:59 aka all day.
+    // Categories mention restricted parking zones
     // Stand rate
-    // lat/long and start day/end day
-    // Use custom text/ or stand rate, they seem the same
+    // lat/long and start day/end day are going to be used
+    // Use custom text or stand rate, they seem the same
     
     // maybe at a certain zoom level we COULD use categories to make the lines?
     // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
     
+    // Regularly scheduled maintenance occurs on the 3rd Saturday of every month.
+    // http://status.socrata.com/
+    
+    // http://www.galloway.me.uk/tutorials/singleton-classes/
+    // if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
 }
 
 
@@ -57,14 +63,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-//changes hour key
-- (NSInteger)hourConversion {//:(NSInteger)startHour {
+// compares current time to start/end time
+- (NSInteger)hourComparator {//:(NSInteger)startHour {
     
     // get current time as an int
     // http://stackoverflow.com/questions/3385552/nsdatecomponents-componentsfromdate-and-time-zones
     // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
-    
-    
     
     NSLog(@"rawr");
     NSInteger start = 0;
@@ -88,6 +92,8 @@
     return 0;
 }
 
+
+//
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
     NSString *reuseIdentifier = @"purplePin";
@@ -103,8 +109,10 @@
     return result;
 }
 
-
+/*
 - (IBAction)centerMapOnUserButtonClicked:(id)sender {
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
 }
+*/
+
 @end

@@ -2,7 +2,7 @@
 //  Restrictions.m
 //  SafeSpot
 //
-//  Created by studentuser on 4/18/14.
+//  Created by Dexter Lesaca III on 4/18/14.
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
 

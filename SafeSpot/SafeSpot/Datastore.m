@@ -130,6 +130,7 @@
 {
     // JSON Datasoure: http://data.seattle.gov/resource/ge96-bmdn.json
     // Parking signs: http://data.seattle.gov/resource/it8u-sznv.json
+    /*
     NSError *error;
     
     NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/it8u-sznv.json"]];
@@ -185,7 +186,7 @@
     */
     
     
-    
+    /*
     NSLog(@"Logging key-value pairs for first element in JSON file:");
     for (id key in firstCategory)
     {
@@ -198,6 +199,8 @@
     if (completionHandler) {
         dispatch_async(dispatch_get_main_queue(), completionHandler);
     }
+    
+    */
 }
 
 @end
