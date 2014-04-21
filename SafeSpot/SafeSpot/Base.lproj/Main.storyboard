@@ -37,6 +37,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lKQ-xN-f7C">
                                 <rect key="frame" x="0.0" y="65" width="320" height="454"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="CZ4-MO-1fc" id="YVh-lY-COK"/>
+                                </connections>
                             </mapView>
                             <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Kdj-r1-4lN">
                                 <rect key="frame" x="44" y="21" width="232" height="44"/>
