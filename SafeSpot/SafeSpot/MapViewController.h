@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "Datastore.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) Datastore *datastore;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
