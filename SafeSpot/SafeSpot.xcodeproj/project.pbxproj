@@ -30,6 +30,7 @@
 		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
 		49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725A1902490C00F7BE6A /* Restrictions.m */; };
 		49EB725F190377C700F7BE6A /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725E190377C700F7BE6A /* DebugViewController.m */; };
+		C087F653190751AC00A82EB7 /* Street_Parking_Signs.csv in Resources */ = {isa = PBXBuildFile; fileRef = C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		49EB725A1902490C00F7BE6A /* Restrictions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Restrictions.m; sourceTree = "<group>"; };
 		49EB725D190377C700F7BE6A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		49EB725E190377C700F7BE6A /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
+		C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Street_Parking_Signs.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		014B583818C908A0005BCBE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */,
 				014B583918C908A0005BCBE2 /* SafeSpot-Info.plist */,
 				014B583A18C908A0005BCBE2 /* InfoPlist.strings */,
 				014B583D18C908A0005BCBE2 /* main.m */,
@@ -296,6 +299,7 @@
 				014B584D18C908A0005BCBE2 /* Images.xcassets in Resources */,
 				014B583C18C908A0005BCBE2 /* InfoPlist.strings in Resources */,
 				014B584518C908A0005BCBE2 /* Main.storyboard in Resources */,
+				C087F653190751AC00A82EB7 /* Street_Parking_Signs.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

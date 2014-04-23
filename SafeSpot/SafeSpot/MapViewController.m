@@ -106,7 +106,8 @@
         float testr = (float) [[s objectForKey:@"latitude"] floatValue]; //maybe double later
         float tl = (float) [[s objectForKey:@"longitude"] floatValue]; //maybe double later
         //NSString *res =  [s objectForKey:@"standardte"];
-        NSString *res2 =  [s objectForKey:@"customtext"];
+        NSString *title =  [s objectForKey:@"unitdesc"];
+        NSString *comment =  [s objectForKey:@"customtext"];
         /*
         NSLog(@"%f",testr);
         NSLog(@"%f",tl);
@@ -114,8 +115,8 @@
         */
         
         Restrictions *r = [[Restrictions alloc] init];
-        r.title = res2;
-        r.comment = res2;
+        r.title = title;
+        r.comment = comment;
         CLLocation *location = [[CLLocation alloc] initWithLatitude:testr longitude:tl];
         
         //NSLog(@"%@", location);
