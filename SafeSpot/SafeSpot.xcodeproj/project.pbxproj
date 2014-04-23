@@ -30,7 +30,7 @@
 		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
 		49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725A1902490C00F7BE6A /* Restrictions.m */; };
 		49EB725F190377C700F7BE6A /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725E190377C700F7BE6A /* DebugViewController.m */; };
-		C087F653190751AC00A82EB7 /* Street_Parking_Signs.csv in Resources */ = {isa = PBXBuildFile; fileRef = C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */; };
+		C02645801907586C0061EEB4 /* rows.json in Resources */ = {isa = PBXBuildFile; fileRef = C026457F1907586C0061EEB4 /* rows.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +78,7 @@
 		49EB725A1902490C00F7BE6A /* Restrictions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Restrictions.m; sourceTree = "<group>"; };
 		49EB725D190377C700F7BE6A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		49EB725E190377C700F7BE6A /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
-		C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Street_Parking_Signs.csv; sourceTree = "<group>"; };
+		C026457F1907586C0061EEB4 /* rows.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rows.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +154,7 @@
 		014B583818C908A0005BCBE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C087F652190751AC00A82EB7 /* Street_Parking_Signs.csv */,
+				C026457F1907586C0061EEB4 /* rows.json */,
 				014B583918C908A0005BCBE2 /* SafeSpot-Info.plist */,
 				014B583A18C908A0005BCBE2 /* InfoPlist.strings */,
 				014B583D18C908A0005BCBE2 /* main.m */,
@@ -296,10 +296,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C02645801907586C0061EEB4 /* rows.json in Resources */,
 				014B584D18C908A0005BCBE2 /* Images.xcassets in Resources */,
 				014B583C18C908A0005BCBE2 /* InfoPlist.strings in Resources */,
 				014B584518C908A0005BCBE2 /* Main.storyboard in Resources */,
-				C087F653190751AC00A82EB7 /* Street_Parking_Signs.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,8 +450,6 @@
 		014B586418C908A0005BCBE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SafeSpot/SafeSpot-Prefix.pch";
 				INFOPLIST_FILE = "SafeSpot/SafeSpot-Info.plist";
@@ -463,8 +461,6 @@
 		014B586518C908A0005BCBE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SafeSpot/SafeSpot-Prefix.pch";
 				INFOPLIST_FILE = "SafeSpot/SafeSpot-Info.plist";
