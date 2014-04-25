@@ -33,14 +33,14 @@
     [super viewDidLoad];
     
     // #FF5E3A
-//    UIColor *color = [UIColor colorWithRed:255/255.0f green:94/255.0f blue:58/255.0f alpha:1.0f];
+    UIColor *color = [UIColor colorWithRed:255/255.0f green:94/255.0f blue:58/255.0f alpha:1.0f];
+    [self.tabBarController.tabBar setSelectedImageTintColor:color];
 //    [self.view setBackgroundColor:color];
 //    
 //    // #FF9500
 //    UIColor *color2 = [UIColor colorWithRed:255/255.0f green:149/255.0f blue:0/255.0f alpha:1.0f];
 //    
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
-    
     
     //NSParameterAssert(self.managedObjectContext);
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
