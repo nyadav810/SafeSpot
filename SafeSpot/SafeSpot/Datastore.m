@@ -49,7 +49,6 @@
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
-/*
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if (_persistentStoreCoordinator != nil) {
@@ -58,7 +57,6 @@
     
     return _persistentStoreCoordinator;
 }
-*/
 
 #pragma mark - Application's Documents directory
 
@@ -86,79 +84,34 @@
 // Retrieve JSON data from datasource and parse the information. Called upon launch in MapViewController.
 - (void)updateFromServerWithCompletion:(void (^)(void))completionHandler
 {
-    // JSON Datasoure: http://data.seattle.gov/resource/ge96-bmdn.json
-    // Parking signs: http://data.seattle.gov/resource/it8u-sznv.json
-    /*
-    NSError *error;
+    // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
     
-    NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/it8u-sznv.json"]];
-    
-    NSArray *completeArray = [NSJSONSerialization JSONObjectWithData:rawData
-                                                             options:kNilOptions
-                                                               error:&error];
-    if (!completeArray) {
-        NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
-    }
-    
-    NSDictionary *firstCategory = completeArray[0];
-    int keyCount = 0;
-    
-    /* Example JSON struct:
-     {
-        "total_zone" : "0",
-        "bus" : "0",
-        "nostop" : "0",
-        "unitid2" : "470",
-        "tl_spaces" : "0",
-        "blockface_" : "616",
-        "total_spac" : "0",
-        "tier" : "0",
-        "parking_sp" : "0",
-        "nopark" : "0",
-        "short_rate" : "0",
-        "unitdesc" : "11TH AVE NE BETWEEN NE 47TH ST AND NE 50TH ST",
-        "distance" : "23",
-        "rate" : "0",
-        "unitid" : "230",
-        "side" : "E",
-        "unrestrict" : "0",
-        "block_nbr" : "4700",
-        "total_nopa" : "0",
-        "long_rate" : "0",
-        "carpool_sp" : "0",
-        "segkey" : "1410",
-        "width" : "-23",
-        "end_distan" : "639",
-        "parking_ca" : "No Parking Allowed",
-        "peak_hour" : "4-6PM",
-        "elmntkey" : "1434",
-        "csm" : true,
-        "paid_space" : "0",
-        "shape_len" : "0",
-        "load" : "0",
-        "objectid" : "1",
-        "rpz_spaces" : "0",
-        "zone" : "0",
-        "block_id" : "NE11-47"
-     }
-    */
-    
-    
-    /*
-    NSLog(@"Logging key-value pairs for first element in JSON file:");
-    for (id key in firstCategory)
-    {
-        NSLog(@"\"%@\" : \"%@\"", key, [firstCategory objectForKey:key]);
-        keyCount++;
-    }
-    
-    NSLog(@"total number of keys: %d", keyCount);
-    
-    if (completionHandler) {
-        dispatch_async(dispatch_get_main_queue(), completionHandler);
-    }
-    
-    */
+//    NSError *error;
+//    
+//    NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/it8u-sznv.json"]];
+//    
+//    NSArray *completeArray = [NSJSONSerialization JSONObjectWithData:rawData
+//                                                             options:kNilOptions
+//                                                               error:&error];
+//    if (!completeArray) {
+//        NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
+//    }
+//    
+//    NSDictionary *firstCategory = completeArray[0];
+//    int keyCount = 0;
+//
+//    NSLog(@"Logging key-value pairs for first element in JSON file:");
+//    for (id key in firstCategory)
+//    {
+//        NSLog(@"\"%@\" : \"%@\"", key, [firstCategory objectForKey:key]);
+//        keyCount++;
+//    }
+//    
+//    NSLog(@"total number of keys: %d", keyCount);
+//    
+//    if (completionHandler) {
+//        dispatch_async(dispatch_get_main_queue(), completionHandler);
+//    }
 }
 
 @end

@@ -32,6 +32,16 @@
 {
     [super viewDidLoad];
     
+    // #FF5E3A
+//    UIColor *color = [UIColor colorWithRed:255/255.0f green:94/255.0f blue:58/255.0f alpha:1.0f];
+//    [self.view setBackgroundColor:color];
+//    
+//    // #FF9500
+//    UIColor *color2 = [UIColor colorWithRed:255/255.0f green:149/255.0f blue:0/255.0f alpha:1.0f];
+//    
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    
+    
     //NSParameterAssert(self.managedObjectContext);
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     self.datastore = appDelegate.datastore;
@@ -80,51 +90,30 @@
 // debug method
 - (void) test{
     
-
-    NSLog(@"eeeee");
     NSError *error;
     
+    // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rows" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *completeDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
-    //NSData *rawData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://data.seattle.gov/resource/it8u-sznv.json"]];
-    
-    //NSArray *completeArray = [NSJSONSerialization JSONObjectWithData:rawData
-    //                                                         options:kNilOptions
-    //                                                           error:&error];
-    
-    if (!completeDictionary) {
+    if (!signs) {
         NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
     }
     
-    NSArray *signs = [completeDictionary objectForKey:@"data"];
-    
-    int l = [signs count];
-    NSLog(@"%d", l);
-    
-    // array only stores 1000
-    //NSDictionary *firstCategory = signs[77];
+    NSLog(@"%d", [signs count]);
 
     int som = 0;
-    for(NSArray *s in signs){
-       // NSLog(@"%@", s);
-        float latitude = (float) [s[35] floatValue]; //maybe double later
-        float longitude = (float) [s[36] floatValue]; //maybe double later
-        NSString *title =  s[21];
-        NSString *comment =  s[18];
-        /*
-        NSLog(@"%f",testr);
-        NSLog(@"%f",tl);
-        NSLog(@"%@",res2);
-        */
+    for(NSDictionary *s in signs){
+        float latitude = (float) [[s objectForKey:@"latitude"] floatValue]; // maybe double later
+        float longitude = (float) [[s objectForKey:@"longitude"] floatValue]; // maybe double later
+        NSString *title =  [s objectForKey:@"unitdesc"];
+        NSString *comment =  [s objectForKey:@"customtext"];
         
         Restrictions *r = [[Restrictions alloc] init];
         r.title = title;
         r.comment = comment;
         CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        
-        //NSLog(@"%@", location);
         
         CLLocationCoordinate2D coordinate = [location coordinate];
         r.location = location;
@@ -136,36 +125,21 @@
             
             som++;
         }
-        
     }
     
-    /*
-    int keyCount = 0;
-    
-     NSLog(@"Logging key-value pairs for first element in JSON file:");
-     for (id key in firstCategory)
-     {
-     NSLog(@"\"%@\" : \"%@\"", key, [firstCategory objectForKey:key]);
-    
-     keyCount++;
-     }
-        
-    NSLog(@"total number of keys: %d", keyCount);
-    */
-    
-    Restrictions *test = [[Restrictions alloc] init];
-    test.title = @"@rawr";
-    test.comment = @"eee";
-    
-    CLLocation *location2 = [[CLLocation alloc]init ];
-    CLLocationCoordinate2D coordinate2 = [location2 coordinate];
-    
-    test.location = location2;
-    test.coordinate = coordinate2;
-    //fiddle with location/coordinate
-    
-    
-    //[self.mapView addAnnotation: test];
+//    Restrictions *test = [[Restrictions alloc] init];
+//    test.title = @"@rawr";
+//    test.comment = @"eee";
+//    
+//    CLLocation *location2 = [[CLLocation alloc]init ];
+//    CLLocationCoordinate2D coordinate2 = [location2 coordinate];
+//    
+//    test.location = location2;
+//    test.coordinate = coordinate2;
+//    fiddle with location/coordinate
+//    
+//    
+//    [self.mapView addAnnotation: test];
     
 }
 

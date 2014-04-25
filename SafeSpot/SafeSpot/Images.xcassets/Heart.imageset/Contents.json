@@ -3,16 +3,16 @@
     {
       "idiom" : "iphone",
       "scale" : "1x",
-      "filename" : "gear_24.png"
+      "filename" : "heart_24.png"
     },
     {
       "idiom" : "iphone",
       "scale" : "2x",
-      "filename" : "gear_48.png"
+      "filename" : "heart_48.png"
     },
     {
       "idiom" : "iphone",
-      "filename" : "gear_64.png",
+      "filename" : "heart_64.png",
       "subtype" : "retina4",
       "scale" : "2x"
     }

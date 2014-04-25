@@ -112,11 +112,11 @@
             </objects>
             <point key="canvasLocation" x="745" y="-102"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - Favorites-->
         <scene sceneID="dTI-Xq-gUS">
             <objects>
                 <navigationController definesPresentationContext="YES" id="cTR-3Y-pkV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="crg-91-XJR"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="Heart" id="crg-91-XJR"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mEQ-mE-b3O">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -318,10 +318,11 @@
     </scenes>
     <resources>
         <image name="Arrow" width="15" height="15"/>
+        <image name="Heart" width="24" height="24"/>
         <image name="Lines" width="19" height="16"/>
-        <image name="Map" width="19" height="19"/>
-        <image name="Nearby" width="30" height="30"/>
-        <image name="Settings" width="30" height="30"/>
+        <image name="Map" width="24" height="24"/>
+        <image name="Nearby" width="24" height="24"/>
+        <image name="Settings" width="24" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
