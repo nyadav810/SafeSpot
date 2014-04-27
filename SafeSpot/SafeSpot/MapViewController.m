@@ -76,6 +76,12 @@
     // Regularly scheduled maintenance occurs on the 3rd Saturday of every month.
     // http://status.socrata.com/
     
+    // Pins
+    
+    // https://github.com/thoughtbot/TBAnnotationClustering/blob/master/TBAnnotationClustering/TBCoordinateQuadTree.m
+    
+    // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
+    
    
 }
 
@@ -92,9 +98,10 @@
     
     NSError *error;
     
-    // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
+    // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json 
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rows" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
     NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     if (!signs) {
@@ -103,45 +110,53 @@
     
     NSLog(@"%d", [signs count]);
 
-    int som = 0;
+    int numberOfPins = 0;
+    int totalSigns = 0;
     for(NSDictionary *s in signs){
-        float latitude = (float) [[s objectForKey:@"latitude"] floatValue]; // maybe double later
-        float longitude = (float) [[s objectForKey:@"longitude"] floatValue]; // maybe double later
-        NSString *title =  [s objectForKey:@"unitdesc"];
-        NSString *comment =  [s objectForKey:@"customtext"];
+        /*
+        float latitude = (float) [[s objectForKey:@"latitude"] floatValue];
+        float longitude = (float) [[s objectForKey:@"longitude"] floatValue];
         
-        Restrictions *r = [[Restrictions alloc] init];
-        r.title = title;
-        r.comment = comment;
+        NSString *title =  [s objectForKey:@"unitdesc"]; // Street Names
+        NSString *comment =  [s objectForKey:@"customtext"]; // Restrictions
+        
+        int startHour =  (int) [[s objectForKey:@"starttime"] integerValue]; // Start time for Restrictions
+        int endHour =  (int) [[s objectForKey:@"starttime"] integerValue];  // End Time
+        
+        int startDay =  (int) [[s objectForKey:@"startday"] integerValue];  //
+        int endDay =  (int) [[s objectForKey:@"endday"] integerValue];      //
+        
+        
+        Restrictions *rest = [[Restrictions alloc] init];
+        rest.title = title;
+        rest.comment = comment;
+        
         CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         
         CLLocationCoordinate2D coordinate = [location coordinate];
-        r.location = location;
-        r.coordinate = coordinate;
-        
-        if(som < 100){
+        rest.location = location;
+        rest.coordinate = coordinate;
+        totalSigns++;
+       
+        if(numberOfPins < 150){
             
-            [self.mapView addAnnotation: r]; // all are adding to [0,0] :( problem with restrictions
+            [self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
             
-            som++;
+            numberOfPins++;
         }
+         */
     }
-    
-//    Restrictions *test = [[Restrictions alloc] init];
-//    test.title = @"@rawr";
-//    test.comment = @"eee";
-//    
-//    CLLocation *location2 = [[CLLocation alloc]init ];
-//    CLLocationCoordinate2D coordinate2 = [location2 coordinate];
-//    
-//    test.location = location2;
-//    test.coordinate = coordinate2;
-//    fiddle with location/coordinate
-//    
-//    
-//    [self.mapView addAnnotation: test];
+    NSLog(@"%d", totalSigns);
     
 }
+
+//should be the last post
+/*
+ , [ 80235, "F301808D-EC9D-4711-9E2E-A360096ED708", 80235, 1285278966, "386118", 1285278966, "386118", null, "80235", "531546.0", "20", "2149", "25117", "260", "-17", "SGN-139286", "01-RS", "R7-NP", "[RED SLASHED CIRCLE] P", "PNP", "No Parking, but \"standing\" allowed", "15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
+ */
+
+// zoom level method
+
 
 
 // This method will compares current time to start/end time

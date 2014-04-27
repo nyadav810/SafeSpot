@@ -10,6 +10,9 @@ typedef struct TBQuadTreeNodeData {
     double x;
     double y;
     void* data;
+    //char* streetname;
+    
+    
 } TBQuadTreeNodeData;
 
 TBQuadTreeNodeData TBQuadTreeNodeDataMake(double x, double y, void* data);

@@ -11,11 +11,11 @@
 
 @interface Restrictions : NSObject <MKAnnotation>
 
-@property (nonatomic, strong) NSDate *date;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *comment;
-@property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) NSDate *date; // Might not need
 
+@property (nonatomic, copy) NSString *title; // Steet Name
+@property (nonatomic, copy) NSString *comment; //Restrictions
+@property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
 
 - (NSNumber *)latitude;
