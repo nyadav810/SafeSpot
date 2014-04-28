@@ -102,21 +102,26 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rows" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     
-    NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    
-    if (!signs) {
+    //NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSDictionary *rawSigns = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    if (!rawSigns) {
         NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
     }
     
-    NSLog(@"%d", [signs count]);
+    NSArray *signs = [rawSigns objectForKey:@"data"];
 
     int numberOfPins = 0;
     int totalSigns = 0;
+    
+    NSLog(@"%@", signs[0][17] );
+    
     for(NSDictionary *s in signs){
-        /*
-        float latitude = (float) [[s objectForKey:@"latitude"] floatValue];
-        float longitude = (float) [[s objectForKey:@"longitude"] floatValue];
         
+        //NSLog(@"%@",[s objectForKey:@"latitude"]);
+        
+        //float latitude = (float) [[s objectForKey:@"latitude"] floatValue];
+        //float longitude = (float) [[s objectForKey:@"longitude"] floatValue];
+          /*
         NSString *title =  [s objectForKey:@"unitdesc"]; // Street Names
         NSString *comment =  [s objectForKey:@"customtext"]; // Restrictions
         
@@ -136,15 +141,16 @@
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
+         */
         totalSigns++;
        
         if(numberOfPins < 150){
-            
-            [self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
+                
+            //[self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
             
             numberOfPins++;
         }
-         */
+        
     }
     NSLog(@"%d", totalSigns);
     
