@@ -113,24 +113,57 @@
     int numberOfPins = 0;
     int totalSigns = 0;
     
-    NSLog(@"%@", signs[0][17] );
+    // NSLog(@"%@", signs[0][21] );
+    // NSLog(@"%@", signs[0][18] );
     
-    for(NSDictionary *s in signs){
+    for(NSArray *s in signs){
         
-        //NSLog(@"%@",[s objectForKey:@"latitude"]);
+        float latitude = (float) [s[35] floatValue];
+        float longitude = (float) [s[36]floatValue];
         
-        //float latitude = (float) [[s objectForKey:@"latitude"] floatValue];
-        //float longitude = (float) [[s objectForKey:@"longitude"] floatValue];
-          /*
-        NSString *title =  [s objectForKey:@"unitdesc"]; // Street Names
-        NSString *comment =  [s objectForKey:@"customtext"]; // Restrictions
+        NSString *title =  s[21]; // Street Names
+        //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
+        // http://stackoverflow.com/questions/6825834/objective-c-how-to-extract-part-of-a-string-e-g-start-with
+        // or use substring to get certain parts
         
-        int startHour =  (int) [[s objectForKey:@"starttime"] integerValue]; // Start time for Restrictions
-        int endHour =  (int) [[s objectForKey:@"starttime"] integerValue];  // End Time
         
+        NSString *comment =  s[20]; // Restrictions
+        
+        NSString *details =  s[32]; // more on the restrictions
+
+        if( s[33] != [NSNull null]){
+            int startHour =  (int) [s[33] integerValue];
+        }else{
+            
+            // ~ 200-300 unlabeled but HAS restrictions
+            // id startHour = s[33]; //-10; //?
+            // NSLog(@"%@",startHour);
+        }
+        if( s[33] != [NSNull null]){
+            int endHour =  (int) [s[33] integerValue];
+        }else{
+            
+        }
+        
+        if( s[30] != [NSNull null]){
+            int startDay =  (int) [s[30] integerValue];
+        }else{
+            
+        }
+        
+        if( s[31] != [NSNull null]){
+            int endDay =  (int) [s[31] integerValue];
+        }else{
+            
+        }
+        
+        //int startHour =  (int) [s[33] integerValue]; // Start time for Restrictions
+        //int endHour =  (int) [s[34] integerValue]; //(int) [[s objectForKey:@"starttime"] integerValue];  // End Time
+        /*
+        //30/31
         int startDay =  (int) [[s objectForKey:@"startday"] integerValue];  //
         int endDay =  (int) [[s objectForKey:@"endday"] integerValue];      //
-        
+        */
         
         Restrictions *rest = [[Restrictions alloc] init];
         rest.title = title;
@@ -141,17 +174,17 @@
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
-         */
+        
         totalSigns++;
        
-        if(numberOfPins < 150){
+        if(numberOfPins < 100){
                 
-            //[self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
+            [self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
             
             numberOfPins++;
         }
-        
     }
+    
     NSLog(@"%d", totalSigns);
     
 }
@@ -172,17 +205,23 @@
     // http://stackoverflow.com/questions/3385552/nsdatecomponents-componentsfromdate-and-time-zones
     // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
     
-    NSLog(@"rawr");
-    NSInteger start = 0;
+    NSLog(@"Hour comparator called");
+    NSInteger start = 0; // start hour
     NSInteger current = 2;
-    NSInteger end = 1;
+    
+    NSInteger end = 1; //end hour
     //use 24hrs, so 7am < 7pm aka 19:00
-    if(end <= current){ //its after the restriction
+    
+    if(end < current){ //its after the restriction
         //cant park
-        NSLog(@"test finish");
+        NSLog(@"test hours finish");
+        //return false;
+        
     } else if(current <= start){ // its its after restriction
         //can park
-        NSLog(@"test cant park finish");
+        NSLog(@"test hours cant park finish");
+        
+        // return true; boolean
     }
     
     return 0;
@@ -194,6 +233,29 @@
     //http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
     
     return 0;
+}
+
+
+- (NSInteger) dayComparator{ // if start date exists compare it
+    
+    //http://stackoverflow.com/questions/4269093/how-do-i-get-the-day-of-the-week-in-objective-c
+    
+    
+    //get todays date
+    
+    
+    return 0;
+}
+
+
+-(NSInteger) zoomLevel{
+    
+    return 0;
+}
+
+
+-(void) h{
+    
 }
 
 // This method will add annotations to map
@@ -216,6 +278,8 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
 }
+
+
 
 /*
 //
