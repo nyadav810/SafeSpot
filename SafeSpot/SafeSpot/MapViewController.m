@@ -53,9 +53,18 @@
         NSLog(@"datastore update complete");
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
-
+    
+    
     [self test];
     [self hourComparator];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    
+    int weekday = [comps weekday];
+    NSLog(@"%d",weekday);
+    
+    // test to make sure it says monday
+    
     
     // - - - - - Notes about signs database - - -
     // "No parking" is good because it uses hours 0-23:59 aka all day.
@@ -115,6 +124,7 @@
     
     // NSLog(@"%@", signs[0][21] );
     // NSLog(@"%@", signs[0][18] );
+    
     
     for(NSArray *s in signs){
         
@@ -200,6 +210,21 @@
 
 // This method will compares current time to start/end time
 - (NSInteger)hourComparator {//:(NSInteger)startHour {
+
+   
+    //NSString *localDate = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
+    
+    //should pass this in since its probably huge
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    // Then use it
+    int minute =[dateComps minute];
+    int hour = [dateComps hour];
+    NSLog(@"%d,%d",hour,minute);
+    
+    //NSLog(@"%@",localDate);
+    
     
     // get current time as an int
     // http://stackoverflow.com/questions/3385552/nsdatecomponents-componentsfromdate-and-time-zones
@@ -232,7 +257,9 @@
 - (NSInteger) correctTimezone{
     //http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
     
+    
     return 0;
+    
 }
 
 
