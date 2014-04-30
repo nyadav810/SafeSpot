@@ -116,10 +116,6 @@
     int numberOfPins = 0;
     int totalSigns = 0;
     
-    // NSLog(@"%@", signs[0][21] );
-    // NSLog(@"%@", signs[0][18] );
-    
-    
     for(NSArray *s in signs){
         
         float latitude = (float) [s[35] floatValue];
@@ -136,6 +132,9 @@
         NSString *details =  s[32]; // more on the restrictions
         
         int startHour = -100;
+        int endHour = -100;
+        int startDay = -100;
+        int endDay = -100;
         
         if( s[33] != [NSNull null]){
             startHour =  (int) [s[33] integerValue];
@@ -143,7 +142,6 @@
             // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
             // NSLog(@"%@",startHour);
         }
-        int endHour = -100;
         
         if( s[33] != [NSNull null]){
             endHour =  (int) [s[33] integerValue];
@@ -151,13 +149,12 @@
             
         }
         
-        int startDay = -100;
         if( s[30] != [NSNull null]){
             startDay =  (int) [s[30] integerValue];
         }else{
             
         }
-        int endDay = -100;
+    
         if( s[31] != [NSNull null]){
             endDay =  (int) [s[31] integerValue];
         }else{
@@ -174,39 +171,32 @@
         rest.comment = comment;
         
         CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
         
         totalSigns++;
-       
         if(numberOfPins < 100){
                 
             [self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
-            
             numberOfPins++;
         }
     }
-    
-    NSLog(@"%d", totalSigns);
+
     
 }
 
-//should be the last post
 /*
  , [ 80235, "F301808D-EC9D-4711-9E2E-A360096ED708", 80235, 1285278966, "386118", 1285278966, "386118", null, "80235", "531546.0", "20", "2149", "25117", "260", "-17", "SGN-139286", "01-RS", "R7-NP", "[RED SLASHED CIRCLE] P", "PNP", "No Parking, but \"standing\" allowed", "15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
  */
 
-
+// Gets string of day
+// NSString *localDate = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
 - (NSInteger)hourComparator {//:(NSInteger)startHour {
 
-   
-    //NSString *localDate = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-    
     //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
@@ -215,8 +205,6 @@
     int minute =[dateComps minute];
     int hour = [dateComps hour];
     NSLog(@"%d,%d",hour,minute);
-
-    
     
     NSLog(@"Hour comparator called");
     NSInteger start = 0; // start hour
@@ -240,15 +228,10 @@
     return 0;
 }
 
-// This method will change the current time to the correct timezone/time
-// not sure what to return, maybe Date instead
-- (NSInteger) correctTimezone{
-    //http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
+// Possibly debug current hour
+// http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
     
-    
-    return 0;
-    
-}
+
 
 // pass in todays date
 - (NSInteger) dayComparator{ // if start date exists compare it
