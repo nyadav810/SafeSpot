@@ -74,7 +74,11 @@
         NSLog(@"datastore update complete");
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
+    int weekday = (int) [comps weekday];
+    NSLog(@"%d",weekday); // pass it in..? it kept breaking
 
     NSLog(@" zoom level is ");
     self.zoomLevel;
@@ -192,7 +196,7 @@
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
-        NSLog(@"%d,%d", startDay, endDay);
+        //NSLog(@"%d", endDay);
 
         [self dayComparator:startDay end:endDay today:current];
        
@@ -255,7 +259,7 @@
     if(currentDay < startDay || currentDay > endDay ){
         // true?
         //NSLog(@"%d,%d", startDay, endDay);
-        NSLog(@" today is %d", currentDay);
+        //NSLog(@"%d", currentDay);
         
     }
     //get todays date
