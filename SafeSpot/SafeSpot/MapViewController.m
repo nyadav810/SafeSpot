@@ -184,6 +184,8 @@
         if(numberOfPins < 100){
             
             // [self mapView addAnnotation
+            
+            //day compare first, if its okay check hour comparator
             [self hourComparator:startHour hour:endHour];
             //depending on answer change pin color
             
@@ -205,7 +207,7 @@
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
-- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour{
+- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour{ //add param for current
 
     //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -246,8 +248,12 @@
 
 
 // pass in todays date
-- (NSInteger) dayComparator{ // if start date exists compare it
-
+- (NSInteger) dayComparator:(NSUInteger)startDay start:(NSUInteger)endDay  end:(NSUInteger)currentDay{ // if start date exists compare it
+    
+    if(currentDay < startDay || currentDay > endDay ){
+        // true?
+        
+    }
     //get todays date
     
     return 0;
