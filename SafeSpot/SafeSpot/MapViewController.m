@@ -78,7 +78,7 @@
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = (int) [comps weekday];
-    NSLog(@"%d",weekday); // pass it in..? it kept breaking
+    //NSLog(@"%d",weekday); // pass it in..? it kept breaking
 
     NSLog(@" zoom level is ");
     self.zoomLevel;
@@ -129,7 +129,7 @@
     int weekday = (int) [comps weekday];
     
     NSInteger current = (hour * 100) + minute;
-    //NSLog(@"%d",current);
+    NSLog(@"%d",weekday);
     
     
     int numberOfPins = 0;
@@ -171,17 +171,22 @@
             
         }
         
-        if( s[30] != [NSNull null]){
-            startDay =  (int) [s[30] integerValue];
+        //maybe make a boolean to verify non null?
+        if( s[31] != [NSNull null]){
+            startDay =  (int) [s[31] integerValue];
         }else{
             
         }
     
-        if( s[31] != [NSNull null]){
-            endDay =  (int) [s[31] integerValue];
+        if( s[32] != [NSNull null]){
+            endDay =  (int) [s[32] integerValue];
+            // NSLog(@"%d",endDay);
         }else{
             
         }
+        // Only run if start and end are not null
+        // [self dayComparator:startDay end:endDay today:weekday];
+        
         
         // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
         // Restrictions have startDay/Hour and endDay/Hour and custom Text
@@ -196,16 +201,16 @@
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
-        //NSLog(@"%d", endDay);
-
-        [self dayComparator:startDay end:endDay today:current];
+        
        
+        
         totalSigns++;
         if(numberOfPins < 100){
             
             // [self mapView addAnnotation
             
-            //day compare first, if its okay check hour comparator
+            // day compare first, if its okay check hour comparator
+            // only run if not start and end hour are not null
             [self hourComparator:startHour hour:endHour ct:current];
             //depending on answer change pin color
             
@@ -239,7 +244,8 @@
         //
     } else if(current >= start){ // its its after restriction
         //can park
-        NSLog(@"test hours cant park finish");
+        //NSLog(@"test hours cant park finish");
+        
         // NSLog(@"%d,%d",start,endHour);
         
         // return true; boolean
@@ -256,10 +262,12 @@
 // pass in todays date
 - (NSInteger) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
     
-    if(currentDay < startDay || currentDay > endDay ){
+    NSLog(@"%d,%d", startDay, endDay);
+    if(currentDay < startDay && currentDay > endDay ){
         // true?
-        //NSLog(@"%d,%d", startDay, endDay);
-        //NSLog(@"%d", currentDay);
+        //
+        
+        NSLog(@"%d", currentDay);
         
     }
     //get todays date
