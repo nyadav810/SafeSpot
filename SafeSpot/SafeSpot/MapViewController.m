@@ -77,7 +77,7 @@
     
     
     [self test];
-    [self hourComparator];
+    [self hourComparator:@2];
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
@@ -196,7 +196,7 @@
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
-- (NSInteger)hourComparator {//:(NSInteger)startHour {
+- (NSInteger)hourComparator: (NSInteger)startHour {
 
     //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -250,7 +250,22 @@
     NSInteger zoomLevel = MAX(0, zoomLevelAtMaxZoom + floor(log2f(scale) + 0.5));
     
     NSLog(@"%d",zoomLevel);
-
+    
+    switch (zoomLevel) {
+        case 13:
+        case 14:
+        case 15:
+            return 64;
+        case 16:
+        case 17:
+        case 18:
+            return 32;
+        case 19:
+            return 16;
+            
+        default:
+            return 88;
+    }
     return 0;
 }
 
