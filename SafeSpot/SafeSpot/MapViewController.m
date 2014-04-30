@@ -139,7 +139,7 @@
         
         if( s[33] != [NSNull null]){
             startHour =  (int) [s[33] integerValue];
-            NSLog(@"%d",startHour);
+            //NSLog(@"%d",startHour);
         }else{
             // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
             // NSLog(@"%@",startHour);
@@ -147,7 +147,7 @@
         
         if( s[34] != [NSNull null]){
             endHour =  (int) [s[34] integerValue];
-            NSLog(@"%d",endHour);
+            //NSLog(@"%d",endHour);
 
         }else{
             
@@ -179,12 +179,14 @@
         rest.location = location;
         rest.coordinate = coordinate;
         
-        [self hourComparator:startHour hour:endHour];
+       
         totalSigns++;
         if(numberOfPins < 100){
             
             // [self mapView addAnnotation
-            //[self hourComparator:startHour hour:endHour];
+            [self hourComparator:startHour hour:endHour];
+            //depending on answer change pin color
+            
             [self.mapView addAnnotation:rest];
             //[self.mapView addAnnotation: self.mapView viewForAnnotation: rest pin:details ]; // all are adding to [0,0] :( problem with restrictions
             numberOfPins++;
@@ -212,23 +214,25 @@
     // Then use it
     int minute = (int) [dateComps minute];
     int hour = (int) [dateComps hour];
+    
     // NSLog(@"%d,%d,%d,%d",hour,minute,start,endHour);
     
     // NSLog(@"Hour comparator called");
     
-    NSInteger current = hour;
-    
-    //use 24hrs, so 7am < 7pm aka 19:00
+    NSInteger current = (hour * 100) + minute;
+    //NSLog(@"%d",current);
     
     //have to change start/end if its -100 aka null
     if(endHour < current){ //its after the restriction, maybe && statement for start..?
         //cant park
-        NSLog(@"test can park yay!");
+        // NSLog(@"test can park yay!");
         //return false;
         
-    } else if(current <= start){ // its its after restriction
+        //
+    } else if(current >= start){ // its its after restriction
         //can park
         NSLog(@"test hours cant park finish");
+        // NSLog(@"%d,%d",start,endHour);
         
         // return true; boolean
     }
