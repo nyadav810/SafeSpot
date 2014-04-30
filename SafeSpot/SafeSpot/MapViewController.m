@@ -77,7 +77,7 @@
     
     
     [self test];
-    [self hourComparator:@2];
+    [self hourComparator:2 hour:2];
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
@@ -139,13 +139,16 @@
         
         if( s[33] != [NSNull null]){
             startHour =  (int) [s[33] integerValue];
+            NSLog(@"%d",startHour);
         }else{
             // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
             // NSLog(@"%@",startHour);
         }
         
-        if( s[33] != [NSNull null]){
-            endHour =  (int) [s[33] integerValue];
+        if( s[34] != [NSNull null]){
+            endHour =  (int) [s[34] integerValue];
+            NSLog(@"%d",endHour);
+
         }else{
             
         }
@@ -176,15 +179,19 @@
         rest.location = location;
         rest.coordinate = coordinate;
         
+        [self hourComparator:startHour hour:endHour];
         totalSigns++;
         if(numberOfPins < 100){
-                
-            [self.mapView addAnnotation: rest]; // all are adding to [0,0] :( problem with restrictions
+            
+            // [self mapView addAnnotation
+            //[self hourComparator:startHour hour:endHour];
+            [self.mapView addAnnotation:rest];
+            //[self.mapView addAnnotation: self.mapView viewForAnnotation: rest pin:details ]; // all are adding to [0,0] :( problem with restrictions
             numberOfPins++;
         }
     }
 
-    
+
 }
 
 /*
@@ -196,27 +203,27 @@
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
-- (NSInteger)hourComparator: (NSInteger)startHour {
+- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour{
 
     //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
                                                   fromDate: [NSDate date]];
     // Then use it
-    int minute =[dateComps minute];
-    int hour = [dateComps hour];
-    NSLog(@"%d,%d",hour,minute);
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    // NSLog(@"%d,%d,%d,%d",hour,minute,start,endHour);
     
-    NSLog(@"Hour comparator called");
-    NSInteger start = 0; // start hour
-    NSInteger current = 2;
+    // NSLog(@"Hour comparator called");
     
-    NSInteger end = 1; //end hour
+    NSInteger current = hour;
+    
     //use 24hrs, so 7am < 7pm aka 19:00
     
-    if(end < current){ //its after the restriction
+    //have to change start/end if its -100 aka null
+    if(endHour < current){ //its after the restriction, maybe && statement for start..?
         //cant park
-        NSLog(@"test hours finish");
+        NSLog(@"test can park yay!");
         //return false;
         
     } else if(current <= start){ // its its after restriction
@@ -249,7 +256,7 @@
     NSInteger zoomLevelAtMaxZoom = log2(totalTilesAtMaxZoom);
     NSInteger zoomLevel = MAX(0, zoomLevelAtMaxZoom + floor(log2f(scale) + 0.5));
     
-    NSLog(@"%d",zoomLevel);
+    // NSLog(@"%d",zoomLevel);
     
     switch (zoomLevel) {
         case 13:
@@ -291,10 +298,10 @@
 
 
 /*
-//
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
-    NSString *reuseIdentifier = @"purplePin";
+    // pin color red or green
+    NSString *reuseIdentifier = @"greenPin";
     
     NSLog(@"annote this");
     
@@ -307,7 +314,7 @@
     
     return result;
 }
- */
+*/
 
 
 - (IBAction)centerMapOnUserButtonClicked:(id)sender {
