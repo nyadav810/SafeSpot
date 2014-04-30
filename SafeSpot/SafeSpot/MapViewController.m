@@ -9,9 +9,29 @@
 /*
  Found bugs:
  Going "Home makes the app crash"
- Current location button makes AC
- Array only holds 1000(kind of useful for now
+ // http://status.socrata.com/
  */
+
+// - - - - - Notes about signs database - - -
+// "No parking" is good because it uses hours 0-23:59 aka all day.
+// Categories mention restricted parking zones
+// lat/long and start day/end day are going to be used
+// Stand rate
+// Use custom text or stand rate, they seem the same
+
+
+// - - - Zoom Notes
+// maybe at a certain zoom level we COULD use categories to make the lines?
+// might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
+// http://www.galloway.me.uk/tutorials/singleton-classes/
+// if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
+
+
+// Pins
+// https://github.com/thoughtbot/TBAnnotationClustering/blob/master/TBAnnotationClustering/TBCoordinateQuadTree.m
+// http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
+
+
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -58,41 +78,14 @@
     
     [self test];
     [self hourComparator];
+    
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = [comps weekday];
     NSLog(@"%d",weekday);
+
     
-    // test to make sure it says monday
-    
-    
-    // - - - - - Notes about signs database - - -
-    // "No parking" is good because it uses hours 0-23:59 aka all day.
-    // Categories mention restricted parking zones
-    // lat/long and start day/end day are going to be used
-    // Stand rate
-    // Use custom text or stand rate, they seem the same
-    
-    
-    // - - - Zoom Notes
-    // maybe at a certain zoom level we COULD use categories to make the lines?
-    // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
-    // http://www.galloway.me.uk/tutorials/singleton-classes/
-    // if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
-    
-    
-    // - - - Bug Notes
-    // Regularly scheduled maintenance occurs on the 3rd Saturday of every month.
-    // http://status.socrata.com/
-    
-    // Pins
-    
-    // https://github.com/thoughtbot/TBAnnotationClustering/blob/master/TBAnnotationClustering/TBCoordinateQuadTree.m
-    
-    // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
-    
-   
 }
 
 
@@ -103,7 +96,7 @@
 }
 
 
-// debug method
+// Main debug method
 - (void) test{
     
     NSError *error;
@@ -141,40 +134,40 @@
         NSString *comment =  s[20]; // Restrictions
         
         NSString *details =  s[32]; // more on the restrictions
-
+        
+        int startHour = -100;
+        
         if( s[33] != [NSNull null]){
-            int startHour =  (int) [s[33] integerValue];
+            startHour =  (int) [s[33] integerValue];
         }else{
-            
-            // ~ 200-300 unlabeled but HAS restrictions
-            // id startHour = s[33]; //-10; //?
+            // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
             // NSLog(@"%@",startHour);
         }
+        int endHour = -100;
+        
         if( s[33] != [NSNull null]){
-            int endHour =  (int) [s[33] integerValue];
+            endHour =  (int) [s[33] integerValue];
         }else{
             
         }
         
+        int startDay = -100;
         if( s[30] != [NSNull null]){
-            int startDay =  (int) [s[30] integerValue];
+            startDay =  (int) [s[30] integerValue];
         }else{
             
         }
-        
+        int endDay = -100;
         if( s[31] != [NSNull null]){
-            int endDay =  (int) [s[31] integerValue];
+            endDay =  (int) [s[31] integerValue];
         }else{
             
         }
         
-        //int startHour =  (int) [s[33] integerValue]; // Start time for Restrictions
-        //int endHour =  (int) [s[34] integerValue]; //(int) [[s objectForKey:@"starttime"] integerValue];  // End Time
-        /*
-        //30/31
-        int startDay =  (int) [[s objectForKey:@"startday"] integerValue];  //
-        int endDay =  (int) [[s objectForKey:@"endday"] integerValue];      //
-        */
+        // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
+        // Restrictions have startDay/Hour and endDay/Hour and custom Text
+        
+        //
         
         Restrictions *rest = [[Restrictions alloc] init];
         rest.title = title;
@@ -205,10 +198,9 @@
  , [ 80235, "F301808D-EC9D-4711-9E2E-A360096ED708", 80235, 1285278966, "386118", 1285278966, "386118", null, "80235", "531546.0", "20", "2149", "25117", "260", "-17", "SGN-139286", "01-RS", "R7-NP", "[RED SLASHED CIRCLE] P", "PNP", "No Parking, but \"standing\" allowed", "15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
  */
 
-// zoom level method
 
 
-
+// http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
 - (NSInteger)hourComparator {//:(NSInteger)startHour {
 
@@ -223,13 +215,8 @@
     int minute =[dateComps minute];
     int hour = [dateComps hour];
     NSLog(@"%d,%d",hour,minute);
+
     
-    //NSLog(@"%@",localDate);
-    
-    
-    // get current time as an int
-    // http://stackoverflow.com/questions/3385552/nsdatecomponents-componentsfromdate-and-time-zones
-    // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
     
     NSLog(@"Hour comparator called");
     NSInteger start = 0; // start hour
@@ -263,14 +250,10 @@
     
 }
 
-
+// pass in todays date
 - (NSInteger) dayComparator{ // if start date exists compare it
-    
-    //http://stackoverflow.com/questions/4269093/how-do-i-get-the-day-of-the-week-in-objective-c
-    
-    
+
     //get todays date
-    
     
     return 0;
 }
@@ -282,9 +265,6 @@
 }
 
 
--(void) h{
-    
-}
 
 // This method will add annotations to map
 // addAnnotations, built in
@@ -295,18 +275,13 @@
 //removeAnnotations
 
 
-
 // need to make the annotations in something I can clear
 
 
-// BROKE EVERYTHING earlier!
+
 // Source for code http://www.appcoda.com/ios-programming-101-drop-a-pin-on-map-with-mapkit-api/
 // suppose to zoom into location
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-}
+// other method
 
 
 
