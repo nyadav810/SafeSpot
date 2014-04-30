@@ -75,17 +75,13 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
     
-    
-    [self test];
-    [self hourComparator:2 hour:2];
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    
-    int weekday = [comps weekday];
-    NSLog(@"%d",weekday);
+
     NSLog(@" zoom level is ");
     self.zoomLevel;
+    
+    [self test];
+
+    
     
 }
 
@@ -113,7 +109,25 @@
     }
     
     NSArray *signs = [rawSigns objectForKey:@"data"];
-
+    
+    //should pass this in since its probably huge
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    // NSLog(@"%d,%d,%d,%d",hour,minute,start,endHour);
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    
+    int weekday = (int) [comps weekday];
+    
+    NSInteger current = (hour * 100) + minute;
+    //NSLog(@"%d",current);
+    
+    
     int numberOfPins = 0;
     int totalSigns = 0;
     
@@ -168,7 +182,7 @@
         // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
         // Restrictions have startDay/Hour and endDay/Hour and custom Text
         
-        //
+        
         
         Restrictions *rest = [[Restrictions alloc] init];
         rest.title = title;
@@ -178,7 +192,9 @@
         CLLocationCoordinate2D coordinate = [location coordinate];
         rest.location = location;
         rest.coordinate = coordinate;
-        
+        NSLog(@"%d,%d", startDay, endDay);
+
+        [self dayComparator:startDay end:endDay today:current];
        
         totalSigns++;
         if(numberOfPins < 100){
@@ -186,7 +202,7 @@
             // [self mapView addAnnotation
             
             //day compare first, if its okay check hour comparator
-            [self hourComparator:startHour hour:endHour];
+            [self hourComparator:startHour hour:endHour ct:current];
             //depending on answer change pin color
             
             [self.mapView addAnnotation:rest];
@@ -207,22 +223,8 @@
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
-- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour{ //add param for current
+- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{ //add param for current
 
-    //should pass this in since its probably huge
-    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
-                                                  fromDate: [NSDate date]];
-    // Then use it
-    int minute = (int) [dateComps minute];
-    int hour = (int) [dateComps hour];
-    
-    // NSLog(@"%d,%d,%d,%d",hour,minute,start,endHour);
-    
-    // NSLog(@"Hour comparator called");
-    
-    NSInteger current = (hour * 100) + minute;
-    //NSLog(@"%d",current);
     
     //have to change start/end if its -100 aka null
     if(endHour < current){ //its after the restriction, maybe && statement for start..?
@@ -248,10 +250,12 @@
 
 
 // pass in todays date
-- (NSInteger) dayComparator:(NSUInteger)startDay start:(NSUInteger)endDay  end:(NSUInteger)currentDay{ // if start date exists compare it
+- (NSInteger) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
     
     if(currentDay < startDay || currentDay > endDay ){
         // true?
+        //NSLog(@"%d,%d", startDay, endDay);
+        NSLog(@" today is %d", currentDay);
         
     }
     //get todays date
