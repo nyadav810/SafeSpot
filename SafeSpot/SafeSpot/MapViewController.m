@@ -16,6 +16,7 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
+#import <CoreData/CoreData.h>
 
 @interface MapViewController ()
 
@@ -298,6 +299,7 @@
 // need to make the annotations in something I can clear
 
 
+// BROKE EVERYTHING earlier!
 // Source for code http://www.appcoda.com/ios-programming-101-drop-a-pin-on-map-with-mapkit-api/
 // suppose to zoom into location
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
