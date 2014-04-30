@@ -84,7 +84,8 @@
     
     int weekday = [comps weekday];
     NSLog(@"%d",weekday);
-
+    NSLog(@" zoom level is ");
+    self.zoomLevel;
     
 }
 
@@ -243,7 +244,13 @@
 
 
 -(NSInteger) zoomLevel{
+    double scale = _mapView.bounds.size.width / _mapView.visibleMapRect.size.width;
+    double totalTilesAtMaxZoom = MKMapSizeWorld.width / 256.0;
+    NSInteger zoomLevelAtMaxZoom = log2(totalTilesAtMaxZoom);
+    NSInteger zoomLevel = MAX(0, zoomLevelAtMaxZoom + floor(log2f(scale) + 0.5));
     
+    NSLog(@"%d",zoomLevel);
+
     return 0;
 }
 
