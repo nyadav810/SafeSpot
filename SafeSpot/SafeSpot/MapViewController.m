@@ -304,6 +304,7 @@
 
 
 
+
 // This method will add annotations to map
 // addAnnotations, built in
 
@@ -342,9 +343,39 @@
 }
 */
 
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    [[NSOperationQueue new] addOperationWithBlock:^{
+        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+        NSLog(@"%f",zoomScale);
+        // NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
+        
+        // [self updateMapViewAnnotationsWithAnnotations:annotations];
+    }];
+}
 
-- (IBAction)centerMapOnUserButtonClicked:(id)sender {
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+- (void)updateMapViewAnnotationsWithAnnotations:(NSArray *)annotations
+{
+    NSMutableSet *before = [NSMutableSet setWithArray:self.mapView.annotations];
+    NSSet *after = [NSSet setWithArray:annotations];
+    
+    // Annotations circled in blue shared by both sets
+    NSMutableSet *toKeep = [NSMutableSet setWithSet:before];
+    [toKeep intersectSet:after];
+    
+    // Annotations circled in green
+    NSMutableSet *toAdd = [NSMutableSet setWithSet:after];
+    [toAdd minusSet:toKeep];
+    
+    // Annotations circled in red
+    NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
+    [toRemove minusSet:after];
+    
+    // These two methods must be called on the main thread
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.mapView addAnnotations:[toAdd allObjects]];
+        [self.mapView removeAnnotations:[toRemove allObjects]];
+    }];
 }
 
 
