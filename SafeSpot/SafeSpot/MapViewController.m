@@ -64,8 +64,9 @@
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
     
     //NSParameterAssert(self.managedObjectContext);
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    self.datastore = appDelegate.datastore;
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.locationManager = self.appDelegate.locationManager;
+    self.datastore = self.appDelegate.datastore;
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
@@ -376,6 +377,29 @@
         [self.mapView addAnnotations:[toAdd allObjects]];
         [self.mapView removeAnnotations:[toRemove allObjects]];
     }];
+}
+
+// Centers map on user's location
+- (IBAction)centerMapOnUserButtonClicked:(id)sender
+{
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = kCLDistanceFilterNone;
+        [self.locationManager startUpdatingLocation];
+    }
+    CLLocation *location = [self.locationManager location];
+    CLLocationCoordinate2D coordinate = [location coordinate];
+    MKCoordinateRegion region;
+    region.center = coordinate;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.0125;
+    span.longitudeDelta = 0.0125;
+    region.span = span;
+    [self.mapView setRegion:region animated:YES];
+    
+    self.mapView.showsUserLocation = YES;
 }
 
 

@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "AppDelegate.h"
 #import "Datastore.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate>
 
+
+@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) Datastore *datastore;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 - (IBAction)centerMapOnUserButtonClicked:(id)sender;
