@@ -341,12 +341,16 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     [[NSOperationQueue new] addOperationWithBlock:^{
-        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
-        NSLog(@"%f",zoomScale);
+//        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+        NSLog(@"%f",[self zoomScale]);
         // NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
         
         // [self updateMapViewAnnotationsWithAnnotations:annotations];
     }];
+}
+
+- (double)zoomScale {
+    return self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
 }
 
 - (void)updateMapViewAnnotationsWithAnnotations:(NSArray *)annotations
@@ -387,9 +391,12 @@
     CLLocationCoordinate2D coordinate = [location coordinate];
     MKCoordinateRegion region;
     region.center = coordinate;
+    
     MKCoordinateSpan span;
-    span.latitudeDelta = 0.0125;
-    span.longitudeDelta = 0.0125;
+    if ([self zoomScale] < 0.032809) {      // if zoomed out
+        span.latitudeDelta = 0.0125;
+        span.longitudeDelta = 0.0125;
+    }
     region.span = span;
     [self.mapView setRegion:region animated:YES];
     
