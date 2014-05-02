@@ -22,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 - (IBAction)centerMapOnUserButtonClicked:(id)sender;
 //- (NSInteger)hourConversion: (NSInteger)startHour;
+@property (weak, nonatomic) IBOutlet UIButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *parkButton;
 
 @end
