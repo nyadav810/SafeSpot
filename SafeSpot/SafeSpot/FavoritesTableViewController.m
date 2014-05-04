@@ -96,6 +96,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [self.favoritesList.signs removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -125,8 +126,7 @@
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailViewController *destination = [segue destinationViewController];
-        Restrictions *thisRestriction = self.favoritesList.signs[indexPath.row];
-        destination.restriction = thisRestriction;
+        destination.restriction = self.favoritesList.signs[indexPath.row];
     }
     
 }

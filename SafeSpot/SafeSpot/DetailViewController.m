@@ -39,7 +39,6 @@
     
     if (self.restriction)
     {
-        NSLog(@"Yay 2!");
         self.detailTitle.title = self.restriction.title;
     }
 }
