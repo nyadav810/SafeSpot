@@ -36,7 +36,7 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
-#import <CoreData/CoreData.h>
+//#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
 
@@ -403,5 +403,17 @@
     self.mapView.showsUserLocation = YES;
 }
 
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                         message:@"Failed to get your location"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+    [errorAlert show];
+}
 
 @end

@@ -7,6 +7,11 @@
 //
 
 #import "FavoritesTableViewController.h"
+#import "DetailViewController.h"
+#import "AppDelegate.h"
+#import "FavoritesList.h"
+#import "FavoritesTableViewCell.h"
+#import "Restrictions.h"
 
 @interface FavoritesTableViewController ()
 
@@ -28,10 +33,23 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.favoritesList = [[FavoritesList alloc] init];
+    [self.favoritesList fakeSomeSigns];
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self reloadInputViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,23 +62,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.favoritesList.signs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavoriteCell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"FavoriteCell";
+    FavoritesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    Restrictions *thisRestriction = self.favoritesList.signs[indexPath.row];
+    cell.titleLabel.text = thisRestriction.title;
     
     return cell;
 }
@@ -102,6 +121,14 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"detailSegue"])
+    {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DetailViewController *destination = [segue destinationViewController];
+        Restrictions *thisRestriction = self.favoritesList.signs[indexPath.row];
+        destination.restriction = thisRestriction;
+    }
+    
 }
 
 @end

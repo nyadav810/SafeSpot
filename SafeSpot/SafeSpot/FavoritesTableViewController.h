@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FavoritesTableViewController : UITableViewController
+@class AppDelegate, FavoritesList;
+
+@interface FavoritesTableViewController : UITableViewController <UITableViewDataSource,UITableViewDelegate>
+
+@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) FavoritesList *favoritesList;
 
 @end

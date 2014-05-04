@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import "Datastore.h"
+
+@class AppDelegate;
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate>
 
