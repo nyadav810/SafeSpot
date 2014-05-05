@@ -31,7 +31,10 @@
 // https://github.com/thoughtbot/TBAnnotationClustering/blob/master/TBAnnotationClustering/TBCoordinateQuadTree.m
 // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
 
-
+// To Do: Add non retina splash screen
+// combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
+// Find way to update restrictions, maybe with a button
+// 
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -126,6 +129,8 @@
     NSInteger current = (hour * 100) + minute;
     NSLog(@"%d",weekday);
     
+    NSString *canPark = @"green";
+    NSString *cantPark = @"red";
     
     int numberOfPins = 0;
     int totalSigns = 0;
@@ -134,6 +139,9 @@
         
         float latitude = (float) [s[35] floatValue];
         float longitude = (float) [s[36]floatValue];
+        
+        // 79515 sets it to 1-1 ._.
+        // ~700, might need to find a hotfix/hard code those points in?
         
         NSString *title =  s[21]; // Street Names
         //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
@@ -200,16 +208,27 @@
        
         
         totalSigns++;
-        if(numberOfPins < 100){
+        if(numberOfPins < 400){
             
             // [self mapView addAnnotation
             
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
-            [self hourComparator:startHour hour:endHour ct:current];
+            
+            
+            if([self dayComparator:startDay end:endDay today:weekday] ||
+               [self hourComparator:startHour hour:endHour ct:current]){ // make them return boolean
+                 [self.mapView addAnnotation:rest];
+                
+                NSLog(@"green ,%d,%d", startHour,endHour);
+            }else{
+                //[self.mapView addAnnotation:rest]; // cant park so red
+                //NSLog(@"Red cant park ,%d,%d", startHour,endHour);
+            }
+
             //depending on answer change pin color
             
-            [self.mapView addAnnotation:rest];
+            // pass in color
             //[self.mapView addAnnotation: self.mapView viewForAnnotation: rest pin:details ]; // all are adding to [0,0] :( problem with restrictions
             numberOfPins++;
         }
@@ -227,26 +246,30 @@
 
 // http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
 // This method will compares current time to start/end time
-- (NSInteger)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{ //add param for current
+- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{ //add param for current
 
     
     //have to change start/end if its -100 aka null
+    if(current == -100){
+        return false;
+    }
+    
     if(endHour < current){ //its after the restriction, maybe && statement for start..?
         //cant park
         // NSLog(@"test can park yay!");
         //return false;
         
-        //
+        return true;
     } else if(current >= start){ // its its after restriction
         //can park
         //NSLog(@"test hours cant park finish");
         
         // NSLog(@"%d,%d",start,endHour);
         
-        // return true; boolean
+        return true;
     }
     
-    return 0;
+    return false; //will reach?
 }
 
 // Possibly debug current hour
@@ -255,19 +278,24 @@
 
 
 // pass in todays date
-- (NSInteger) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
+- (Boolean) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
     
-    NSLog(@"%d,%d", startDay, endDay);
+    if(currentDay == -100){
+        return false;
+    }
+    
+    //have to change start/end if its -100 aka null
     if(currentDay < startDay && currentDay > endDay ){
         // true?
         //
         
         NSLog(@"%d", currentDay);
+        return true;
         
     }
     //get todays date
     
-    return 0;
+    return false;
 }
 
 
