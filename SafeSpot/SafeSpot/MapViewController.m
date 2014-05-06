@@ -34,7 +34,7 @@
 // To Do: Add non retina splash screen
 // combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
 // Find way to update restrictions, maybe with a button
-// 
+// add quad tree coord
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -76,11 +76,10 @@
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = (int) [comps weekday];
-    //NSLog(@"%d",weekday); // pass it in..? it kept breaking
 
     NSLog(@" zoom level is ");
-    self.zoomLevel;
     
+    //self.zoomLevel;
     [self test];
 
     
@@ -218,7 +217,8 @@
             
             if([self dayComparator:startDay end:endDay today:weekday] ||
                [self hourComparator:startHour hour:endHour ct:current]){ // make them return boolean
-                 [self.mapView addAnnotation:rest];
+                
+                [self.mapView addAnnotation:rest];
                 
                 NSLog(@"green ,%d,%d", startHour,endHour);
             }else{
@@ -305,10 +305,12 @@
     NSInteger zoomLevelAtMaxZoom = log2(totalTilesAtMaxZoom);
     NSInteger zoomLevel = MAX(0, zoomLevelAtMaxZoom + floor(log2f(scale) + 0.5));
     
-    // NSLog(@"%d",zoomLevel);
+    NSLog(@"%d",zoomLevel);
     
     switch (zoomLevel) {
         case 13:
+            // [self test];
+            return  0;
         case 14:
         case 15:
             return 64;
@@ -371,6 +373,7 @@
     [[NSOperationQueue new] addOperationWithBlock:^{
 //        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
         NSLog(@"%f",[self zoomScale]);
+        [self zoomLevel];
         // NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
         
         // [self updateMapViewAnnotationsWithAnnotations:annotations];
