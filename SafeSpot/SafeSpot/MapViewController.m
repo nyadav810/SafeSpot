@@ -66,9 +66,9 @@
     self.mapView.delegate = self;
     
     [self.view addSubview:self.mapView];
-    
+    self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
-    self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init];
+  
 
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
@@ -122,12 +122,6 @@
     int current = (hour * 100) + minute;
 
     
-    NSString *canPark = @"green";
-    NSString *cantPark = @"red";
-    
-    int numberOfPins = 0;
-    int totalSigns = 0;
-    
     // call build tree
     
     [self.coordinateQuadTree buildTree:signs withTime:current withDay:weekday]; // make it pass in an array
@@ -135,6 +129,13 @@
     
     
     /*
+     
+     NSString *canPark = @"green";
+     NSString *cantPark = @"red";
+     
+     int numberOfPins = 0;
+     int totalSigns = 0;
+     
     for(NSArray *s in signs){
         
         float latitude = (float) [s[35] floatValue];
@@ -376,7 +377,8 @@
     [[NSOperationQueue new] addOperationWithBlock:^{
 //        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
-        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
+        
+        //NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
         
         //[self updateMapViewAnnotationsWithAnnotations:annotations];
     }];

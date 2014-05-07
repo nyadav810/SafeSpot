@@ -205,7 +205,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             //NSLog(@"%f,%f",latitude,longitude);
             if(i < 300){
-                [self.mapView addAnnotation:rest];
+                [self.mapView addAnnotation:rest]; // connect them somhow ?
                 NSLog(@"%f",latitude);
             
             }
