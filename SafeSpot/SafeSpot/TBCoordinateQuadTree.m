@@ -205,14 +205,14 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             //NSLog(@"%f,%f",latitude,longitude);
             if(i < 300){
-                //[self.mapView addAnnotation:rest];
+                [self.mapView addAnnotation:rest];
                 NSLog(@"%f",latitude);
             
             }
             
         }
         
-        
+        NSLog(@"%d",i);
         
         
         TBBoundingBox world = TBBoundingBoxMake(19, -166, 72, -53);
@@ -313,12 +313,12 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             if (count == 1) {
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX, totalY);
-                /*
-                TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
-                annotation.title = [names lastObject];
-                annotation.subtitle = [phoneNumbers lastObject];
-                [clusteredAnnotations addObject:annotation];
-                 */
+                
+                //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
+                //annotation.title = [names lastObject];
+                //annotation.subtitle = [phoneNumbers lastObject];
+                //[clusteredAnnotations addObject:annotation];
+                
             }
             
             if (count > 1) {

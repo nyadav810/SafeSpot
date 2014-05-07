@@ -7,12 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "MapViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.locationManager = [[CLLocationManager alloc] init];
+    //MapViewController *mapController = [[MapViewController alloc] init];
+    //[self.window setRootViewController:mapController];
+    
     return YES;
 }
 							

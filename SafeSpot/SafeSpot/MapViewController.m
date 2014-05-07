@@ -62,7 +62,7 @@
     self.searchBar.delegate = self;
     
     
-        self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+       // self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
     
     [self.view addSubview:self.mapView];
@@ -131,7 +131,7 @@
     // call build tree
     
     [self.coordinateQuadTree buildTree:signs withTime:current withDay:weekday]; // make it pass in an array
-    []
+    
     
     
     /*
@@ -375,11 +375,10 @@
 {
     [[NSOperationQueue new] addOperationWithBlock:^{
 //        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
-        NSLog(@"%f",[self zoomScale]);
-        [self zoomLevel];
-        // NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
+        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
         
-        // [self updateMapViewAnnotationsWithAnnotations:annotations];
+        //[self updateMapViewAnnotationsWithAnnotations:annotations];
     }];
 }
 
