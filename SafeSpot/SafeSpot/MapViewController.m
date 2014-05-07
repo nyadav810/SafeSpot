@@ -69,17 +69,10 @@
     self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
   
-
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    
-    int weekday = (int) [comps weekday];
-
-    NSLog(@" zoom level is ");
-
     [self test];
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -91,7 +84,7 @@
 // Main debug method
 - (void) test{
    
-    
+    /*
     NSError *error;
     
     // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json 
@@ -105,6 +98,8 @@
     }
     
     NSArray *signs = [rawSigns objectForKey:@"data"];
+    
+    */
     
     //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -124,7 +119,7 @@
     
     // call build tree
     
-    [self.coordinateQuadTree buildTree:signs withTime:current withDay:weekday]; // make it pass in an array
+    [self.coordinateQuadTree buildTree:current withDay:weekday]; // make it pass in an array
     
     
     
@@ -302,34 +297,6 @@
     return false;
 }
 
-
--(NSInteger) zoomLevel{
-    double scale = _mapView.bounds.size.width / _mapView.visibleMapRect.size.width;
-    double totalTilesAtMaxZoom = MKMapSizeWorld.width / 256.0;
-    NSInteger zoomLevelAtMaxZoom = log2(totalTilesAtMaxZoom);
-    NSInteger zoomLevel = MAX(0, zoomLevelAtMaxZoom + floor(log2f(scale) + 0.5));
-    
-    NSLog(@"%d",zoomLevel);
-    
-    switch (zoomLevel) {
-        case 13:
-            // [self test];
-            return  0;
-        case 14:
-        case 15:
-            return 64;
-        case 16:
-        case 17:
-        case 18:
-            return 32;
-        case 19:
-            return 16;
-            
-        default:
-            return 88;
-    }
-    return 0;
-}
 
 
 

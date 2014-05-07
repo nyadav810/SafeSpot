@@ -23,7 +23,7 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
 
     float latitude = (float) [s[35] floatValue];
     float longitude = (float) [s[36]floatValue];
-    
+    NSString *sign;
     TBHotelInfo* hotelInfo = malloc(sizeof(TBHotelInfo));
     
     NSString *hotelName =  s[21];;
@@ -156,7 +156,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 @implementation TBCoordinateQuadTree
 
-- (void)buildTree:(NSArray *)signs withTime:(int)time withDay:(int)day
+- (void)buildTree:(int)time withDay:(int)day
 {
     @autoreleasepool {
         NSLog(@"RAWR i am a tree calling yo");
@@ -183,9 +183,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             dataArray[i] = TBDataFromLine(s);
             float latitude = dataArray[i].x;
             float longitude = dataArray[i].y;
+            //maybe have start/end hour/day as a int
             
-            
-            //NSLog(@"%@",dataArray[i].data);
             
             Restrictions *rest = [[Restrictions alloc] init];
             rest.title = @"i am a title idk";//String) dataArray[i].data;
@@ -196,16 +195,12 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             CLLocationCoordinate2D coordinate = [location coordinate];
             rest.location = location;
             rest.coordinate = coordinate;
-            
-            
-            // [self mapView addAnnotation
-            
+
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
-            
-            //NSLog(@"%f,%f",latitude,longitude);
+
             if(i < 300){
-                [self.mapView addAnnotation:rest]; // connect them somhow ?
+                [self.mapView addAnnotation:rest];
                 NSLog(@"%f",latitude);
             
             }
@@ -222,7 +217,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
     }
 }
 
-- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{ //add param for current
+- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
     
     
     //have to change start/end if its -100 aka null
@@ -230,22 +225,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         return false;
     }
     
-    if(endHour < current){ //its after the restriction, maybe && statement for start..?
-        //cant park
-        // NSLog(@"test can park yay!");
-        //return false;
-        
+    if(endHour < current){
         return true;
     } else if(current >= start){ // its its after restriction
-        //can park
-        //NSLog(@"test hours cant park finish");
-        
-        // NSLog(@"%d,%d",start,endHour);
-        
         return true;
     }
-    
-    return false; //will reach?
+
+    return false;
 }
 
 // Possibly debug current hour
@@ -262,15 +248,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
     
     //have to change start/end if its -100 aka null
     if(currentDay < startDay && currentDay > endDay ){
-        // true?
-        //
-        
         NSLog(@"%d", currentDay);
         return true;
-        
+
     }
-    //get todays date
-    
+
     return false;
 }
 
