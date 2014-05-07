@@ -10,7 +10,6 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 //#import "AppDelegate.h"
-#import "Datastore.h"
 
 @class AppDelegate;
 
@@ -18,7 +17,6 @@
 
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) Datastore *datastore;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

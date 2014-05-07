@@ -47,11 +47,6 @@
 
 @implementation MapViewController
 
-- (NSManagedObjectContext *)managedObjectContext
-{
-    return self.datastore.managedObjectContext;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,15 +58,9 @@
     //NSParameterAssert(self.managedObjectContext);
     self.appDelegate = [[UIApplication sharedApplication] delegate];
     self.locationManager = self.appDelegate.locationManager;
-    self.datastore = self.appDelegate.datastore;
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    
-    [self.datastore updateFromServerWithCompletion:^{
-        NSLog(@"datastore update complete");
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
