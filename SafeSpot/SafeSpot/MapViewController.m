@@ -55,11 +55,11 @@
     UIColor *color = [UIColor colorWithRed:255/255.0f green:94/255.0f blue:58/255.0f alpha:1.0f];
     [self.tabBarController.tabBar setSelectedImageTintColor:color];
     
-    //NSParameterAssert(self.managedObjectContext);
     self.appDelegate = [[UIApplication sharedApplication] delegate];
     self.locationManager = self.appDelegate.locationManager;
-    
-    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    self.locationManager.delegate = self;
+    self.searchBar.delegate = self;
+    self.mapView.delegate = self;
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
@@ -67,14 +67,9 @@
     int weekday = (int) [comps weekday];
 
     NSLog(@" zoom level is ");
-    
-    //self.zoomLevel;
+
     [self test];
-
-    
-    
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -397,26 +392,44 @@
     }];
 }
 
-// Centers map on user's location
-- (IBAction)centerMapOnUserButtonClicked:(id)sender
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    if ([CLLocationManager locationServicesEnabled])
-    {
-        self.locationManager.delegate = self;
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        self.locationManager.distanceFilter = kCLDistanceFilterNone;
-        [self.locationManager startUpdatingLocation];
-    }
-    CLLocation *location = [self.locationManager location];
+    [self.nav setLeftBarButtonItem:nil animated:YES];
+    [self.nav setRightBarButtonItem:nil animated:YES];
+    [self.nav setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didClickCancelButton:)]];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self.nav setLeftBarButtonItem:self.locationButton animated:YES];
+    [self.nav setRightBarButtonItem:self.parkButton animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar endEditing:YES];
+}
+
+#pragma mark - Button actions
+
+- (IBAction)didClickCancelButton:(id)sender
+{
+    [self searchBarCancelButtonClicked:self.searchBar];
+}
+
+- (IBAction)locationButtonClicked:(id)sender
+{
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager startUpdatingLocation];
+    CLLocation *location  = [self.locationManager location];
     CLLocationCoordinate2D coordinate = [location coordinate];
     MKCoordinateRegion region;
     region.center = coordinate;
-    
     MKCoordinateSpan span;
-    if ([self zoomScale] < 0.032809) {      // if zoomed out
-        span.latitudeDelta = 0.0125;
-        span.longitudeDelta = 0.0125;
-    }
+    span.latitudeDelta = 0.0125;
+    span.longitudeDelta = 0.0125;
     region.span = span;
     [self.mapView setRegion:region animated:YES];
     
@@ -428,12 +441,18 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                         message:@"Failed to get your location"
-                                                        delegate:nil
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    //NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+    if (currentLocation != nil) {
+    }
 }
 
 @end

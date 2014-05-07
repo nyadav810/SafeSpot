@@ -14,15 +14,17 @@
 @class AppDelegate;
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate>
-
-
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-- (IBAction)centerMapOnUserButtonClicked:(id)sender;
 //- (NSInteger)hourConversion: (NSInteger)startHour;
-@property (weak, nonatomic) IBOutlet UIButton *locationButton;
-@property (weak, nonatomic) IBOutlet UIButton *parkButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *nav;                 // <-- THATS ME
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *locationButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *parkButton;
+- (IBAction)locationButtonClicked:(id)sender;
 
 @end
