@@ -60,7 +60,16 @@
     self.locationManager = self.appDelegate.locationManager;
     self.locationManager.delegate = self;
     self.searchBar.delegate = self;
+    
+    
+        self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
+    
+    [self.view addSubview:self.mapView];
+    
+    self.coordinateQuadTree.mapView = self.mapView;
+    self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init];
+
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
@@ -81,7 +90,7 @@
 
 // Main debug method
 - (void) test{
-    [self.coordinateQuadTree buildTree]; // make it pass in an array
+   
     
     NSError *error;
     
@@ -110,9 +119,8 @@
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = (int) [comps weekday];
-    
-    NSInteger current = (hour * 100) + minute;
-    NSLog(@"%d",weekday);
+    int current = (hour * 100) + minute;
+
     
     NSString *canPark = @"green";
     NSString *cantPark = @"red";
@@ -122,6 +130,11 @@
     
     // call build tree
     
+    [self.coordinateQuadTree buildTree:signs withTime:current withDay:weekday]; // make it pass in an array
+    []
+    
+    
+    /*
     for(NSArray *s in signs){
         
         float latitude = (float) [s[35] floatValue];
@@ -221,6 +234,8 @@
             numberOfPins++;
         }
     }
+     
+     */
 
 
 }

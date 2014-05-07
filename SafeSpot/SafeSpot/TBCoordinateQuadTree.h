@@ -15,7 +15,7 @@
 @property (assign, nonatomic) TBQuadTreeNode* root;
 @property (strong, nonatomic) MKMapView *mapView;
 
-- (void)buildTree;
+- (void)buildTree:(NSArray *)signs withTime:(int)time withDay:(int)day;
 
 - (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale;
 
