@@ -39,6 +39,7 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
+#import "TBCoordinateQuadTree.h"
 //#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
@@ -80,6 +81,7 @@
 
 // Main debug method
 - (void) test{
+    [self.coordinateQuadTree buildTree]; // make it pass in an array
     
     NSError *error;
     
@@ -117,6 +119,8 @@
     
     int numberOfPins = 0;
     int totalSigns = 0;
+    
+    // call build tree
     
     for(NSArray *s in signs){
         

@@ -16,9 +16,11 @@ typedef struct TBHotelInfo {
     char* hotelPhoneNumber;
 } TBHotelInfo;
 
-TBQuadTreeNodeData TBDataFromLine(NSString *line)
+
+// pass in array
+TBQuadTreeNodeData TBDataFromLine(NSArray *components)
 {
-    NSArray *components = [line componentsSeparatedByString:@","];
+    
     double latitude = [components[1] doubleValue];
     double longitude = [components[0] doubleValue];
     
@@ -26,11 +28,17 @@ TBQuadTreeNodeData TBDataFromLine(NSString *line)
     
     NSString *hotelName = [components[2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     hotelInfo->hotelName = malloc(sizeof(char) * hotelName.length + 1);
+    
     strncpy(hotelInfo->hotelName, [hotelName UTF8String], hotelName.length + 1);
     
     NSString *hotelPhoneNumber = [[components lastObject] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
     hotelInfo->hotelPhoneNumber = malloc(sizeof(char) * hotelPhoneNumber.length + 1);
     strncpy(hotelInfo->hotelPhoneNumber, [hotelPhoneNumber UTF8String], hotelPhoneNumber.length + 1);
+    
+    
+    
+    
     
     return TBQuadTreeNodeDataMake(latitude, longitude, hotelInfo);
 }
@@ -92,20 +100,48 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 - (void)buildTree
 {
     @autoreleasepool {
-        NSString *data = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"USA-HotelMotel" ofType:@"csv"] encoding:NSASCIIStringEncoding error:nil];
-        NSArray *lines = [data componentsSeparatedByString:@"\n"];
         
-        NSInteger count = lines.count - 1;
+        NSError *error;
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rows" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
         
-        TBQuadTreeNodeData *dataArray = malloc(sizeof(TBQuadTreeNodeData) * count);
-        for (NSInteger i = 0; i < count; i++) {
-            dataArray[i] = TBDataFromLine(lines[i]);
+        //NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *rawSigns = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (!rawSigns) {
+            NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
         }
         
+        NSArray *signs = [rawSigns objectForKey:@"data"];
+        
+        NSInteger count = signs.count - 1; //might not need -1
+        
+        TBQuadTreeNodeData *dataArray = malloc(sizeof(TBQuadTreeNodeData) * count);
+        
+        for(NSArray *s in signs){
+        
+            
+        
+        }
+        
+        
+        
+        
+        
+        // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
+     
+
+        
+        
         TBBoundingBox world = TBBoundingBoxMake(19, -166, 72, -53);
+        // not sure what the bounding box does :(
+        
         _root = TBQuadTreeBuildWithData(dataArray, count, world, 4);
     }
 }
+
+
+
+
 
 - (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale
 {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "TBCoordinateQuadTree.h"
 //#import "AppDelegate.h"
 
 @class AppDelegate;
@@ -20,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 //- (NSInteger)hourConversion: (NSInteger)startHour;
 @property (weak, nonatomic) IBOutlet UINavigationItem *nav;                 // <-- THATS ME
-
+@property (strong, nonatomic) TBCoordinateQuadTree *coordinateQuadTree;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *locationButton;
