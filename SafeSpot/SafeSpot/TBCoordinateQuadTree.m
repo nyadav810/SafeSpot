@@ -14,6 +14,8 @@
 typedef struct TBHotelInfo {
     char* hotelName;
     char* hotelPhoneNumber;
+    //int hour;
+    
 } TBHotelInfo;
 
 
@@ -24,9 +26,10 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     float latitude = (float) [s[35] floatValue];
     float longitude = (float) [s[36]floatValue];
     NSString *sign;
+    
     TBHotelInfo* hotelInfo = malloc(sizeof(TBHotelInfo));
     
-    NSString *hotelName =  s[21];;
+    NSString *hotelName =  s[21];
     
     hotelInfo->hotelName = malloc(sizeof(char) * hotelName.length + 1);
     
@@ -36,8 +39,7 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     hotelInfo->hotelPhoneNumber = malloc(sizeof(char) * hotelPhoneNumber.length + 1);
     strncpy(hotelInfo->hotelPhoneNumber, [hotelPhoneNumber UTF8String], hotelPhoneNumber.length + 1);
-    
-    
+
 
     
     // 79515 sets it to 1-1 ._.
@@ -177,6 +179,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         NSInteger count = signs.count - 1; //might not need -1
         
         TBQuadTreeNodeData *dataArray = malloc(sizeof(TBQuadTreeNodeData) * count);
+        
+        // maybe have an array of restrictions?
+        
         int i = 0;
         for(NSArray *s in signs){
             i++; //?
@@ -185,10 +190,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             float longitude = dataArray[i].y;
             //maybe have start/end hour/day as a int
             
+            TBHotelInfo hotelInfo = *(TBHotelInfo *)dataArray[i].data;
+            [NSString stringWithFormat:@"%s", hotelInfo.hotelName];
+            [NSString stringWithFormat:@"%s", hotelInfo.hotelPhoneNumber];
             
             Restrictions *rest = [[Restrictions alloc] init];
-            rest.title = @"i am a title idk";//String) dataArray[i].data;
-            rest.comment = @"";
+            rest.title =  [NSString stringWithFormat:@"%s", hotelInfo.hotelName];
+            rest.comment = [NSString stringWithFormat:@"%s", hotelInfo.hotelPhoneNumber];
             
             CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
            
@@ -199,7 +207,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
 
-            if(i < 300){
+            if(i < 700){
                 [self.mapView addAnnotation:rest];
                 NSLog(@"%f",latitude);
             
