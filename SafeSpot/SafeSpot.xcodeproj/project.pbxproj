@@ -22,6 +22,7 @@
 		014B585618C908A0005BCBE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 014B583518C908A0005BCBE2 /* UIKit.framework */; };
 		014B585E18C908A0005BCBE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 014B585C18C908A0005BCBE2 /* InfoPlist.strings */; };
 		014B586018C908A0005BCBE2 /* SafeSpotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B585F18C908A0005BCBE2 /* SafeSpotTests.m */; };
+		01C9060E191B79EB008FCE04 /* ParkCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C9060D191B79EB008FCE04 /* ParkCarViewController.m */; };
 		01D4D7F918F64FEC0009C8AE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4D7F818F64FEC0009C8AE /* MapKit.framework */; };
 		01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */; };
 		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
@@ -67,6 +68,8 @@
 		014B585D18C908A0005BCBE2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		014B585F18C908A0005BCBE2 /* SafeSpotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafeSpotTests.m; sourceTree = "<group>"; };
 		014B586918C90918005BCBE2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		01C9060C191B79EB008FCE04 /* ParkCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkCarViewController.h; sourceTree = "<group>"; };
+		01C9060D191B79EB008FCE04 /* ParkCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkCarViewController.m; sourceTree = "<group>"; };
 		01D4D7F818F64FEC0009C8AE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		01D4D7FA18F66F250009C8AE /* FavoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesTableViewController.h; sourceTree = "<group>"; };
 		01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesTableViewController.m; sourceTree = "<group>"; };
@@ -201,6 +204,8 @@
 				014B584718C908A0005BCBE2 /* MapViewController.m */,
 				01D4D7FD18F67B780009C8AE /* NearbyTableViewController.h */,
 				01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */,
+				01C9060C191B79EB008FCE04 /* ParkCarViewController.h */,
+				01C9060D191B79EB008FCE04 /* ParkCarViewController.m */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -321,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */,
+				01C9060E191B79EB008FCE04 /* ParkCarViewController.m in Sources */,
 				49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */,
 				014B584218C908A0005BCBE2 /* AppDelegate.m in Sources */,
 				A5FA35AD1915B6C6004C7AE0 /* FavoritesTableViewCell.m in Sources */,

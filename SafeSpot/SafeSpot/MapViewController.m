@@ -427,6 +427,10 @@
     self.mapView.showsUserLocation = YES;
 }
 
+- (IBAction)parkButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"parkSegue" sender:sender];
+}
+
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
