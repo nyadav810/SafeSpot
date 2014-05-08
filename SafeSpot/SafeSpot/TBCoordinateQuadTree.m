@@ -20,6 +20,7 @@ typedef struct TBHotelInfo {
     int startDay;
     int endDay;
     
+    
 } TBHotelInfo;
 
 
@@ -196,11 +197,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             TBHotelInfo hotelInfo = *(TBHotelInfo *)dataArray[i].data;
             
-            hotelInfo.startDay;
+            
             hotelInfo.startHour;
             
-            hotelInfo.endDay;
+           
             hotelInfo.endHour;
+            
+            
             
             Restrictions *rest = [[Restrictions alloc] init];
             rest.title =  [NSString stringWithFormat:@"%s", hotelInfo.hotelName];
@@ -215,10 +218,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
-
+            
+            //[self dayComparator:hotelInfo.startDay; end: hotelInfo.endDay; today:weekday];
+            
+            // [self hourComparator:startHour hour:endHour ct:current]
+            
             if(i < 300){
                 [self.mapView addAnnotation:rest];
-                NSLog(@"%f",latitude);
             
             }
             
