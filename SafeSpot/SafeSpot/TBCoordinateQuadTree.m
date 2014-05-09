@@ -35,81 +35,64 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
     
-    NSString *hotelName =  s[21];
+    NSString *streets =  s[21];
     
-    parkingInfo->streetName = malloc(sizeof(char) * hotelName.length + 1);
-    
-    strncpy(parkingInfo->streetName, [hotelName UTF8String], hotelName.length + 1);
+    parkingInfo->streetName = malloc(sizeof(char) * streets.length + 1);
+    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length + 1);
     
     NSString *parkingStreet = s[20];
-    
-    NSString *pt = s[18]; // RPZ, blah blah type name
-    
+
+    NSString *pt = s[19]; // RPZ, blah blah type name
+    // NSLog(@"%@",pt);
+    parkingInfo->parkType = malloc(sizeof(char) * pt.length + 1);
+    strncpy(parkingInfo->parkType, [pt UTF8String], pt.length + 1);
     
     parkingInfo->restrictions = malloc(sizeof(char) * parkingStreet.length + 1);
     strncpy(parkingInfo->restrictions, [parkingStreet UTF8String], parkingStreet.length + 1);
 
 
-    
     // 79515 sets it to 1-1 ._.
     // ~700, might need to find a hotfix/hard code those points in?
     
-    NSString *title =  s[21]; // Street Names
+
     //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
     // http://stackoverflow.com/questions/6825834/objective-c-how-to-extract-part-of-a-string-e-g-start-with
     // or use substring to get certain parts
     
-    
-    NSString *comment =  s[20]; // Restrictions
-    
-    NSString *details =  s[32]; // more on the restrictions
+    // NSString *details =  s[32]; // more on the restrictions
     
     
-    parkingInfo->startHour;
+    parkingInfo->startHour = -100;
     
-    int startHour = -100;
-    int endHour = -100;
-    int startDay = -100;
-    int endDay = -100;
+    parkingInfo->endHour = -100;
+    parkingInfo->startDay = -100;
+    parkingInfo->endDay = -100;
     
     if( s[33] != [NSNull null]){
-        startHour =  (int) [s[33] integerValue];
+        parkingInfo->startHour =  (int) [s[33] integerValue];
         //NSLog(@"%d",startHour);
-    }else{
-        // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
-        // NSLog(@"%@",startHour);
     }
     
     if( s[34] != [NSNull null]){
-        endHour =  (int) [s[34] integerValue];
+        parkingInfo->endHour =  (int) [s[34] integerValue];
         //NSLog(@"%d",endHour);
-        
-    }else{
-        
     }
     
     //maybe make a boolean to verify non null?
     if( s[31] != [NSNull null]){
-        startDay =  (int) [s[31] integerValue];
-    }else{
-        
+        parkingInfo->startDay =  (int) [s[31] integerValue];
     }
+    
     
     if( s[32] != [NSNull null]){
-        endDay =  (int) [s[32] integerValue];
+        parkingInfo->endDay =  (int) [s[32] integerValue];
         // NSLog(@"%d",endDay);
-    }else{
-        
     }
-    // Only run if start and end are not null
-    // [self dayComparator:startDay end:endDay today:weekday];
-    
-    
+
     // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
     // Restrictions have startDay/Hour and endDay/Hour and custom Text
     
-    
-    
+
     
     return TBQuadTreeNodeDataMake(latitude, longitude, parkingInfo);
 }
@@ -174,6 +157,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 {
     @autoreleasepool {
         NSLog(@"RAWR i am a tree calling yo");
+        
         NSError *error;
         // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
         
@@ -202,20 +186,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             float longitude = dataArray[i].y;
             //maybe have start/end hour/day as a int
             
-            TBParkingInfo hotelInfo = *(TBParkingInfo *)dataArray[i].data;
+            TBParkingInfo info = *(TBParkingInfo *)dataArray[i].data;
             
-            
-            hotelInfo.startHour;
-            
-           
-            hotelInfo.endHour;
-            
-            
+    
             
             Restrictions *rest = [[Restrictions alloc] init];
-            rest.title =  [NSString stringWithFormat:@"%s", hotelInfo.streetName];
-            rest.comment = [NSString stringWithFormat:@"%s", hotelInfo.restrictions];
-            
+            rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
+            rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
             
             CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
            
@@ -226,11 +203,17 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
             
-            //[self dayComparator:hotelInfo.startDay; end: hotelInfo.endDay; today:weekday];
+            [self dayComparator:info.startDay end:info.endDay today:day];
             
-            // [self hourComparator:startHour hour:endHour ct:current]
+            [self hourComparator:info.startHour hour:info.endHour ct:time];
+            
+            if(day == 1){ //
+                info.parkType; //
+            }
+            
             //THIRD TEST, PRZ/? under category
             // cant if PNP, PNS
+            
             if(i < 300){
                 [self.mapView addAnnotation:rest];
             
