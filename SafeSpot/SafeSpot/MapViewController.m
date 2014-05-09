@@ -68,16 +68,39 @@
     [self.view addSubview:self.mapView];
     self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
-  
+    
+    self.setCenterCoordinate;
     [self test];
     
 }
+
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setCenterCoordinate
+{
+    // clamp large numbers to 28
+    MKCoordinateRegion region;
+    CLLocationCoordinate2D center;
+    
+    center.latitude = 47.6097;
+    center.longitude = 122.3331;
+    
+    // use the zoom level to compute the region
+    MKCoordinateSpan span; // = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
+    // = MKCoordinateRegionMake(centerCoordinate, span);
+    span.latitudeDelta = 0.01f;
+    span.longitudeDelta = 0.01f;
+    
+    region.center = center;
+    region.span = span;
+    // set the region like normal
+    [self.mapView setRegion:region animated:YES];
 }
 
 

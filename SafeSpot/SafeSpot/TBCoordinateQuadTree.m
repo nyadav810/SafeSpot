@@ -35,10 +35,10 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
     
-    NSString *streets =  s[21];
+    NSString *streets =  s[21]; // maybe change length to -4 ?
     
-    parkingInfo->streetName = malloc(sizeof(char) * streets.length + 1);
-    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length + 1);
+    parkingInfo->streetName = malloc(sizeof(char) * streets.length -4);
+    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length -4);
     
     NSString *parkingStreet = s[20];
 
@@ -203,18 +203,18 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
             
-            [self dayComparator:info.startDay end:info.endDay today:day];
-            
-            [self hourComparator:info.startHour hour:info.endHour ct:time];
+            //[self dayComparator:info.startDay end:info.endDay today:day] [self hourComparator:info.startHour hour:info.endHour ct:time]
             
             if(day == 1){ //
-                info.parkType; //
+                info.parkType; //place if its restricted/paid
+                
             }
             
             //THIRD TEST, PRZ/? under category
             // cant if PNP, PNS
             
-            if(i < 300){
+            if(i < 300 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
+                
                 [self.mapView addAnnotation:rest];
             
             }
