@@ -31,19 +31,16 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
 
     float latitude = (float) [s[35] floatValue];
     float longitude = (float) [s[36]floatValue];
-   
     
     TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
     
     NSString *streets =  s[21]; // maybe change length to -4 ?
-    
     parkingInfo->streetName = malloc(sizeof(char) * streets.length -4);
     strncpy(parkingInfo->streetName, [streets UTF8String], streets.length -4);
     
     NSString *parkingStreet = s[20];
-
     NSString *pt = s[19]; // RPZ, blah blah type name
-    // NSLog(@"%@",pt);
+
     parkingInfo->parkType = malloc(sizeof(char) * pt.length + 1);
     strncpy(parkingInfo->parkType, [pt UTF8String], pt.length + 1);
     
@@ -61,9 +58,8 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     // NSString *details =  s[32]; // more on the restrictions
     
-    
+    // setting restrictions days/hours
     parkingInfo->startHour = -100;
-    
     parkingInfo->endHour = -100;
     parkingInfo->startDay = -100;
     parkingInfo->endDay = -100;
@@ -78,7 +74,6 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
         //NSLog(@"%d",endHour);
     }
     
-    //maybe make a boolean to verify non null?
     if( s[31] != [NSNull null]){
         parkingInfo->startDay =  (int) [s[31] integerValue];
     }
@@ -86,13 +81,10 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     if( s[32] != [NSNull null]){
         parkingInfo->endDay =  (int) [s[32] integerValue];
-        // NSLog(@"%d",endDay);
     }
 
     // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
     // Restrictions have startDay/Hour and endDay/Hour and custom Text
-    
-
     
     return TBQuadTreeNodeDataMake(latitude, longitude, parkingInfo);
 }
@@ -156,6 +148,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 - (void)buildTree:(int)time withDay:(int)day
 {
     @autoreleasepool {
+        
         NSLog(@"RAWR i am a tree calling yo");
         
         NSError *error;
@@ -202,7 +195,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
-            
             //[self dayComparator:info.startDay end:info.endDay today:day] [self hourComparator:info.startHour hour:info.endHour ct:time]
             
             if(day == 1){ //
@@ -215,7 +207,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             if(i < 300 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
                 
-                [self.mapView addAnnotation:rest];
+                [self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
             
             }
             
@@ -297,7 +289,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             NSMutableArray *names = [[NSMutableArray alloc] init];
             NSMutableArray *phoneNumbers = [[NSMutableArray alloc] init];
             
-            TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) {
+            TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
                 totalX += data.x;
                 totalY += data.y;
                 count++;
@@ -305,10 +297,15 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 TBParkingInfo hotelInfo = *(TBParkingInfo *)data.data;
                 [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.streetName]];
                 [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.restrictions]];
+                
             });
             
             if (count == 1) {
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX, totalY);
+                Restrictions *rest = [[Restrictions alloc] init];
+                rest.coordinate = coordinate;
+
+                [clusteredAnnotations addObject:rest];
                 
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
                 //annotation.title = [names lastObject];
@@ -319,6 +316,14 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             if (count > 1) {
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX / count, totalY / count);
+                Restrictions *rest = [[Restrictions alloc] init];
+                rest.coordinate = coordinate;
+                
+                [clusteredAnnotations addObject:rest];
+                
+                //idk what to do
+                
+                
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
                 //[clusteredAnnotations addObject:annotation];
             }

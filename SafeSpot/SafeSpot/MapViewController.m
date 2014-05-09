@@ -61,16 +61,18 @@
     self.locationManager.delegate = self;
     self.searchBar.delegate = self;
     
-    
-       // self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
-    
     [self.view addSubview:self.mapView];
+    
     self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
     
+    
+    // centers map
     self.setCenterCoordinate;
-    [self test];
+    
+    //builds tree
+    [self main];
     
 }
 
@@ -94,8 +96,8 @@
     // use the zoom level to compute the region
     MKCoordinateSpan span; // = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
     // = MKCoordinateRegionMake(centerCoordinate, span);
-    span.latitudeDelta = 0.1f;
-    span.longitudeDelta = 0.1f;
+    span.latitudeDelta = 0.3f;
+    span.longitudeDelta = 0.3f;
     
     region.center = center;
     region.span = span;
@@ -106,156 +108,24 @@
 
 
 // Main debug method
-- (void) test{
+- (void) main{
    
-    /*
-    NSError *error;
     
-    // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json 
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rows" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
-    //NSArray *signs = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSDictionary *rawSigns = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    if (!rawSigns) {
-        NSLog(@"%@ %@", error.localizedDescription, error.localizedFailureReason);
-    }
-    
-    NSArray *signs = [rawSigns objectForKey:@"data"];
-    
-    */
-    
-    //should pass this in since its probably huge
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
                                                   fromDate: [NSDate date]];
     
     int minute = (int) [dateComps minute];
     int hour = (int) [dateComps hour];
-    // NSLog(@"%d,%d,%d,%d",hour,minute,start,endHour);
-    
+
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = (int) [comps weekday];
     int current = (hour * 100) + minute;
 
-    
     // call build tree
-    
     [self.coordinateQuadTree buildTree:current withDay:weekday]; // make it pass in an array
-    
-    
-    
-    /*
-     
-     NSString *canPark = @"green";
-     NSString *cantPark = @"red";
-     
-     int numberOfPins = 0;
-     int totalSigns = 0;
-     
-    for(NSArray *s in signs){
-        
-        float latitude = (float) [s[35] floatValue];
-        float longitude = (float) [s[36]floatValue];
-        
-        // 79515 sets it to 1-1 ._.
-        // ~700, might need to find a hotfix/hard code those points in?
-        
-        NSString *title =  s[21]; // Street Names
-        //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
-        // http://stackoverflow.com/questions/6825834/objective-c-how-to-extract-part-of-a-string-e-g-start-with
-        // or use substring to get certain parts
-        
-        
-        NSString *comment =  s[20]; // Restrictions
-        
-        NSString *details =  s[32]; // more on the restrictions
-        
-        int startHour = -100;
-        int endHour = -100;
-        int startDay = -100;
-        int endDay = -100;
-        
-        if( s[33] != [NSNull null]){
-            startHour =  (int) [s[33] integerValue];
-            //NSLog(@"%d",startHour);
-        }else{
-            // ~ 200-300 unlabeled but HAS restrictions id startHour = s[33]; //-10; //?
-            // NSLog(@"%@",startHour);
-        }
-        
-        if( s[34] != [NSNull null]){
-            endHour =  (int) [s[34] integerValue];
-            //NSLog(@"%d",endHour);
-
-        }else{
-            
-        }
-        
-        //maybe make a boolean to verify non null?
-        if( s[31] != [NSNull null]){
-            startDay =  (int) [s[31] integerValue];
-        }else{
-            
-        }
-    
-        if( s[32] != [NSNull null]){
-            endDay =  (int) [s[32] integerValue];
-            // NSLog(@"%d",endDay);
-        }else{
-            
-        }
-        // Only run if start and end are not null
-        // [self dayComparator:startDay end:endDay today:weekday];
-        
-        
-        // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
-        // Restrictions have startDay/Hour and endDay/Hour and custom Text
-        
-        
-        
-        Restrictions *rest = [[Restrictions alloc] init];
-        rest.title = title;
-        rest.comment = comment;
-        
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        CLLocationCoordinate2D coordinate = [location coordinate];
-        rest.location = location;
-        rest.coordinate = coordinate;
-        
-       
-        
-        totalSigns++;
-        if(numberOfPins < 400){
-            
-            // [self mapView addAnnotation
-            
-            // day compare first, if its okay check hour comparator
-            // only run if not start and end hour are not null
-            
-            
-            if([self dayComparator:startDay end:endDay today:weekday] ||
-               [self hourComparator:startHour hour:endHour ct:current]){ // make them return boolean
-                
-                [self.mapView addAnnotation:rest];
-                
-                NSLog(@"green ,%d,%d", startHour,endHour);
-            }else{
-                //[self.mapView addAnnotation:rest]; // cant park so red
-                //NSLog(@"Red cant park ,%d,%d", startHour,endHour);
-            }
-
-            //depending on answer change pin color
-            
-            // pass in color
-            //[self.mapView addAnnotation: self.mapView viewForAnnotation: rest pin:details ]; // all are adding to [0,0] :( problem with restrictions
-            numberOfPins++;
-        }
-    }
-     
-     */
 
 
 }
@@ -267,63 +137,6 @@
  
  ", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
  */
-
-// Gets string of day
-// NSString *localDate = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-
-// http://stackoverflow.com/questions/10861433/in-objective-c-to-get-the-current-hour-and-minute-as-integers-we-need-to-use-n
-// This method will compares current time to start/end time
-- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{ //add param for current
-
-    
-    //have to change start/end if its -100 aka null
-    if(current == -100){
-        return false;
-    }
-    
-    if(endHour < current){ //its after the restriction, maybe && statement for start..?
-        //cant park
-        // NSLog(@"test can park yay!");
-        //return false;
-        
-        return true;
-    } else if(current >= start){ // its its after restriction
-        //can park
-        //NSLog(@"test hours cant park finish");
-        
-        // NSLog(@"%d,%d",start,endHour);
-        
-        return true;
-    }
-    
-    return false; //will reach?
-}
-
-// Possibly debug current hour
-// http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
-    
-
-
-// pass in todays date
-- (Boolean) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
-    
-    if(currentDay == -100){
-        return false;
-    }
-    
-    //have to change start/end if its -100 aka null
-    if(currentDay < startDay && currentDay > endDay ){
-        // true?
-        //
-        
-        NSLog(@"%d", currentDay);
-        return true;
-        
-    }
-    //get todays date
-    
-    return false;
-}
 
 
 
@@ -370,8 +183,9 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     [[NSOperationQueue new] addOperationWithBlock:^{
-//        double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+        // visible rect might be causing problems
         
         //NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
         
@@ -406,6 +220,7 @@
         [self.mapView removeAnnotations:[toRemove allObjects]];
     }];
 }
+
 
 #pragma mark - UISearchBarDelegate
 
