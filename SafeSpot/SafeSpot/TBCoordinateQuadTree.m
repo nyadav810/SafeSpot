@@ -11,17 +11,18 @@
 #import "Restrictions.h"
 #import <Foundation/Foundation.h>
 
-typedef struct TBHotelInfo {
-    char* hotelName;
-    char* hotelPhoneNumber;
+typedef struct TBParkingInfo {
+    char* streetName;
+    char* restrictions;
+    char* parkType; // will tell if paid parking/RPZ/what the restriction is
     
     int startHour;
     int endHour;
     int startDay;
     int endDay;
+    // maybe add category Char
     
-    
-} TBHotelInfo;
+} TBParkingInfo;
 
 
 // pass in array
@@ -30,20 +31,23 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
 
     float latitude = (float) [s[35] floatValue];
     float longitude = (float) [s[36]floatValue];
-    NSString *sign;
+   
     
-    TBHotelInfo* hotelInfo = malloc(sizeof(TBHotelInfo));
+    TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
     
     NSString *hotelName =  s[21];
     
-    hotelInfo->hotelName = malloc(sizeof(char) * hotelName.length + 1);
+    parkingInfo->streetName = malloc(sizeof(char) * hotelName.length + 1);
     
-    strncpy(hotelInfo->hotelName, [hotelName UTF8String], hotelName.length + 1);
+    strncpy(parkingInfo->streetName, [hotelName UTF8String], hotelName.length + 1);
     
-    NSString *hotelPhoneNumber = s[20];
+    NSString *parkingStreet = s[20];
     
-    hotelInfo->hotelPhoneNumber = malloc(sizeof(char) * hotelPhoneNumber.length + 1);
-    strncpy(hotelInfo->hotelPhoneNumber, [hotelPhoneNumber UTF8String], hotelPhoneNumber.length + 1);
+    NSString *pt = s[18]; // RPZ, blah blah type name
+    
+    
+    parkingInfo->restrictions = malloc(sizeof(char) * parkingStreet.length + 1);
+    strncpy(parkingInfo->restrictions, [parkingStreet UTF8String], parkingStreet.length + 1);
 
 
     
@@ -59,6 +63,9 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     NSString *comment =  s[20]; // Restrictions
     
     NSString *details =  s[32]; // more on the restrictions
+    
+    
+    parkingInfo->startHour;
     
     int startHour = -100;
     int endHour = -100;
@@ -104,7 +111,7 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     
     
     
-    return TBQuadTreeNodeDataMake(latitude, longitude, hotelInfo);
+    return TBQuadTreeNodeDataMake(latitude, longitude, parkingInfo);
 }
 
 
@@ -195,7 +202,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             float longitude = dataArray[i].y;
             //maybe have start/end hour/day as a int
             
-            TBHotelInfo hotelInfo = *(TBHotelInfo *)dataArray[i].data;
+            TBParkingInfo hotelInfo = *(TBParkingInfo *)dataArray[i].data;
             
             
             hotelInfo.startHour;
@@ -206,8 +213,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             
             Restrictions *rest = [[Restrictions alloc] init];
-            rest.title =  [NSString stringWithFormat:@"%s", hotelInfo.hotelName];
-            rest.comment = [NSString stringWithFormat:@"%s", hotelInfo.hotelPhoneNumber];
+            rest.title =  [NSString stringWithFormat:@"%s", hotelInfo.streetName];
+            rest.comment = [NSString stringWithFormat:@"%s", hotelInfo.restrictions];
             
             
             CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
@@ -222,7 +229,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             //[self dayComparator:hotelInfo.startDay; end: hotelInfo.endDay; today:weekday];
             
             // [self hourComparator:startHour hour:endHour ct:current]
-            
+            //THIRD TEST, PRZ/? under category
+            // cant if PNP, PNS
             if(i < 300){
                 [self.mapView addAnnotation:rest];
             
@@ -311,9 +319,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 totalY += data.y;
                 count++;
                 
-                TBHotelInfo hotelInfo = *(TBHotelInfo *)data.data;
-                [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.hotelName]];
-                [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.hotelPhoneNumber]];
+                TBParkingInfo hotelInfo = *(TBParkingInfo *)data.data;
+                [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.streetName]];
+                [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.restrictions]];
             });
             
             if (count == 1) {
