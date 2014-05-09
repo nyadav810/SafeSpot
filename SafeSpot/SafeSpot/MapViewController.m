@@ -84,22 +84,23 @@
 
 - (void)setCenterCoordinate
 {
-    // clamp large numbers to 28
+
     MKCoordinateRegion region;
     CLLocationCoordinate2D center;
     
     center.latitude = 47.6097;
-    center.longitude = 122.3331;
+    center.longitude = -122.3331;
     
     // use the zoom level to compute the region
     MKCoordinateSpan span; // = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
     // = MKCoordinateRegionMake(centerCoordinate, span);
-    span.latitudeDelta = 0.01f;
-    span.longitudeDelta = 0.01f;
+    span.latitudeDelta = 0.1f;
+    span.longitudeDelta = 0.1f;
     
     region.center = center;
     region.span = span;
     // set the region like normal
+    NSLog(@"%f,%f", center.longitude,center.latitude);
     [self.mapView setRegion:region animated:YES];
 }
 
