@@ -102,6 +102,7 @@
     region.span = span;
     // set the region
     [self.mapView setRegion:region animated:YES];
+    
 }
 
 
@@ -123,7 +124,7 @@
     int current = (hour * 100) + minute;
 
     // call build tree
-    [self.coordinateQuadTree buildTree:current withDay:weekday]; // make it pass in an array
+    [self.coordinateQuadTree buildTree]; // make it pass in an array
 
 
 }
@@ -205,9 +206,12 @@
         //sleep(10); // maybe removev
         NSLog(@"%f",zoomScale);
         
-        //might need a better scale
-        if(zoomScale > .1){ //else maybe clustered view
-            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
+        // might need a better scale
+        
+        // add global for current time and day
+        if(zoomScale > .05){ //else maybe clustered view
+            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2];
+            
             //NSLog(@"%@",annotations);
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }

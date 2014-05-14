@@ -145,7 +145,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 @implementation TBCoordinateQuadTree
 
-- (void)buildTree:(int)time withDay:(int)day
+- (void)buildTree
 {
     @autoreleasepool {
 
@@ -171,38 +171,19 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         for(NSArray *s in signs){
             i++; //?
             dataArray[i] = TBDataFromLine(s);
-            float latitude = dataArray[i].x;
-            float longitude = dataArray[i].y;
-            //maybe have start/end hour/day as a int
-            
-            TBParkingInfo info = *(TBParkingInfo *)dataArray[i].data;
-            
-            Restrictions *rest = [[Restrictions alloc] init];
-            rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
-            rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
-            
-            CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-            CLLocationCoordinate2D coordinate = [location coordinate];
-            rest.location = location;
-            rest.coordinate = coordinate;
 
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
             //[self dayComparator:info.startDay end:info.endDay today:day] [self hourComparator:info.startHour hour:info.endHour ct:time]
             
-            if(day == 1){ //
-                info.parkType; //place if its restricted/paid
-                
-            }
-            
             //THIRD TEST, PRZ/? under category
             // cant if PNP, PNS
             
-            if(i < 30 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
+          //&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
                 
                 //[self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
             
-            }
+            
             
         }
         
@@ -254,7 +235,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 
 // doesnt cluster, but adds signs in this rect to map
-- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale
+- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day
 {
     double TBCellSize = TBCellSizeForZoomScale(zoomScale);
     double scaleFactor = zoomScale / TBCellSize;
@@ -288,8 +269,22 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
                 //NSLog(@"%@",totalX);
+                int day = 0;
                 
-                [clusteredAnnotations addObject:rest];
+                if(day == 1){ //
+                    info.parkType; //place if its restricted/paid
+                    
+                }
+                
+                //THIRD TEST, PRZ/? under category
+                // cant if PNP, PNS
+                
+                // NSLog(@"%d",!([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) );
+                // need to check
+                if ( !([self dayComparator:info.startDay end:info.endDay today:day]) ||!([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
+                
+                    [clusteredAnnotations addObject:rest];
+                }
                 });
             
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];

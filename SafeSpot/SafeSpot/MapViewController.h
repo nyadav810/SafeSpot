@@ -20,7 +20,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-//- (NSInteger)hourConversion: (NSInteger)startHour;
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *nav;                 // <-- THATS ME
 @property (strong, nonatomic) TBCoordinateQuadTree *coordinateQuadTree;
 
