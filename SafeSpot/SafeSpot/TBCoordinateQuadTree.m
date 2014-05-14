@@ -148,9 +148,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 - (void)buildTree:(int)time withDay:(int)day
 {
     @autoreleasepool {
-        
-        NSLog(@"RAWR i am a tree calling yo");
-        
+
         NSError *error;
         // JSON Datasoure: http://data.seattle.gov/resource/it8u-sznv.json
         
@@ -169,8 +167,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         
         TBQuadTreeNodeData *dataArray = malloc(sizeof(TBQuadTreeNodeData) * count);
         
-        // maybe have an array of restrictions?
-        
         int i = 0;
         for(NSArray *s in signs){
             i++; //?
@@ -181,14 +177,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             TBParkingInfo info = *(TBParkingInfo *)dataArray[i].data;
             
-    
-            
             Restrictions *rest = [[Restrictions alloc] init];
             rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
             rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
             
             CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-           
             CLLocationCoordinate2D coordinate = [location coordinate];
             rest.location = location;
             rest.coordinate = coordinate;
@@ -207,7 +200,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             if(i < 30 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
                 
-                [self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
+                //[self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
             
             }
             
@@ -215,16 +208,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         
         NSLog(@"%d",i);
         
-        
         TBBoundingBox world = TBBoundingBoxMake(19, -166, 72, -53);
         // not sure what the bounding box does :(
-        
         _root = TBQuadTreeBuildWithData(dataArray, count, world, 4);
     }
 }
 
 - (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
-    
     
     //have to change start/end if its -100 aka null
     if(current == -100){
@@ -291,19 +281,17 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 // count++;
                 
                 TBParkingInfo info = *(TBParkingInfo *)data.data;
-                /*
-                [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.streetName]];
-                [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.restrictions]];
-                */
-                
+                // http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 Restrictions *rest = [[Restrictions alloc] init];
                 rest.coordinate = coordinate;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
                 //NSLog(@"%@",totalX);
+                
                 [clusteredAnnotations addObject:rest];
                 });
+            
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
                 //annotation.title = [names lastObject];
                 //annotation.subtitle = [phoneNumbers lastObject];

@@ -7,9 +7,7 @@
 //
 
 /*
- Found bugs:
- Going "Home makes the app crash"
- // http://status.socrata.com/
+
  */
 
 // - - - - - Notes about signs database - - -
@@ -34,7 +32,8 @@
 // To Do: Add non retina splash screen
 // combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
 // Find way to update restrictions, maybe with a button
-// add quad tree coord
+// find way to update ONLY new restrictions, but for NOW just replace ALL?
+
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -66,8 +65,6 @@
     
     self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
-    self.coordinateQuadTree.root;
-    
     
     // centers map
     self.setCenterCoordinate;
@@ -85,7 +82,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+ // centers map to seattle
 - (void)setCenterCoordinate
 {
 
@@ -103,16 +100,15 @@
     
     region.center = center;
     region.span = span;
-    // set the region like normal
-    NSLog(@"%f,%f", center.longitude,center.latitude);
+    // set the region
     [self.mapView setRegion:region animated:YES];
 }
 
 
-// Main debug method
+// Main  method
 - (void) main{
-   
     
+    // get current day and time
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
                                                   fromDate: [NSDate date]];
@@ -153,15 +149,7 @@
 //removeAnnotations
 
 
-// need to make the annotations in something I can clear
-
-
-
-// Source for code http://www.appcoda.com/ios-programming-101-drop-a-pin-on-map-with-mapkit-api/
-// suppose to zoom into location
-// other method
-
-
+// Method for CUSTOM pins
 
 /*
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
@@ -182,21 +170,47 @@
 }
 */
 
+// annimation for pins
+- (void)addBounceAnnimationToView:(UIView *)view
+{
+    CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    
+    bounceAnimation.values = @[@(0.05), @(1.1), @(0.9), @(1)];
+    
+    bounceAnimation.duration = 0.6;
+    NSMutableArray *timingFunctions = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < 4; i++) {
+        [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    }
+    [bounceAnimation setTimingFunctions:timingFunctions.copy];
+    bounceAnimation.removedOnCompletion = NO;
+    
+    [view.layer addAnimation:bounceAnimation forKey:@"bounce"];
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (UIView *view in views) {
+        [self addBounceAnnimationToView:view];
+    }
+}
+
+// when map moves
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     [[NSOperationQueue new] addOperationWithBlock:^{
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
-        // visible rect might be causing problems
-        sleep(10);
+
+        //sleep(10); // maybe removev
         NSLog(@"%f",zoomScale);
+        
         //might need a better scale
-        if(zoomScale > .01){
+        if(zoomScale > .1){ //else maybe clustered view
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
             //NSLog(@"%@",annotations);
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }
-        
     }];
 }
 
@@ -204,6 +218,7 @@
     return self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
 }
 
+// updates pins to whats on the map
 - (void)updateMapViewAnnotationsWithAnnotations:(NSArray *)annotations
 {
     NSMutableSet *before = [NSMutableSet setWithArray:self.mapView.annotations];
@@ -220,8 +235,7 @@
     // Annotations circled in red
     NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
     [toRemove minusSet:after];
-    NSLog(@"TEST");
-    NSLog(@"%@",toKeep);
+    NSLog(@"update pins");
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
