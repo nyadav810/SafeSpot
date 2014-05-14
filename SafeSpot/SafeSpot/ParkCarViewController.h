@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ParkCarViewController : UIViewController
-- (IBAction)doneButtonClicked:(id)sender;
+@interface ParkCarViewController : UIViewController <UITextViewDelegate>
+- (IBAction)cancelButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end
