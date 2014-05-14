@@ -209,7 +209,7 @@
         // might need a better scale
         
         // add global for current time and day
-        if(zoomScale > .05){ //else maybe clustered view
+        if(zoomScale > .08){ //else maybe clustered view
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2];
             
             //NSLog(@"%@",annotations);
