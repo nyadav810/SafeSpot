@@ -205,7 +205,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             //THIRD TEST, PRZ/? under category
             // cant if PNP, PNS
             
-            if(i < 300 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
+            if(i < 30 ){//&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
                 
                 [self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
             
@@ -263,9 +263,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 }
 
 
-
-
-
+// doesnt cluster, but adds signs in this rect to map
 - (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale
 {
     double TBCellSize = TBCellSizeForZoomScale(zoomScale);
@@ -284,50 +282,35 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             __block double totalX = 0;
             __block double totalY = 0;
-            __block int count = 0;
-            
-            NSMutableArray *names = [[NSMutableArray alloc] init];
-            NSMutableArray *phoneNumbers = [[NSMutableArray alloc] init];
-            
+
             TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
+                //need to pass in root
                 totalX += data.x;
                 totalY += data.y;
-                count++;
                 
-                TBParkingInfo hotelInfo = *(TBParkingInfo *)data.data;
+                // count++;
+                
+                TBParkingInfo info = *(TBParkingInfo *)data.data;
+                /*
                 [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.streetName]];
                 [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.restrictions]];
-                
-            });
-            
-            if (count == 1) {
+                */
+           
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX, totalY);
                 Restrictions *rest = [[Restrictions alloc] init];
                 rest.coordinate = coordinate;
-
+                rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
+                rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
+                //NSLog(@"%@",totalX);
                 [clusteredAnnotations addObject:rest];
-                
+                });
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
                 //annotation.title = [names lastObject];
                 //annotation.subtitle = [phoneNumbers lastObject];
                 //[clusteredAnnotations addObject:annotation];
                 
             }
-            
-            if (count > 1) {
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX / count, totalY / count);
-                Restrictions *rest = [[Restrictions alloc] init];
-                rest.coordinate = coordinate;
-                
-                [clusteredAnnotations addObject:rest];
-                
-                //idk what to do
-                
-                
-                //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
-                //[clusteredAnnotations addObject:annotation];
-            }
-        }
+        
     }
     
     return [NSArray arrayWithArray:clusteredAnnotations];

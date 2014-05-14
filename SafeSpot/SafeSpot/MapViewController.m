@@ -66,6 +66,7 @@
     
     self.coordinateQuadTree = [[TBCoordinateQuadTree alloc] init]; 
     self.coordinateQuadTree.mapView = self.mapView;
+    self.coordinateQuadTree.root;
     
     
     // centers map
@@ -73,6 +74,7 @@
     
     //builds tree
     [self main];
+    
     
 }
 
@@ -186,10 +188,14 @@
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
         // visible rect might be causing problems
+        sleep(10);
+        NSLog(@"%f",zoomScale);
+        if(zoomScale < 10){
+            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
+            //NSLog(@"%@",annotations);
+            [self updateMapViewAnnotationsWithAnnotations:annotations];
+        }
         
-        //NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
-        
-        //[self updateMapViewAnnotationsWithAnnotations:annotations];
     }];
 }
 
@@ -213,10 +219,13 @@
     // Annotations circled in red
     NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
     [toRemove minusSet:after];
+    NSLog(@"TEST");
+    NSLog(@"%@",toKeep);
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [self.mapView addAnnotations:[toAdd allObjects]];
+        
         [self.mapView removeAnnotations:[toRemove allObjects]];
     }];
 }
