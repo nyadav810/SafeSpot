@@ -295,8 +295,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 [names addObject:[NSString stringWithFormat:@"%s", hotelInfo.streetName]];
                 [phoneNumbers addObject:[NSString stringWithFormat:@"%s", hotelInfo.restrictions]];
                 */
-           
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(totalX, totalY);
+                
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 Restrictions *rest = [[Restrictions alloc] init];
                 rest.coordinate = coordinate;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName];

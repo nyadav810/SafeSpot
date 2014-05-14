@@ -190,7 +190,8 @@
         // visible rect might be causing problems
         sleep(10);
         NSLog(@"%f",zoomScale);
-        if(zoomScale < 10){
+        //might need a better scale
+        if(zoomScale > .01){
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale];
             //NSLog(@"%@",annotations);
             [self updateMapViewAnnotationsWithAnnotations:annotations];
