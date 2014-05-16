@@ -137,39 +137,53 @@
  ", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
  */
 
+// http://stackoverflow.com/questions/11741334/mkmapview-show-detailview-how-to-make-a-segue
 
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+    
+    NSLog(@"rawr segue");
+    //[self performSegueWithIdentifier:@"showPinDetails" sender:self];
+    
+    
+    
+}
 
-
-
-// This method will add annotations to map
-// addAnnotations, built in
-
-
-
-// This method will remove annotations on map
-//removeAnnotations
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"showPinDetails"]) {
+        
+        //
+        
+        
+    }
+}
 
 
 // Method for CUSTOM pins
 
-/*
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
     // pin color red or green
     NSString *reuseIdentifier = @"greenPin";
     
-    NSLog(@"annote this");
     
     MKPinAnnotationView *result = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
     if (!result) {
         result =
         [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     }
-    result.pinColor = MKPinAnnotationColorPurple;
     
+    //result.image = [UIImage imageNamed:@"pin2.png"];
+    result.canShowCallout = YES;
+    result.pinColor = MKPinAnnotationColorGreen;
+    
+    result.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    
+
     return result;
 }
-*/
+
 
 // annimation for pins
 - (void)addBounceAnnimationToView:(UIView *)view

@@ -273,6 +273,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 if(day == 1){ //
                     info.parkType; //place if its restricted/paid
+                    // PPP, PTIML, all paid
+                    // P1530, P1H
+                    // PDIS is disabled
+                    // RPZ
                     
                 }
                 
@@ -281,8 +285,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 // NSLog(@"%d",!([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) );
                 // need to check
-                if ( !([self dayComparator:info.startDay end:info.endDay today:day]) ||!([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
-                
+                if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
+                     // NSLog(@"%s",info.parkType);
+                     // NSLog(@"%@",rest.comment);
+                    
                     [clusteredAnnotations addObject:rest];
                 }
                 });
