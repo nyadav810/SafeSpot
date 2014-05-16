@@ -282,8 +282,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS
-                
-                // NSLog(@"%d",!([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) );
+
                 // need to check
                 if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                      // NSLog(@"%s",info.parkType);

@@ -142,7 +142,7 @@
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
     
     NSLog(@"rawr segue");
-    //[self performSegueWithIdentifier:@"showPinDetails" sender:self];
+    // [self performSegueWithIdentifier:@"showPinDetails" sender:self];
     
     
     
@@ -161,7 +161,7 @@
 
 // Method for CUSTOM pins
 
-
+//http://stackoverflow.com/questions/5861686/help-with-mapkit-three-annotations-with-three-different-pin-colors 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
     // pin color red or green
@@ -217,7 +217,7 @@
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
 
-        //sleep(10); // maybe removev
+        //sleep(10); 
         NSLog(@"%f",zoomScale);
         
         // might need a better scale
