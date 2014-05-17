@@ -25,6 +25,7 @@
     return [NSString stringWithFormat:@"Favorite List"];
 }
 
+// Create fake Favorite signs
 - (void)fakeSomeSigns
 {
     double latitudeSeattle = 47.0;

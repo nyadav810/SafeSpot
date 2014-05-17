@@ -5,6 +5,7 @@
 //  Created by Naveen Yadav on 5/3/14.
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
+//  Persistant list of user's favorite signs
 
 #import <Foundation/Foundation.h>
 
