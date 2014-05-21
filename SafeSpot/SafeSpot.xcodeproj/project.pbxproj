@@ -27,6 +27,7 @@
 		01D4D7FC18F66F250009C8AE /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FB18F66F250009C8AE /* FavoritesTableViewController.m */; };
 		01D4D7FF18F67B780009C8AE /* NearbyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */; };
 		49B68FBA19188005009A4EB5 /* TBCoordinateQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B68FB919188005009A4EB5 /* TBCoordinateQuadTree.m */; };
+		49C4086A192C565B0040DFF7 /* signs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 49C40869192C565B0040DFF7 /* signs.csv */; };
 		49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725A1902490C00F7BE6A /* Restrictions.m */; };
 		49EB725F190377C700F7BE6A /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725E190377C700F7BE6A /* DebugViewController.m */; };
 		A5FA35AA1915B32C004C7AE0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA35A91915B32C004C7AE0 /* DetailViewController.m */; };
@@ -77,6 +78,7 @@
 		01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyTableViewController.m; sourceTree = "<group>"; };
 		49B68FB819188005009A4EB5 /* TBCoordinateQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBCoordinateQuadTree.h; sourceTree = "<group>"; };
 		49B68FB919188005009A4EB5 /* TBCoordinateQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBCoordinateQuadTree.m; sourceTree = "<group>"; };
+		49C40869192C565B0040DFF7 /* signs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = signs.csv; path = ../../../../Downloads/signs.csv; sourceTree = "<group>"; };
 		49EB72591902490C00F7BE6A /* Restrictions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restrictions.h; sourceTree = "<group>"; };
 		49EB725A1902490C00F7BE6A /* Restrictions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Restrictions.m; sourceTree = "<group>"; };
 		49EB725D190377C700F7BE6A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		014B583818C908A0005BCBE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				49C40869192C565B0040DFF7 /* signs.csv */,
 				C08019DE190A2C4200B4EDE4 /* rows.json */,
 				014B583918C908A0005BCBE2 /* SafeSpot-Info.plist */,
 				014B583A18C908A0005BCBE2 /* InfoPlist.strings */,
@@ -306,6 +309,7 @@
 				C08019DF190A2C4200B4EDE4 /* rows.json in Resources */,
 				014B584D18C908A0005BCBE2 /* Images.xcassets in Resources */,
 				014B583C18C908A0005BCBE2 /* InfoPlist.strings in Resources */,
+				49C4086A192C565B0040DFF7 /* signs.csv in Resources */,
 				014B584518C908A0005BCBE2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

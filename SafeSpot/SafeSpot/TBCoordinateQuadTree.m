@@ -253,7 +253,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             __block double totalX = 0;
             __block double totalY = 0;
-
+            
+            
+            
             TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
                 //need to pass in root
                 totalX += data.x;
@@ -285,10 +287,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
                 // need to check
                 if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
-                     // NSLog(@"%s",info.parkType);
+                      NSLog(@"%s",info.parkType);
                      // NSLog(@"%@",rest.comment);
                     
-                    [clusteredAnnotations addObject:rest];
+                    [clusteredAnnotations addObject:rest]; //pass in parking type probably
                 }
                 });
             
