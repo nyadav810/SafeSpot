@@ -273,23 +273,39 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 rest.pin;
                 
                 //NSLog(@"%@",totalX);
-                int day = 0;
                 
-                if(day == 1){ //
-                    info.parkType; //place if its restricted/paid
+                
+                 NSArray * arr = [rest.title componentsSeparatedByString:@" "];
+                
+                 // NSLog(@"%@",arr);
+                
+                int day = 0;
+                NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
+                
+                if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //
+                    
+                    rest.pinColor = @"yellow"; //place if its restricted/paid
                     // PPP, PTIML, all paid
                     // P1530, P1H
                     // PDIS is disabled
                     // RPZ
                     
-                }
+                }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
+                    rest.pinColor = @"yellow";
+                    
+                }else if([parkingType  isEqual: @"RPZ"]){
+                    rest.pinColor = @"purple";
+                    
+                }else if([parkingType  isEqual: @"PDIS"]){
+                    rest.pinColor = @"blue";
+                } //maybe else red?
                 
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS
 
                 // need to check
                 if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
-                      NSLog(@"%s",info.parkType);
+                      // NSLog(@"%s",info.parkType);
                      // NSLog(@"%@",rest.comment);
                     
                     [clusteredAnnotations addObject:rest]; //pass in parking type probably

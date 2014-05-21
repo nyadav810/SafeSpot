@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSDate *date; // Might not need
 
 @property (nonatomic, copy) NSString *title; // Steet Name
+@property (nonatomic, copy) NSString *pinColor; // Steet Name
 
 @property (nonatomic, copy) NSArray *allTimes; // start/end times..?
 
