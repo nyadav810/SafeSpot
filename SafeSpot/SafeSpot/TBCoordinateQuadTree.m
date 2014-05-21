@@ -270,6 +270,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 rest.coordinate = coordinate;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
+                rest.pin;
+                
                 //NSLog(@"%@",totalX);
                 int day = 0;
                 

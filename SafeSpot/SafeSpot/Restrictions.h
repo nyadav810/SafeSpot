@@ -19,6 +19,7 @@
 
 @property (nonatomic, copy) NSString *comment; //Restrictions
 @property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) NSString *pin;
 
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
 
