@@ -55,11 +55,9 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
 
     //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
     // http://stackoverflow.com/questions/6825834/objective-c-how-to-extract-part-of-a-string-e-g-start-with
-    // or use substring to get certain parts
-    
+
     // NSString *details =  s[32]; // more on the restrictions
-    
-    // setting restrictions days/hours
+
     parkingInfo->startHour = -100;
     parkingInfo->endHour = -100;
     parkingInfo->startDay = -100;
@@ -301,11 +299,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                     
                     rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+                    // for testing
+                    
                     //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
 
                     
                     // IF count = 0 [clusteredAnnotations addObject:rest];
-                    //
+
                     // elseadd to a master array?
                     
                 }else{
@@ -336,10 +336,12 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 }else if([parkingType  isEqual: @"PDIS"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple PDIS  ");
-                    //NSLog(@"%@",rest.pinColor);
-                } //maybe else red?
+
+                } //
                 
                 // need other icons, so probably add another property
+                
+                
                 
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS
@@ -349,7 +351,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                       // NSLog(@"%s",info.parkType);
                      // NSLog(@"%@",rest.comment);
                     
-                    [clusteredAnnotations addObject:rest]; //pass in parking type probably
+                    [clusteredAnnotations addObject:rest];
+                    // Need some type of collision detection/combo
+                
                 //}
                 
                 });

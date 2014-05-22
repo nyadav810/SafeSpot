@@ -6,22 +6,15 @@
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
 
-/*
-
- */
-
 // - - - - - Notes about signs database - - -
-// "No parking" is good because it uses hours 0-23:59 aka all day.
-// Categories mention restricted parking zones
-// lat/long and start day/end day are going to be used
-// Stand rate
-// Use custom text or stand rate, they seem the same
+
 
 
 // - - - Zoom Notes
 // maybe at a certain zoom level we COULD use categories to make the lines?
 // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
 // http://www.galloway.me.uk/tutorials/singleton-classes/
+
 // if we implement quad trees we should cite http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
 
 
@@ -126,10 +119,11 @@
     int current = (hour * 100) + minute;
 
     // call build tree
-    [self.coordinateQuadTree buildTree]; // make it pass in an array
-
+    [self.coordinateQuadTree buildTree];
 
 }
+
+
 
 /*
  , [ 80235, "F301808D-EC9D-4711-9E2E-A360096ED708", 80235, 1285278966, "386118", 1285278966, "386118", null, "80235", "531546.0", "20", "2149", "25117", "260", "-17", "SGN-139286", "01-RS", "R7-NP", "[RED SLASHED CIRCLE] P", "PNP", "No Parking, but \"standing\" allowed", "
@@ -187,8 +181,7 @@
 //http://stackoverflow.com/questions/5861686/help-with-mapkit-three-annotations-with-three-different-pin-colors 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation // color:(NSString *)pin
 {
-    // pin color red or green
-    // annotation.pinColor
+
     NSString *reuseIdentifier = @"pin";
     
     //MKAnnotationView for own pics
@@ -262,8 +255,7 @@
        
          NSLog(@"%f",zoomScale);
         
-        // might need a better scale
-        
+
         // add global for current time and day
         if(zoomScale > .08){ //else maybe clustered view
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:NO];
