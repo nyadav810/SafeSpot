@@ -292,15 +292,18 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     int counterForStreet = 0;
                     //look for /0, last 2 chars
                     // test around H stadium
-                    for (int i = split.count -2; i > split.count -7; i--) {
+                    
+                    //change end bounds later
+                    for (int i = split.count -3; i > 0; i--) {
 
                         if([split[i] length] > 1){
                             
                             NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
                             
                             if ([code isEqualToString:@"/O"] ) { // might not be the best
-                                NSLog(@"%@,%@",split[i],split[i-1]);
-                                counterForStreet = i;
+                                
+                                counterForStreet = i; // sometime i goes to 0?
+                                //maybe break/leave FOR loop
                             }
                         }
                       
@@ -308,7 +311,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         // Things before / is side of street (for later)
                     }
                     
-                    NSLog(@"%@,%@",split[counterForStreet+1],split[counterForStreet+2]);
+                    NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
                    
                     // counterForStreet; //
                     
