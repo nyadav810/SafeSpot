@@ -8,14 +8,22 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import "FavoritesList.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.locationManager = [[CLLocationManager alloc] init];
-    //MapViewController *mapController = [[MapViewController alloc] init];
-    //[self.window setRootViewController:mapController];
+    
+    // Restore Favorites List
+    self.favoritesList = [NSKeyedUnarchiver unarchiveObjectWithFile:[self favoritesListStorageLocation]];
+    
+    if (!self.favoritesList)
+    {
+        self.favoritesList = [[FavoritesList alloc] init];
+        [self.favoritesList fakeSomeSigns];
+    }
     
     return YES;
 }
@@ -32,6 +40,9 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [NSKeyedArchiver archiveRootObject:self.favoritesList
+                                toFile:[self favoritesListStorageLocation]];
+    NSLog(@"Favorites List archived");
     [self.locationManager stopUpdatingLocation];
 }
 
@@ -49,6 +60,18 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self.locationManager stopUpdatingLocation];
+}
+
+- (NSString *)applicationDocumentsFolderName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
+- (NSString *)favoritesListStorageLocation
+{
+    return [[self applicationDocumentsFolderName] stringByAppendingPathComponent:@"favoritesList"];
 }
 
 @end

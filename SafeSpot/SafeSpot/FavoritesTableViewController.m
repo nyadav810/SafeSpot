@@ -39,9 +39,8 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.appDelegate = [[UIApplication sharedApplication] delegate];
-    self.favoritesList = [[FavoritesList alloc] init];
-    [self.favoritesList fakeSomeSigns];
-    
+    self.favoritesList = self.appDelegate.favoritesList;
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self reloadInputViews];
@@ -100,7 +99,7 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
 // Override to support rearranging the table view.

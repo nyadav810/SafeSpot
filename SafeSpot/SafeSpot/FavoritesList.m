@@ -65,4 +65,18 @@
     [self.signs removeObjectsAtIndexes:indexes];
 }
 
+// Archiving
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.signs forKey:@"signs"];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    if (self = [super init]) {
+        _signs = [decoder decodeObjectForKey:@"signs"];
+    }
+    return self;
+}
+
 @end
