@@ -130,4 +130,23 @@
     
 }
 
+// Clear all Favorites using the 'Clear' Bar button item in the top left
+- (IBAction)clearButtonClicked:(id)sender {
+    [self.tableView beginUpdates];
+    
+    int n = self.favoritesList.signs.count; // will change, get before clearing signs
+    
+    // clear signs
+    [self.favoritesList.signs removeAllObjects];
+    
+    // clear tableview rows
+    for (int i = 0; i < n; i++)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+    [self.tableView endUpdates];
+    NSLog(@"Favorites List Cleared");
+}
 @end

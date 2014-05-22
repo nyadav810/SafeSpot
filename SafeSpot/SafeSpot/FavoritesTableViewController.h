@@ -16,4 +16,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) FavoritesList *favoritesList;
 
+- (IBAction)clearButtonClicked:(id)sender;
+
 @end

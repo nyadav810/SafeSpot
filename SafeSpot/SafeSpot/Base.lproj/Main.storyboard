@@ -255,7 +255,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="Kux-fJ-78T" id="IPZ-1J-ukE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Favorites" id="cZF-sN-fSI"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="cZF-sN-fSI">
+                        <barButtonItem key="leftBarButtonItem" title="Clear" id="M8t-9f-cok">
+                            <connections>
+                                <action selector="clearButtonClicked:" destination="Kux-fJ-78T" id="0fm-dM-BgO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="0Gy-fO-1Op" id="OVG-KG-EdE"/>
                     </connections>
