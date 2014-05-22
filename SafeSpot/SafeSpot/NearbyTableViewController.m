@@ -46,6 +46,11 @@
     [self reloadInputViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -62,21 +67,21 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return self.nearbyList.signs.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"NearbyCell";
+    RestrictionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    Restrictions *thisRestriction = self.nearbyList.signs[indexPath.row];
+    cell.titleLabel.text = thisRestriction.title;
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -127,7 +132,7 @@
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailViewController *destination = [segue destinationViewController];
-        //destination.restriction = self.nearbyList.signs[indexPath.row];
+        destination.restriction = self.nearbyList.signs[indexPath.row];
     }
 }
 

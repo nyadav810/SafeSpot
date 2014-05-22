@@ -40,6 +40,7 @@
 #import "Restrictions.h"
 #import "TBCoordinateQuadTree.h"
 #import "AnnotationViewController.h"
+#import "NearbyList.h"
 //#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
@@ -249,6 +250,9 @@
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2];
             
             //NSLog(@"%@",annotations);
+            
+            self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
+            
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }
     }];
