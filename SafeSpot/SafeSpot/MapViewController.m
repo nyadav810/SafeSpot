@@ -39,6 +39,7 @@
 #import "AppDelegate.h"
 #import "Restrictions.h"
 #import "TBCoordinateQuadTree.h"
+#import "AnnotationViewController.h"
 //#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
@@ -138,23 +139,44 @@
  */
 
 // http://stackoverflow.com/questions/11741334/mkmapview-show-detailview-how-to-make-a-segue
+//
+//-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+//    
+//    NSLog(@"rawr segue");
+//    // [self performSegueWithIdentifier:@"showPinDetails" sender:self];
+//    
+//    
+//    
+//}
+//
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    
+//    if ([segue.identifier isEqualToString:@"showPinDetails"]) {
+//        
+//        //
+//        
+//        
+//    }
+//}
 
--(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-    
-    NSLog(@"rawr segue");
-    // [self performSegueWithIdentifier:@"showPinDetails" sender:self];
-    
-    
-    
+
+#pragma mark - Map Annotation Segue
+
+// called when an annotation view is clicked on
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    [self performSegueWithIdentifier:@"annotationSegue" sender:view.annotation];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:@"showPinDetails"]) {
+//connection between sender and destination
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"annotationSegue"])
+    {
+        //connect with property in destination controller class
+        //MKAnnotationView *view = sender;
+        //NSString *sign = [view.annotation title];
         
-        //
-        
-        
+        [segue.destinationViewController setRestriction:sender];
     }
 }
 
@@ -262,7 +284,6 @@
         [self.mapView removeAnnotations:[toRemove allObjects]];
     }];
 }
-
 
 #pragma mark - UISearchBarDelegate
 
