@@ -276,25 +276,46 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
               
                 
                 //NSLog(@"%@",totalX);
-            
-                if(clust){
+                bool boo = YES;
+                
+                if(boo){ // clust, change for testing
                     
-                    
-                    NSArray * arr = [rest.title componentsSeparatedByString:@" "];
+                    // split text
+                    NSArray * split = [rest.title componentsSeparatedByString:@" "];
                     // Get First 2
-                    int counterForStreet;
+                    // split[0];
+                    // split[1];
+                    //NSLog(@"%@",split[0]);
+                    
+                    // NSLog(@"%@",split);
+                    
+                    int counterForStreet = 0;
                     //look for /0, last 2 chars
-                    for (int i = arr.count -3; i > arr.count -1; i--) {
-                        NSLog(@"");
-                        
+                    // test around H stadium
+                    for (int i = split.count -2; i > split.count -7; i--) {
+
+                        if([split[i] length] > 1){
+                            
+                            NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
+                            
+                            if ([code isEqualToString:@"/O"] ) { // might not be the best
+                                NSLog(@"%@,%@",split[i],split[i-1]);
+                                counterForStreet = i;
+                            }
+                        }
+                      
                         // LOOK FOR /O !!! only thing constant
                         // Things before / is side of street (for later)
                     }
                     
-                    counterForStreet; //
+                    NSLog(@"%@,%@",split[counterForStreet+1],split[counterForStreet+2]);
+                   
+                    // counterForStreet; //
+                    
+                    
                     
                     // IF count = 0 [clusteredAnnotations addObject:rest];
-                    // 
+                    //
                     // elseadd to a master array?
                     
                 }else{
@@ -314,17 +335,17 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // PDIS is disabled
                     // PRZ
                      // NSLog(@"%@",rest.pinColor);
-                    NSLog(@"purple ppp");
+                    // NSLog(@"Green paid ppp");
                 }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                      NSLog(@"purple p15");
+                      // NSLog(@"purple p15/timed? need to relook what this restriction is lol");
                 }else if([parkingType  isEqual: @"PRZ"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                    // NSLog(@"purple RPZZZZZ");
-                    // NSLog(@"%@",rest.pinColor);
+                    // NSLog(@"purple RPZZZ one");
+
                 }else if([parkingType  isEqual: @"PDIS"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                    NSLog(@"purple PDIS  ");
+                    // NSLog(@"purple PDIS  ");
                     //NSLog(@"%@",rest.pinColor);
                 } //maybe else red?
                 
