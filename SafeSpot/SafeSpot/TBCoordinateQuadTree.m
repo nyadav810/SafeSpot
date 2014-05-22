@@ -269,14 +269,15 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 Restrictions *rest = [[Restrictions alloc] init];
                 rest.coordinate = coordinate;
-                rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
+                rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
+                // rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
               
                 
                 //NSLog(@"%@",totalX);
                 
                 
-                 NSArray * arr = [rest.title componentsSeparatedByString:@" "];
+                 // NSArray * arr = [rest.title componentsSeparatedByString:@" "];
                 
                  // NSLog(@"%@",arr);
                 
@@ -289,16 +290,19 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // PPP, PTIML, all paid
                     // P1530, P1H
                     // PDIS is disabled
-                    // RPZ
+                    // PRZ
                      // NSLog(@"%@",rest.pinColor);
+                    NSLog(@"purple ppp");
                 }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                     // NSLog(@"%@",rest.pinColor);
-                }else if([parkingType  isEqual: @"RPZ"]){
+                      NSLog(@"purple p15");
+                }else if([parkingType  isEqual: @"PRZ"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                     // NSLog(@"%@",rest.pinColor);
+                    NSLog(@"purple RPZZZZZ");
+                    // NSLog(@"%@",rest.pinColor);
                 }else if([parkingType  isEqual: @"PDIS"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
+                    NSLog(@"purple PDIS  ");
                     //NSLog(@"%@",rest.pinColor);
                 } //maybe else red?
                 
@@ -308,12 +312,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 // cant if PNP, PNS
 
                 // need to check
-                if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
+                //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                       // NSLog(@"%s",info.parkType);
                      // NSLog(@"%@",rest.comment);
                     
                     [clusteredAnnotations addObject:rest]; //pass in parking type probably
-                }
+                //}
+                
                 });
             
                 //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
