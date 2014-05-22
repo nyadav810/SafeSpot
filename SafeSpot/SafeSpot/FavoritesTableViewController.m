@@ -10,7 +10,7 @@
 #import "DetailViewController.h"
 #import "AppDelegate.h"
 #import "FavoritesList.h"
-#import "FavoritesTableViewCell.h"
+#import "RestrictionTableViewCell.h"
 #import "Restrictions.h"
 
 @interface FavoritesTableViewController ()
@@ -74,7 +74,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"FavoriteCell";
-    FavoritesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    RestrictionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     Restrictions *thisRestriction = self.favoritesList.signs[indexPath.row];

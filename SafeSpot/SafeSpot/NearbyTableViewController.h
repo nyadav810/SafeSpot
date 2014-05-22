@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NearbyTableViewController : UITableViewController
+@class AppDelegate, NearbyList;
+
+@interface NearbyTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NearbyList *nearbyList;
 
 @end

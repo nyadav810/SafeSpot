@@ -7,6 +7,11 @@
 //
 
 #import "NearbyTableViewController.h"
+#import "DetailViewController.h"
+#import "AppDelegate.h"
+#import "NearbyList.h"
+#import "RestrictionTableViewCell.h"
+#import "Restrictions.h"
 
 @interface NearbyTableViewController ()
 
@@ -32,6 +37,13 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.nearbyList = self.appDelegate.nearbyList;
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self reloadInputViews];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,7 +64,7 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.nearbyList.signs.count;
 }
 
 /*
@@ -104,7 +116,6 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -112,7 +123,12 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"detailSegue"])
+    {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DetailViewController *destination = [segue destinationViewController];
+        //destination.restriction = self.nearbyList.signs[indexPath.row];
+    }
 }
-*/
 
 @end

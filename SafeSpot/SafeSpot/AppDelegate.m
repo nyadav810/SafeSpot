@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MapViewController.h"
 #import "FavoritesList.h"
+#import "NearbyList.h"
 
 @implementation AppDelegate
 
@@ -24,6 +25,9 @@
         self.favoritesList = [[FavoritesList alloc] init];
         [self.favoritesList fakeSomeSigns];
     }
+    
+    // Initialize Nearby List (needs to be done each time App starts)
+    self.nearbyList = [[NearbyList alloc] init];
     
     return YES;
 }

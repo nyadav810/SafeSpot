@@ -1,14 +1,14 @@
 //
-//  FavoritesTableViewCell.m
+//  RestrictionTableViewCell.m
 //  SafeSpot
 //
 //  Created by Naveen Yadav on 5/3/14.
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
 
-#import "FavoritesTableViewCell.h"
+#import "RestrictionTableViewCell.h"
 
-@implementation FavoritesTableViewCell
+@implementation RestrictionTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

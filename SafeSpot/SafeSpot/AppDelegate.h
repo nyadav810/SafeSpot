@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-@class Datastore, FavoritesList;
+@class Datastore, FavoritesList, NearbyList;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) FavoritesList *favoritesList;
+@property (strong, nonatomic) NearbyList *nearbyList;
 
 @end

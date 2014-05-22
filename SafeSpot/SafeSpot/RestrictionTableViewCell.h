@@ -1,5 +1,5 @@
 //
-//  FavoritesTableViewCell.h
+//  RestrictionTableViewCell.h
 //  SafeSpot
 //
 //  Created by Naveen Yadav on 5/3/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Restrictions;
 
-@interface FavoritesTableViewCell : UITableViewCell
+@interface RestrictionTableViewCell : UITableViewCell
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 

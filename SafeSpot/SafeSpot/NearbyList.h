@@ -1,17 +1,17 @@
 //
-//  FavoritesList.h
+//  NearbyList.h
 //  SafeSpot
 //
-//  Created by Naveen Yadav on 5/3/14.
+//  Created by Naveen Yadav on 5/21/14.
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
-//  Persistent list of user's favorite signs
+//  List of Parking Signs close to user
 
 #import <Foundation/Foundation.h>
 
 @class Restrictions;
 
-@interface FavoritesList : NSObject
+@interface NearbyList : NSObject
 
 @property (nonatomic, strong) NSMutableArray *signs;
 
@@ -20,7 +20,5 @@
 - (void)insertObjects:(NSArray *)array atIndexes:(NSIndexSet *)indexes;
 - (void)removeObjectsAtIndexes:(NSIndexSet *)indexes;
 
-
-- (void)fakeSomeSigns;
 
 @end

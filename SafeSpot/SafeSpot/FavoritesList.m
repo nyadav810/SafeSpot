@@ -22,7 +22,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Favorite List"];
+    return [self.signs description];
 }
 
 // Create fake Favorite signs
