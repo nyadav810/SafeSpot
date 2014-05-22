@@ -14,13 +14,14 @@
 @property (nonatomic, strong) NSDate *date; // Might not need
 
 @property (nonatomic, copy) NSString *title; // Steet Name
-@property (nonatomic, copy) NSString *pinColor; // Steet Name
+
+@property  (nonatomic) MKPinAnnotationColor pinColor; // Steet Name
 
 @property (nonatomic, copy) NSArray *allTimes; // start/end times..?
 
 @property (nonatomic, copy) NSString *comment; //Restrictions
 @property (nonatomic, strong) CLLocation *location;
-@property (nonatomic, strong) NSString *pin;
+
 
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
 

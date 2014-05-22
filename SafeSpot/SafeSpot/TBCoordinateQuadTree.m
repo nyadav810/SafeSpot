@@ -10,6 +10,7 @@
 
 #import "Restrictions.h"
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef struct TBParkingInfo {
     char* streetName;
@@ -270,7 +271,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 rest.coordinate = coordinate;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
-                rest.pin;
+              
                 
                 //NSLog(@"%@",totalX);
                 
@@ -284,21 +285,24 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //
                     
-                    rest.pinColor = @"yellow"; //place if its restricted/paid
+                    rest.pinColor = MKPinAnnotationColorGreen ;//place if its restricted/paid
                     // PPP, PTIML, all paid
                     // P1530, P1H
                     // PDIS is disabled
                     // RPZ
-                    
+                     // NSLog(@"%@",rest.pinColor);
                 }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
-                    rest.pinColor = @"yellow";
-                    
+                    rest.pinColor = MKPinAnnotationColorPurple;
+                     // NSLog(@"%@",rest.pinColor);
                 }else if([parkingType  isEqual: @"RPZ"]){
-                    rest.pinColor = @"purple";
-                    
+                    rest.pinColor = MKPinAnnotationColorPurple;
+                     // NSLog(@"%@",rest.pinColor);
                 }else if([parkingType  isEqual: @"PDIS"]){
-                    rest.pinColor = @"blue";
+                    rest.pinColor = MKPinAnnotationColorPurple;
+                    //NSLog(@"%@",rest.pinColor);
                 } //maybe else red?
+                
+                // need other icons, so probably add another property
                 
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS

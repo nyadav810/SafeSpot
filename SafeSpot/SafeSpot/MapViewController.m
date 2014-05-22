@@ -185,10 +185,11 @@
 // Method for CUSTOM pins
 
 //http://stackoverflow.com/questions/5861686/help-with-mapkit-three-annotations-with-three-different-pin-colors 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation // color:(NSString *)pin
 {
     // pin color red or green
-    NSString *reuseIdentifier = @"greenPin";
+    // annotation.pinColor
+    NSString *reuseIdentifier = @"pin";
     
     
     MKPinAnnotationView *result = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
@@ -199,8 +200,26 @@
     
     //result.image = [UIImage imageNamed:@"pin2.png"];
     result.canShowCallout = YES;
-    result.pinColor = MKPinAnnotationColorGreen;
     
+    // result.pinColor = MKPinAnnotationColorGreen;
+    if ([annotation isKindOfClass:[Restrictions class]]){
+        Restrictions *currentAnn = (Restrictions *)annotation;
+        /*
+        if (currentAnn.pinColor == MKPinAnnotationColorGreen) {
+            result.pinColor = MKPinAnnotationColorGreen;
+        }
+        
+        else if (currentAnn.pinColor == MKPinAnnotationColorRed) {
+            result.pinColor = MKPinAnnotationColorRed;
+            
+        }
+        
+        else if (currentAnn.pinColor == MKPinAnnotationColorPurple) {
+            result.pinColor = MKPinAnnotationColorPurple;
+        }
+         */
+        result.pinColor = currentAnn.pinColor;
+    }
     result.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
 
