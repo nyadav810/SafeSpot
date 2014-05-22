@@ -17,6 +17,6 @@
 
 - (void)buildTree;
 
-- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day;
+- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day b:(bool)clust;
 
 @end

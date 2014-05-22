@@ -36,8 +36,8 @@ TBQuadTreeNodeData TBDataFromLine(NSArray *s)
     TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
     
     NSString *streets =  s[21]; // maybe change length to -4 ?
-    parkingInfo->streetName = malloc(sizeof(char) * streets.length -4);
-    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length -4);
+    parkingInfo->streetName = malloc(sizeof(char) * streets.length ); //
+    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length );
     
     NSString *parkingStreet = s[20];
     NSString *pt = s[19]; // RPZ, blah blah type name
@@ -236,7 +236,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 
 // doesnt cluster, but adds signs in this rect to map
-- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day
+- (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day b:(bool)clust
 {
     double TBCellSize = TBCellSizeForZoomScale(zoomScale);
     double scaleFactor = zoomScale / TBCellSize;
@@ -269,21 +269,43 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 Restrictions *rest = [[Restrictions alloc] init];
                 rest.coordinate = coordinate;
-                rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
-                // rest.title =  [NSString stringWithFormat:@"%s", info.streetName];
+                // rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
+                
+                rest.title =  [NSString stringWithFormat:@"%s", info.streetName]; // street signs might be moving around
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
               
                 
                 //NSLog(@"%@",totalX);
+            
+                if(clust){
+                    
+                    
+                    NSArray * arr = [rest.title componentsSeparatedByString:@" "];
+                    // Get First 2
+                    int counterForStreet;
+                    //look for /0, last 2 chars
+                    for (int i = arr.count -3; i > arr.count -1; i--) {
+                        NSLog(@"");
+                        
+                        // LOOK FOR /O !!! only thing constant
+                        // Things before / is side of street (for later)
+                    }
+                    
+                    counterForStreet; //
+                    
+                    // IF count = 0 [clusteredAnnotations addObject:rest];
+                    // 
+                    // elseadd to a master array?
+                    
+                }else{
+                    
+                }
                 
-                
-                 // NSArray * arr = [rest.title componentsSeparatedByString:@" "];
-                
-                 // NSLog(@"%@",arr);
-                
-                int day = 0;
+                  //NSLog(@"%@",arr);
+        
                 NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
                 
+                // http://stackoverflow.com/questions/13522198/setting-map-pin-colour-dynamically-for-ios
                 if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //
                     
                     rest.pinColor = MKPinAnnotationColorGreen ;//place if its restricted/paid
@@ -298,7 +320,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                       NSLog(@"purple p15");
                 }else if([parkingType  isEqual: @"PRZ"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                    NSLog(@"purple RPZZZZZ");
+                    // NSLog(@"purple RPZZZZZ");
                     // NSLog(@"%@",rest.pinColor);
                 }else if([parkingType  isEqual: @"PDIS"]){
                     rest.pinColor = MKPinAnnotationColorPurple;

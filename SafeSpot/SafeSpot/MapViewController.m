@@ -97,8 +97,8 @@
     // use the zoom level to compute the region
     MKCoordinateSpan span; // = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
     // = MKCoordinateRegionMake(centerCoordinate, span);
-    span.latitudeDelta = 0.3f;
-    span.longitudeDelta = 0.3f;
+    span.latitudeDelta = 0.03f;
+    span.longitudeDelta = 0.03f;
     
     region.center = center;
     region.span = span;
@@ -191,7 +191,7 @@
     // annotation.pinColor
     NSString *reuseIdentifier = @"pin";
     
-    
+    //MKAnnotationView for own pics
     MKPinAnnotationView *result = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
     if (!result) {
         result =
@@ -259,21 +259,22 @@
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
 
-        //sleep(10); 
-        NSLog(@"%f",zoomScale);
+       
+         NSLog(@"%f",zoomScale);
         
         // might need a better scale
         
         // add global for current time and day
         if(zoomScale > .08){ //else maybe clustered view
-            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2];
+            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:NO];
             
             //NSLog(@"%@",annotations);
             
             self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
             
             [self updateMapViewAnnotationsWithAnnotations:annotations];
-        }
+        } //else call way that combines them
+        
     }];
 }
 
