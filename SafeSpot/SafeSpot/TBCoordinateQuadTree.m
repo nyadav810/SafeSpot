@@ -176,15 +176,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             // day compare first, if its okay check hour comparator
             // only run if not start and end hour are not null
             //[self dayComparator:info.startDay end:info.endDay today:day] [self hourComparator:info.startHour hour:info.endHour ct:time]
-            
-            //THIRD TEST, PRZ/? under category
-            // cant if PNP, PNS
-            
           //&& ([self dayComparator:info.startDay end:info.endDay today:day] ||[self hourComparator:info.startHour hour:info.endHour ct:time])){
-                
-                //[self.mapView addAnnotation:rest]; //shouldnt be here..? or maybe it should
-            
-            
             
         }
         
@@ -273,7 +265,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName]; // street signs might be moving around
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
-              
+                NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
                 
                 //NSLog(@"%@",totalX);
                 bool boo = YES;
@@ -285,16 +277,12 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // Get First 2
                     // split[0];
                     // split[1];
-                    //NSLog(@"%@",split[0]);
-                    
-                    // NSLog(@"%@",split);
                     
                     int counterForStreet = 0;
-                    //look for /0, last 2 chars
-                    // test around H stadium
+
                     
-                    //change end bounds later
-                    for (int i = split.count -3; i > 0; i--) {
+                    // change end bounds later maybe
+                    for (int i = (split.count - 3); i > 4; i--) {
 
                         if([split[i] length] > 1){
                             
@@ -310,12 +298,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         // LOOK FOR /O !!! only thing constant
                         // Things before / is side of street (for later)
                     }
+                    // rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                     
-                    NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
-                   
-                    // counterForStreet; //
-                    
-                    
+                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+                    //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
+
                     
                     // IF count = 0 [clusteredAnnotations addObject:rest];
                     //
@@ -327,7 +314,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                   //NSLog(@"%@",arr);
         
-                NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
+                
                 
                 // http://stackoverflow.com/questions/13522198/setting-map-pin-colour-dynamically-for-ios
                 if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //
