@@ -14,16 +14,12 @@
 @property (nonatomic, strong) NSDate *date; // Might not need
 
 @property (nonatomic, copy) NSString *title; // Steet Name
-
-@property  (nonatomic) MKPinAnnotationColor pinColor; // Steet Name
-
-@property (nonatomic, copy) NSArray *allTimes; // start/end times..?
+@property  (nonatomic) MKPinAnnotationColor pinColor; // pin color
 
 @property (nonatomic, copy) NSString *comment; //Restrictions
 @property (nonatomic, strong) CLLocation *location;
-
-
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSArray *allTimes; // used to combine restrictions. idk how yet
 
 - (NSNumber *)latitude;
 - (NSNumber *)longitude;

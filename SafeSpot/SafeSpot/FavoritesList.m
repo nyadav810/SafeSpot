@@ -33,8 +33,8 @@
     
     for (NSInteger i = 1; i < 21; i++)
     {
-        NSString *title = [NSString stringWithFormat:@"Favorite Sign #%d", i];
-        NSString *comment = [NSString stringWithFormat:@"Comment #%d", i];
+        NSString *title = [NSString stringWithFormat:@"Favorite Sign #%ld", (long)i];
+        NSString *comment = [NSString stringWithFormat:@"Comment #%ld", (long)i];
         Restrictions *newRestrictions = [Restrictions postWithTitle:title comment:comment latitude:latitudeSeattle longitude:longitudeSeattle];
         latitudeSeattle += .1;
         longitudeSeattle += .1;

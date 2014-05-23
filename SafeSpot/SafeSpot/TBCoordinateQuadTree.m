@@ -162,7 +162,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
         
         NSArray *signs = [rawSigns objectForKey:@"data"];
         
-        NSInteger count = signs.count - 1; //might not need -1
+        int count = (int) signs.count - 1; //might not need -1
         
         TBQuadTreeNodeData *dataArray = malloc(sizeof(TBQuadTreeNodeData) * count);
         
@@ -216,7 +216,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
     
     //have to change start/end if its -100 aka null
     if(currentDay < startDay && currentDay > endDay ){
-        NSLog(@"%d", currentDay);
+       
         return true;
 
     }
@@ -244,7 +244,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
             __block double totalX = 0;
             __block double totalY = 0;
-            
+            __block int count = 0;
             
             
             TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
@@ -252,69 +252,21 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 totalX += data.x;
                 totalY += data.y;
                 
-                // count++;
+                count++;
                 
                 TBParkingInfo info = *(TBParkingInfo *)data.data;
                 // http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                
                 Restrictions *rest = [[Restrictions alloc] init];
-                rest.coordinate = coordinate;
+            
                 // rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
+                
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                rest.coordinate = coordinate;
                 
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName]; // street signs might be moving around
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
                 NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
-                
-                //NSLog(@"%@",totalX);
-                bool boo = YES;
-                
-                if(boo){ // clust, change for testing
-                    
-                    // split text
-                    NSArray * split = [rest.title componentsSeparatedByString:@" "];
-                    // Get First 2
-                    // split[0];
-                    // split[1];
-                    
-                    int counterForStreet = 0;
-
-                    
-                    // change end bounds later maybe
-                    for (int i = (split.count - 3); i > 4; i--) {
-
-                        if([split[i] length] > 1){
-                            
-                            NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
-                            
-                            if ([code isEqualToString:@"/O"] ) { // might not be the best
-                                
-                                counterForStreet = i; // sometime i goes to 0?
-                                //maybe break/leave FOR loop
-                            }
-                        }
-                      
-                        // LOOK FOR /O !!! only thing constant
-                        // Things before / is side of street (for later)
-                    }
-                    // rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
-                    
-                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
-                    // for testing
-                    
-                    //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
-
-                    
-                    // IF count = 0 [clusteredAnnotations addObject:rest];
-
-                    // elseadd to a master array?
-                    
-                }else{
-                    
-                }
-                
-                  //NSLog(@"%@",arr);
-        
-                
                 
                 // http://stackoverflow.com/questions/13522198/setting-map-pin-colour-dynamically-for-ios
                 if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //
@@ -324,33 +276,78 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // P1530, P1H
                     // PDIS is disabled
                     // PRZ
-                     // NSLog(@"%@",rest.pinColor);
+                    // NSLog(@"%@",rest.pinColor);
                     // NSLog(@"Green paid ppp");
                 }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
                     rest.pinColor = MKPinAnnotationColorPurple;
-                      // NSLog(@"purple p15/timed? need to relook what this restriction is lol");
+                    // NSLog(@"purple p15/timed? need to relook what this restriction is lol");
                 }else if([parkingType  isEqual: @"PRZ"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple RPZZZ one");
-
+                    
                 }else if([parkingType  isEqual: @"PDIS"]){
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple PDIS  ");
-
+                    
                 } //
-                
                 // need other icons, so probably add another property
-                
-                
-                
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS
 
-                // need to check
+                
+                bool boo = YES;
+                if(boo){ // clust, change for testing
+                    
+                    // split text
+                    NSArray * split = [rest.title componentsSeparatedByString:@" "];
+                    int counterForStreet = 0;
+
+                    // change end bounds later maybe
+                    for (int i = (int)(split.count - 3); i > 4; i--) {
+                        if([split[i] length] > 1){
+                            NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
+                            // CAN use the part before/ to decide street side. COULD be hard cause of NW/SW
+                            if ([code isEqualToString:@"/O"] ) { // might not be the best
+                                
+                                counterForStreet = i;
+                                //maybe break/leave FOR loop
+                                break;
+                            }
+                        }
+                        // Things before / is side of street (for later)
+                    }
+                    // rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
+                    
+                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+                    // for testing
+                    //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
+
+                    
+                    // IF count = 0 [clusteredAnnotations addObject:rest];
+                    // elseadd to a master array?
+                    
+                }else{
+                    
+                }
+                
+                
+                [rest.title isEqualToString:@""]; // Find way to add Restriction to restriction
+                // might not want count,
+                if(count == 1){
+                    //CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                    //rest.coordinate = coordinate;
+                }
+                
+                if (count > 1){ // find way to combine to 1 restriction..? or add to segue stuff
+                    
+                    // CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                    // rest.coordinate = coordinate;
+                }
+                
+                // Add setting to ONLY show where you cant park?
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                       // NSLog(@"%s",info.parkType);
-                     // NSLog(@"%@",rest.comment);
-                    
+
                     [clusteredAnnotations addObject:rest];
                     // Need some type of collision detection/combo
                 

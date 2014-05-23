@@ -115,7 +115,7 @@
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
-    int weekday = (int) [comps weekday];
+    int weekday = (int) [comps weekday]; // turn to globals
     int current = (hour * 100) + minute;
 
     // call build tree
