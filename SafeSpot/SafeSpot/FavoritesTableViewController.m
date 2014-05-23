@@ -134,7 +134,7 @@
 - (IBAction)clearButtonClicked:(id)sender {
     [self.tableView beginUpdates];
     
-    int n = self.favoritesList.signs.count; // will change, get before clearing signs
+    NSUInteger n = self.favoritesList.signs.count; // will change, get before clearing signs
     
     // clear signs
     [self.favoritesList.signs removeAllObjects];

@@ -40,6 +40,7 @@
     if (self.restriction)
     {
         self.annotationTitle.title = self.restriction.title;
+        self.commentLabel.text = self.restriction.comment;
     }
 }
 

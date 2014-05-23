@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *annotationTitle;
 - (IBAction)doneButtonClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+
 @end

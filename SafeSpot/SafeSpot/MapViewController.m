@@ -67,7 +67,7 @@
     //builds tree
     [self main];
     
-    
+    [self updateNearbyAnnotations];
 }
 
 
@@ -132,28 +132,6 @@
  
  ", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
  */
-
-// http://stackoverflow.com/questions/11741334/mkmapview-show-detailview-how-to-make-a-segue
-//
-//-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-//    
-//    NSLog(@"rawr segue");
-//    // [self performSegueWithIdentifier:@"showPinDetails" sender:self];
-//    
-//    
-//    
-//}
-//
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    
-//    if ([segue.identifier isEqualToString:@"showPinDetails"]) {
-//        
-//        //
-//        
-//        
-//    }
-//}
-
 
 #pragma mark - Map Annotation Segue
 
@@ -262,8 +240,6 @@
             
             //NSLog(@"%@",annotations);
             
-            self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
-            
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         } //else call way that combines them
         
@@ -301,6 +277,27 @@
     }];
 }
 
+// Nearby Annotation stuff
+- (void)updateNearbyAnnotations
+{
+    CLLocation *location  = [self.locationManager location];
+    CLLocationCoordinate2D coordinate = [location coordinate];
+    
+    MKMapPoint curr;
+    MKMapRect rect;
+
+    if (location != nil) {
+        curr = MKMapPointForCoordinate(coordinate);
+        rect = MKMapRectMake(curr.x, curr.y, 0.0025, 0.0025);
+        
+        // Change nearby list here
+        
+        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:rect withZoomScale:[self zoomScale] c:1000 withDay:2 b:NO];
+        
+        self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
+    }
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -330,19 +327,23 @@
 
 - (IBAction)locationButtonClicked:(id)sender
 {
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
-    CLLocation *location  = [self.locationManager location];
-    CLLocationCoordinate2D coordinate = [location coordinate];
-    MKCoordinateRegion region;
-    region.center = coordinate;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.0125;
-    span.longitudeDelta = 0.0125;
-    region.span = span;
-    [self.mapView setRegion:region animated:YES];
-    
-    self.mapView.showsUserLocation = YES;
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)
+    {
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        [self.locationManager startUpdatingLocation];
+        CLLocation *location  = [self.locationManager location];
+        CLLocationCoordinate2D coordinate = [location coordinate];
+        MKCoordinateRegion region;
+        region.center = coordinate;
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.0125;
+        span.longitudeDelta = 0.0125;
+        region.span = span;
+        [self.mapView setRegion:region animated:YES];
+        
+        self.mapView.showsUserLocation = YES;
+        [self updateNearbyAnnotations];
+    }
 }
 
 - (IBAction)parkButtonClicked:(id)sender {
@@ -359,13 +360,9 @@
     [errorAlert show];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //NSLog(@"didUpdateToLocation: %@", newLocation);
-    CLLocation *currentLocation = newLocation;
-    
-    if (currentLocation != nil) {
-    }
+
 }
 
 @end
