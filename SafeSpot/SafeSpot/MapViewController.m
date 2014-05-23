@@ -362,7 +362,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-
+    // TODO: Update Nearby List when user moves WITHOUT clearing the list
 }
 
 @end
