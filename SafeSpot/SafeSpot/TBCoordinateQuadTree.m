@@ -336,9 +336,14 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 if(count == 1){
                     //CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                     //rest.coordinate = coordinate;
+                    
+                    // [clusteredAnnotations addObject:rest];
                 }
                 
                 if (count > 1){ // find way to combine to 1 restriction..? or add to segue stuff
+                    rest.allTimes;
+                    //blah idk
+                    rest.title = [NSString stringWithFormat:@"%@ %@",rest.title, parkingType];
                     
                     // CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                     // rest.coordinate = coordinate;
