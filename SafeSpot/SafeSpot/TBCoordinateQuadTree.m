@@ -296,6 +296,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
                 
                 bool boo = YES;
+                
                 if(boo){ // clust, change for testing
                     
                     // split text
@@ -343,7 +344,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 if (count > 1){ // find way to combine to 1 restriction..? or add to segue stuff
                     rest.allTimes;
                     //blah idk
-                    rest.title = [NSString stringWithFormat:@"%@ %@",rest.title, parkingType];
+                    // rest.title = [NSString stringWithFormat:@"%@ %@",rest.title, parkingType];
                     
                     // CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                     // rest.coordinate = coordinate;
