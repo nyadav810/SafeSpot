@@ -341,11 +341,13 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 //maybe use last object ?
                 if( last != NULL && ![rest.title isEqualToString:last.title]){
-                    //CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                    //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                     //rest.coordinate = coordinate;
                     [clusteredAnnotations addObject:rest];
                     // [clusteredAnnotations addObject:rest];
                 }else { // Maybe use # of signs for icon clustering?
+                    //problem with else, not clustering x.x
+                    
                     NSLog(@"%@",rest.title);
                     NSLog(@"%@",last.title);
                     // problem, streets are flippin floppin, aka

@@ -18,4 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
+
 @end

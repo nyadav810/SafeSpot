@@ -41,6 +41,8 @@
     {
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
+        //self.arrayLabel.text = self.restriction.clusterRestriction;
+        NSLog(@"%d",[self.restriction.clusterRestriction count]);
     }
 }
 

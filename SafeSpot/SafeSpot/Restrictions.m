@@ -14,7 +14,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<Post %@ %@>", self.date, self.comment];
+    return [NSString stringWithFormat:@"<Post %@ %@>", self.title, self.comment];
 }
 
 - (id)init
