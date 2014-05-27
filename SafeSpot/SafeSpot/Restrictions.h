@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *comment; //Restrictions
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
-@property (nonatomic, copy) NSArray *allTimes; // used to combine restrictions. idk how yet
+@property (nonatomic, copy) NSMutableArray *clusterRestriction; // used to combine restrictions. idk how yet
 
 - (NSNumber *)latitude;
 - (NSNumber *)longitude;

@@ -246,6 +246,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             __block double totalY = 0;
             __block int count = 0;
             
+            __block Restrictions *last = NULL;
             
             TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
                 //need to pass in root
@@ -258,7 +259,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 // http://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
                 
                 Restrictions *rest = [[Restrictions alloc] init];
-            
+                
+                
+                
+                
                 // rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
                 
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
@@ -317,9 +321,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         }
                         // Things before / is side of street (for later)
                     }
-                    // rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
+                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                     
-                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+                    //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
                     // for testing
                     //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
 
@@ -331,30 +335,42 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     
                 }
                 
-                
-                [rest.title isEqualToString:@""]; // Find way to add Restriction to restriction
+                // if last != null &&, or set boolean to show last != null
+                //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
                 // might not want count,
+                
+                //maybe use last object ?
                 if(count == 1){
                     //CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                     //rest.coordinate = coordinate;
-                    
+                    [clusteredAnnotations addObject:rest];
                     // [clusteredAnnotations addObject:rest];
-                }
-                
-                if (count > 1){ // find way to combine to 1 restriction..? or add to segue stuff
-                    rest.allTimes;
-                    //blah idk
-                    // rest.title = [NSString stringWithFormat:@"%@ %@",rest.title, parkingType];
+                }else if(count > 1){ // Maybe use # of signs for icon clustering?
+                    NSLog(@"%@",rest.title);
+                    NSLog(@"%@",last.title);
+                    // problem, streets are flippin floppin, aka
                     
-                    // CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
-                    // rest.coordinate = coordinate;
+                    /*
+                     2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST
+                     2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MINOR AVE & MARION ST
+                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                     */
+                    [last.clusterRestriction addObject:rest];
+
+                    //NSLog(@"%d",  [last.clusterRestriction count] );
+
                 }
                 
                 // Add setting to ONLY show where you cant park?
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                       // NSLog(@"%s",info.parkType);
-
-                    [clusteredAnnotations addObject:rest];
+                    // NSLog(@"%@",last.title);
+                
+                    last = rest;
+                
                     // Need some type of collision detection/combo
                 
                 //}
@@ -367,7 +383,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 //[clusteredAnnotations addObject:annotation];
                 
             }
-        
     }
     
     return [NSArray arrayWithArray:clusteredAnnotations];

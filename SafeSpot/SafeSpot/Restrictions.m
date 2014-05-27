@@ -21,6 +21,7 @@
 {
     if (self = [super init]) {
         _date = [NSDate date];
+        _clusterRestriction = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -49,6 +50,8 @@
     return @(self.location.coordinate.longitude);
     
 }
+
+
 
 // Archiving
 - (void)encodeWithCoder:(NSCoder *)encoder
