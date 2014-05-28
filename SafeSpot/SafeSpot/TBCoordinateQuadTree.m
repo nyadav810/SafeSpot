@@ -260,9 +260,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 Restrictions *rest = [[Restrictions alloc] init];
                 
-                
-                
-                
                 // rest.title =  [NSString stringWithFormat:@"%s", info.parkType];
                 
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
@@ -298,72 +295,62 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 //THIRD TEST, PRZ/? under category
                 // cant if PNP, PNS
 
-                
-                bool boo = YES;
-                
-                if(boo){ // clust, change for testing
-                    
-                    // split text
-                    NSArray * split = [rest.title componentsSeparatedByString:@" "];
-                    int counterForStreet = 0;
+            
 
-                    // change end bounds later maybe
-                    for (int i = (int)(split.count - 3); i > 4; i--) {
-                        if([split[i] length] > 1){
-                            NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
-                            // CAN use the part before/ to decide street side. COULD be hard cause of NW/SW
-                            if ([code isEqualToString:@"/O"] ) { // might not be the best
-                                
-                                counterForStreet = i;
-                                //maybe break/leave FOR loop
-                                break;
-                            }
+                // split text
+                NSArray * split = [rest.title componentsSeparatedByString:@" "];
+                int counterForStreet = 0;
+
+                // change end bounds later maybe
+                for (int i = (int)(split.count - 3); i > 4; i--) {
+                    if([split[i] length] > 1){
+                        NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
+                        // CAN use the part before/ to decide street side. COULD be hard cause of NW/SW
+                        if ([code isEqualToString:@"/O"] ) { // might not be the best
+                            
+                            counterForStreet = i;
+                            //maybe break/leave FOR loop
+                            break;
                         }
-                        // Things before / is side of street (for later)
                     }
-                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
-                    
-                    //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
-                    // for testing
-                    //NSLog(@"%@,%@",split[counterForStreet +1],split[counterForStreet+2]);
-
-                    
-                    // IF count = 0 [clusteredAnnotations addObject:rest];
-                    // elseadd to a master array?
-                    
-                }else{
-                    
+                    // Things before / is side of street (for later)
                 }
+                rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
+                
+                    //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+
                 
                 // if last != null &&, or set boolean to show last != null
                 //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
                 // might not want count,
                 
-                //maybe use last object ?
-                if( last != NULL && ![rest.title isEqualToString:last.title]){
-                    //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
-                    //rest.coordinate = coordinate;
+                if(clust){
+                    //maybe use last object ?
+                    if(last != NULL && ![rest.title isEqualToString:last.title]){
+                        //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
+                        //rest.coordinate = coordinate;
+                        [clusteredAnnotations addObject:rest];
+                        // [clusteredAnnotations addObject:rest];
+                    }else { // Maybe use # of signs for icon clustering?
+                        //problem with else, not clustering x.x
+                        
+                        NSLog(@"%@",rest.title);
+                        NSLog(@"%@",last.title);
+                        // problem, streets are flippin floppin, aka
+                        /*
+                         2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST
+                         2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MINOR AVE & MARION ST
+                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
+                         */
+                        [last.clusterRestriction addObject:rest];
+                        // maybe have NINJA way of holding onto 1st restriction(parent) reference
+                        
+                    }
+                        
+                }else{// bool false
                     [clusteredAnnotations addObject:rest];
-                    // [clusteredAnnotations addObject:rest];
-                }else { // Maybe use # of signs for icon clustering?
-                    //problem with else, not clustering x.x
-                    
-                    NSLog(@"%@",rest.title);
-                    NSLog(@"%@",last.title);
-                    // problem, streets are flippin floppin, aka
-                    
-                    /*
-                     2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST
-                     2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MINOR AVE & MARION ST
-                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                     2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                     */
-                    [last.clusterRestriction addObject:rest];
-                    // maybe have NINJA way of holding onto 1st restriction(parent) reference
-                    
-                    //NSLog(@"%d",  [last.clusterRestriction count] );
 
                 }
                 
@@ -375,8 +362,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     last = rest;
                 
                     // Need some type of collision detection/combo
-                
-                //}
                 
                 });
             
