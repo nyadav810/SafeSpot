@@ -27,6 +27,11 @@
 // Find way to update restrictions, maybe with a button
 // find way to update ONLY new restrictions, but for NOW just replace ALL?
 
+// TODO Naveen:
+// Park Car Feature
+// Map View Overlaid Search
+// Finish Favorites/Nearby
+// Improve location button
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -62,7 +67,7 @@
     self.coordinateQuadTree.mapView = self.mapView;
     
     // centers map
-    self.setCenterCoordinate;
+    [self setCenterCoordinate];
     
     //builds tree
     [self main];

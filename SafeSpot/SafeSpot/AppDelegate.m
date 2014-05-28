@@ -23,7 +23,7 @@
     if (!self.favoritesList)
     {
         self.favoritesList = [[FavoritesList alloc] init];
-        [self.favoritesList fakeSomeSigns];
+        //[self.favoritesList fakeSomeSigns];
     }
     
     // Initialize Nearby List (needs to be done each time App starts)
