@@ -9,6 +9,7 @@
 #import "AnnotationViewController.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
+#import "FavoritesList.h"
 
 @interface AnnotationViewController ()
 
@@ -65,6 +66,10 @@
 
 - (IBAction)doneButtonClicked:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)addFavoritesButtonClicked:(id)sender {
+    [self.appDelegate.favoritesList insertObject:self.restriction inSignsAtIndex:0];
 }
 
 @end

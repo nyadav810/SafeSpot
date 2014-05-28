@@ -15,9 +15,9 @@
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UINavigationItem *annotationTitle;
 - (IBAction)doneButtonClicked:(id)sender;
+- (IBAction)addFavoritesButtonClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
 
 @end
