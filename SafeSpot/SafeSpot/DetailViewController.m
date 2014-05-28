@@ -67,6 +67,7 @@
         [self.appDelegate.favoritesList removeObjectAtIndex:[self.appDelegate.favoritesList.signs indexOfObject:self.restriction]];
         
         // segue out
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 @end
