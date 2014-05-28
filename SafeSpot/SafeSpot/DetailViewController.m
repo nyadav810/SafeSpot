@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
+#import "FavoritesList.h"
 
 @interface DetailViewController ()
 
@@ -60,4 +61,12 @@
 }
 */
 
+- (IBAction)removeFavoriteButtonClicked:(id)sender {
+    if ([self.appDelegate.favoritesList.signs containsObject:self.restriction])
+    {
+        [self.appDelegate.favoritesList removeObjectAtIndex:[self.appDelegate.favoritesList.signs indexOfObject:self.restriction]];
+        
+        // segue out
+    }
+}
 @end

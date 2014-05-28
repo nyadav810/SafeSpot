@@ -15,5 +15,6 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UINavigationItem *detailTitle;
+- (IBAction)removeFavoriteButtonClicked:(id)sender;
 
 @end

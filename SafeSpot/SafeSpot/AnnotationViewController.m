@@ -69,7 +69,9 @@
 }
 
 - (IBAction)addFavoritesButtonClicked:(id)sender {
-    [self.appDelegate.favoritesList insertObject:self.restriction inSignsAtIndex:0];
+    if (![self.appDelegate.favoritesList.signs containsObject:self.restriction]) {
+        [self.appDelegate.favoritesList insertObject:self.restriction inSignsAtIndex:0];
+    }
 }
 
 @end
