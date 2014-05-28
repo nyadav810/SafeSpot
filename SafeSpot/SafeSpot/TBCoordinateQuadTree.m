@@ -361,7 +361,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                      2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
                      */
                     [last.clusterRestriction addObject:rest];
-
+                    // maybe have NINJA way of holding onto 1st restriction(parent) reference
+                    
                     //NSLog(@"%d",  [last.clusterRestriction count] );
 
                 }
