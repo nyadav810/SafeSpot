@@ -24,6 +24,7 @@
 
 // To Do: Add non retina splash screen
 // combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
+// 
 // Find way to update restrictions, maybe with a button
 // find way to update ONLY new restrictions, but for NOW just replace ALL?
 
@@ -93,8 +94,9 @@
     center.longitude = -122.3331;
     
     // use the zoom level to compute the region
-    MKCoordinateSpan span; // = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
-    // = MKCoordinateRegionMake(centerCoordinate, span);
+    MKCoordinateSpan span;
+    
+    // change these to change zoom level
     span.latitudeDelta = 0.03f;
     span.longitudeDelta = 0.03f;
     
@@ -130,14 +132,6 @@
 
 
 
-/*
- , [ 80235, "F301808D-EC9D-4711-9E2E-A360096ED708", 80235, 1285278966, "386118", 1285278966, "386118", null, "80235", "531546.0", "20", "2149", "25117", "260", "-17", "SGN-139286", "01-RS", "R7-NP", "[RED SLASHED CIRCLE] P", "PNP", "No Parking, but \"standing\" allowed", "
- 
- 15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
- 
- ", "N", "UP", "Wood Pole", "RED/WHITE", "12X18", false, null, null, "[RED SLASHED CIRCLE] P", "1", "7", "0", "2359", "47.5744", "-122.3135" ]
- */
-
 #pragma mark - Map Annotation Segue
 
 // called when an annotation view is clicked on
@@ -162,7 +156,7 @@
 // Method for CUSTOM pins
 
 //http://stackoverflow.com/questions/5861686/help-with-mapkit-three-annotations-with-three-different-pin-colors 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation // color:(NSString *)pin
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
 
     NSString *reuseIdentifier = @"pin";
@@ -180,20 +174,6 @@
     // result.pinColor = MKPinAnnotationColorGreen;
     if ([annotation isKindOfClass:[Restrictions class]]){
         Restrictions *currentAnn = (Restrictions *)annotation;
-        /*
-        if (currentAnn.pinColor == MKPinAnnotationColorGreen) {
-            result.pinColor = MKPinAnnotationColorGreen;
-        }
-        
-        else if (currentAnn.pinColor == MKPinAnnotationColorRed) {
-            result.pinColor = MKPinAnnotationColorRed;
-            
-        }
-        
-        else if (currentAnn.pinColor == MKPinAnnotationColorPurple) {
-            result.pinColor = MKPinAnnotationColorPurple;
-        }
-         */
         result.pinColor = currentAnn.pinColor;
     }
     result.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -228,7 +208,7 @@
     }
 }
 
-// when map moves
+// when map moves it calls this
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     [[NSOperationQueue new] addOperationWithBlock:^{
@@ -240,18 +220,17 @@
         
 
         // add global for current time and day
-        if(zoomScale > 0.256){ //else maybe clustered view
+        if(zoomScale > 0.256){ //zoom level affects clustering
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:NO];
             
             //NSLog(@"%@",annotations);
-            
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }else if(zoomScale > 0.065){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:YES];
             
             [self updateMapViewAnnotationsWithAnnotations:annotations];
-        }//else call way that combines them
+        }
         
     }];
 }

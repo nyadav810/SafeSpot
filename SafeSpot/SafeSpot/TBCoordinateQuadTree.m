@@ -27,6 +27,7 @@ typedef struct TBParkingInfo {
 
 
 // pass in array
+// Takes data from array and creates object and gets passed to a method to build the Quad tree node
 TBQuadTreeNodeData TBDataFromLine(NSArray *s)
 {
 
@@ -144,6 +145,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 @implementation TBCoordinateQuadTree
 
+// builds Quad tree
+// Currently from JSON, takes data and makes nodes for each sign in the file
 - (void)buildTree
 {
     @autoreleasepool {
@@ -186,6 +189,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
     }
 }
 
+// compares current hour to restriction hour
 - (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
     
     //have to change start/end if its -100 aka null
@@ -208,6 +212,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 
 // pass in todays date
+// compares current day to restriction days
 - (Boolean) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
     
     if(currentDay == -100){
@@ -226,6 +231,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
 
 // doesnt cluster, but adds signs in this rect to map
+// Adds annotations to map
+// allows panning/animatons/clustering
 - (NSArray *)clusteredAnnotationsWithinMapRect:(MKMapRect)rect withZoomScale:(double)zoomScale c:(int)time withDay:(int)day b:(bool)clust
 {
     double TBCellSize = TBCellSizeForZoomScale(zoomScale);
@@ -324,10 +331,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
 
                 if(clust){
-                    //maybe use last object ?
                     //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
                     
                     if(last != NULL && ![rest.title isEqualToString:last.title]){
+                        // maybe use total instead of data
                         //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                         //rest.coordinate = coordinate;
                         [clusteredAnnotations addObject:rest];
@@ -356,13 +363,20 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                        */
                         
                         [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
-                        
                         // maybe have NINJA way of holding onto 1st restriction(parent) reference
                         
                     }
                         
                 }else{// bool false
+                    if( rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude ==  [[clusteredAnnotations lastObject] longitude]){// doesnt work cause of miss match, maybe sort by lat OR longr
+                        NSLog(@"This was called cause 2 signs are on same spot rawr");
+                        [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
+
+                    }
+                   
+                     
                     [clusteredAnnotations addObject:rest];
+                    
 
                 }
                 
@@ -372,7 +386,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // NSLog(@"%@",last.title);
                 
                     last = rest;
-                
                     // sometimes null
                 
                 });
