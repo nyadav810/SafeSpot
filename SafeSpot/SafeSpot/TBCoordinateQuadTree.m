@@ -221,9 +221,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
     
     //have to change start/end if its -100 aka null
     if(currentDay < startDay && currentDay > endDay ){
-       
         return true;
-
     }
 
     return false;
@@ -272,6 +270,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 rest.coordinate = coordinate;
                 
+                rest.location = [[CLLocation alloc] initWithLatitude:data.x longitude:data.y];
+                
+                // rest.latitude = data.x ;
+                // rest.longitude = data.y;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName]; // street signs might be moving around
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
                 NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
@@ -344,10 +346,10 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         // [clusteredAnnotations addObject:rest];
                     }else { // Maybe use # of signs for icon clustering?
                         //problem with else, not clustering x.x
-                        
-                        NSLog(@"%@",rest.title);
+                        //NSLog(@"how long are these %@, and long %@",rest.longitude  ,rest.longitude);
+                        //NSLog(@"%@",rest.title);
                         NSLog(@"last  %@",last.title); //ending up as null, not really understanding the loop/blocks
-                        NSLog(@"this is the other last%@", [clusteredAnnotations lastObject]);
+                        //NSLog(@"this is the other last%@", [clusteredAnnotations lastObject]);
                         // problem, streets are flippin floppin, aka
                         /*
                          2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST

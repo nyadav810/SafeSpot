@@ -63,10 +63,14 @@
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
         self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
+        
         //NSLog(@"%d",[self.restriction.clusterRestriction count]);
         
         NSLog(@"%@",self.restriction.clusterRestriction );
-        
+        for(Restrictions *s in self.restriction.clusterRestriction){
+            NSLog(@"how long are these %f, and long %f",[s.longitude floatValue] ,[s.longitude floatValue]);
+            
+        }
         self.startDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startDay];
         self.endDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endDay];
     }

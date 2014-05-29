@@ -8,6 +8,8 @@
 
 #import "ParkCarViewController.h"
 #import "AppDelegate.h"
+#import "Restrictions.h"
+#import "MapViewController.h"
 
 @interface ParkCarViewController ()
 
@@ -32,12 +34,65 @@
     
     self.textView.delegate = self;
     
+    Restrictions; // Pass in signs within the mapview
+    
+    
+    // Get location / street?
+    // Maybe ask to confirm street?
+    // compare to street signs at SAME/(.0001 closest? fiddle0
+    
+    // use day/hour comparator
+    
+    
+    
+    // maybe need to know if on left/right side
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
 }
+
+
+// compares current hour to restriction hour
+- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
+    
+    //have to change start/end if its -100 aka null
+    if(current == -100){
+        return false;
+    }
+    
+    if(endHour < current){
+        return true;
+    } else if(current >= start){ // its its after restriction
+        return true;
+    }
+    
+    return false;
+}
+
+// Possibly debug current hour
+// http://stackoverflow.com/questions/1268509/convert-utc-nsdate-to-local-timezone-objective-c
+
+
+
+// pass in todays date
+// compares current day to restriction days
+- (Boolean) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
+    
+    if(currentDay == -100){
+        return false;
+    }
+    
+    //have to change start/end if its -100 aka null
+    if(currentDay < startDay && currentDay > endDay ){
+        return true;
+    }
+    
+    return false;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
