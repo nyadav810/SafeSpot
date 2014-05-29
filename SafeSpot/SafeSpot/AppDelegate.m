@@ -17,8 +17,9 @@
 {
     self.locationManager = [[CLLocationManager alloc] init];
     
-    // Restore Favorites List
+    // Restore Favorites List & User location
     self.favoritesList = [NSKeyedUnarchiver unarchiveObjectWithFile:[self favoritesListStorageLocation]];
+    self.userParkLocation = [NSKeyedUnarchiver unarchiveObjectWithFile:[self userParkStorageLocation]];
     
     if (!self.favoritesList)
     {
@@ -81,6 +82,11 @@
 - (NSString *)favoritesListStorageLocation
 {
     return [[self applicationDocumentsFolderName] stringByAppendingPathComponent:@"favoritesList"];
+}
+
+- (NSString *)userParkStorageLocation
+{
+    return [[self applicationDocumentsFolderName] stringByAppendingString:@"userParkLocation"];
 }
 
 @end

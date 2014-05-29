@@ -7,6 +7,7 @@
 //
 
 #import "ParkCarViewController.h"
+#import "AppDelegate.h"
 
 @interface ParkCarViewController ()
 
@@ -26,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    
     self.textView.delegate = self;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]

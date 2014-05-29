@@ -14,6 +14,8 @@
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSString *notes;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDate *duration;
 
 
 @end

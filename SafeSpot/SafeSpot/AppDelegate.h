@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-@class Datastore, FavoritesList, NearbyList;
+@class Datastore, FavoritesList, NearbyList, ParkingLocation;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -16,5 +16,6 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) FavoritesList *favoritesList;
 @property (strong, nonatomic) NearbyList *nearbyList;
+@property (strong, nonatomic) ParkingLocation *userParkLocation;
 
 @end
