@@ -322,10 +322,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 // if last != null &&, or set boolean to show last != null
                 //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
-                // might not want count,
-                
+
                 if(clust){
                     //maybe use last object ?
+                    //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
+                    
                     if(last != NULL && ![rest.title isEqualToString:last.title]){
                         //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                         //rest.coordinate = coordinate;
@@ -335,16 +336,27 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         //problem with else, not clustering x.x
                         
                         NSLog(@"%@",rest.title);
-                        NSLog(@"%@",last.title);
+                        NSLog(@"last  %@",last.title); //ending up as null, not really understanding the loop/blocks
+                        NSLog(@"this is the other last%@", [clusteredAnnotations lastObject]);
                         // problem, streets are flippin floppin, aka
                         /*
                          2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST
                          2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MARION ST & BOREN AVE
                          2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MINOR AVE & MARION ST
                          2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                         */
-                        [last.clusterRestriction addObject:rest];
+                         
+                         OTHER bug where it combines the wrong streets
+                         /*
+                        if([rest.title isEqualToString:[[clusteredAnnotations lastObject] title]] || [rest.title isEqualToString:last.title] ){
+                            [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
+
+                        }else{
+                            [clusteredAnnotations addObject:rest];
+                        }
+                       */
+                        
+                        [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
+                        
                         // maybe have NINJA way of holding onto 1st restriction(parent) reference
                         
                     }
@@ -361,7 +373,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                     last = rest;
                 
-                    // Need some type of collision detection/combo
+                    // sometimes null
                 
                 });
             

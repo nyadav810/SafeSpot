@@ -42,8 +42,9 @@
     {
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
-        //self.arrayLabel.text = self.restriction.clusterRestriction;
+        self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
         NSLog(@"%d",[self.restriction.clusterRestriction count]);
+        //NSLog(@"%@",self.restriction.clusterRestriction );
     }
 }
 
