@@ -23,8 +23,9 @@
 // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
 
 // To Do: Add non retina splash screen
-// combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
-// 
+// Create globals for current day/time
+// Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
+// implement CSV instead of JSON
 // Find way to update restrictions, maybe with a button
 // find way to update ONLY new restrictions, but for NOW just replace ALL?
 
@@ -107,23 +108,33 @@
     
 }
 
-
-// Main  method
-- (void) main{
-    
-    // get current day and time
+-(int)getTime{
+    // get current time
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
                                                   fromDate: [NSDate date]];
     
     int minute = (int) [dateComps minute];
     int hour = (int) [dateComps hour];
+    
+    int current = (hour * 100) + minute;
+    
+    return current;
+}
 
+-(int)getDay{
+    // get todays day
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+
+    int weekday = (int) [comps weekday];
+    return weekday;
+}
+
+
+// Main  method
+- (void) main{
     
-    int weekday = (int) [comps weekday]; // turn to globals
-    int current = (hour * 100) + minute;
 
     // call build tree
     [self.coordinateQuadTree buildTree];
@@ -217,17 +228,18 @@
 
        
          NSLog(@"%f",zoomScale);
+        int time =[self getTime];
+        int day = [self getDay];
         
-
         // add global for current time and day
         if(zoomScale > 0.256){ //zoom level affects clustering
-            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:NO];
+            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
             //NSLog(@"%@",annotations);
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }else if(zoomScale > 0.065){
             
-            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:1000 withDay:2 b:YES];
+            NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }
@@ -280,8 +292,9 @@
         rect = MKMapRectMake(curr.x, curr.y, 0.0025, 0.0025);
         
         // Change nearby list here
-        
-        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:rect withZoomScale:[self zoomScale] c:1000 withDay:2 b:NO];
+        int time =[self getTime];
+        int day = [self getDay];
+        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:rect withZoomScale:[self zoomScale] c:time withDay:day b:NO];
         
         self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
     }

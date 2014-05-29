@@ -28,6 +28,8 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *locationButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *parkButton;
+
+
 - (IBAction)locationButtonClicked:(id)sender;
 - (IBAction)parkButtonClicked:(id)sender;
 
