@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 @interface ParkingLocation : NSObject
+
+@property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
+@property (nonatomic, strong) NSString *notes;
+
 
 @end

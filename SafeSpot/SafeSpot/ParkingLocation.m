@@ -10,4 +10,20 @@
 
 @implementation ParkingLocation
 
+- (id)init
+{
+    return self;
+}
+
+- (id)initWithLocation: (CLLocation *)location
+                 notes: (NSString *)notes
+{
+    if (self = [super init])
+    {
+        _location = location;
+        _notes = notes;
+    }
+    return self;
+}
+
 @end
