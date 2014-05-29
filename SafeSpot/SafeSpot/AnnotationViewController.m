@@ -40,12 +40,35 @@
     
     if (self.restriction)
     {
+        NSMutableArray *numbers = [NSMutableArray array];
+        
+        for (NSInteger i = 1; i <= 7; i++)
+        {
+            [numbers addObject:[NSNumber numberWithInteger:i]];
+        }
+        
+        
+        
+        NSMutableArray *days = [NSMutableArray array];
+        [days addObject:@"Sunday"];
+        [days addObject:@"Monday"];
+        [days addObject:@"Tuesday"];
+        [days addObject:@"Wednesday"];
+        [days addObject:@"Thursday"];
+        [days addObject:@"Friday"];
+        [days addObject:@"Saturday"];
+        
+        NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:numbers forKeys:days];
+                                       
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
         self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
         //NSLog(@"%d",[self.restriction.clusterRestriction count]);
         
         NSLog(@"%@",self.restriction.clusterRestriction );
+        
+        self.startDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startDay];
+        self.endDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endDay];
     }
 }
 

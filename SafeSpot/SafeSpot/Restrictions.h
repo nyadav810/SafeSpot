@@ -21,6 +21,9 @@
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
 @property (nonatomic, copy) NSMutableArray *clusterRestriction; // used to combine restrictions. idk how yet
 
+@property int startDay;
+@property int endDay;
+
 - (NSNumber *)latitude;
 - (NSNumber *)longitude;
 

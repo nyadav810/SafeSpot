@@ -14,10 +14,14 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UINavigationItem *annotationTitle;
+
 - (IBAction)doneButtonClicked:(id)sender;
 - (IBAction)addFavoritesButtonClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startDayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endDayLabel;
+
 
 @end
