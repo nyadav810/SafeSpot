@@ -47,8 +47,7 @@
             [numbers addObject:[NSNumber numberWithInteger:i]];
         }
         
-        
-        
+        // Day of Week Array
         NSMutableArray *days = [NSMutableArray array];
         [days addObject:@"Sunday"];
         [days addObject:@"Monday"];
@@ -58,7 +57,7 @@
         [days addObject:@"Friday"];
         [days addObject:@"Saturday"];
         
-        NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:numbers forKeys:days];
+        NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
                                        
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
@@ -67,8 +66,12 @@
         
         NSLog(@"%@",self.restriction.clusterRestriction );
         
-        self.startDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startDay];
-        self.endDayLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endDay];
+        
+        NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
+        NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
+        
+        self.startDayLabel.text = startDay;
+        self.endDayLabel.text = endDay;
     }
 }
 
