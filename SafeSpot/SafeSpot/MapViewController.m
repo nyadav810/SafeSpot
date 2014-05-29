@@ -230,6 +230,7 @@
          NSLog(@"%f",zoomScale);
         int time =[self getTime];
         int day = [self getDay];
+        // NSLog(@"today is %d day",[self getDay]);
         
         // add global for current time and day
         if(zoomScale > 0.256){ //zoom level affects clustering
