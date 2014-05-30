@@ -23,6 +23,8 @@
 
 @property int startDay;
 @property int endDay;
+@property int startTime;
+@property int endTime;
 
 - (NSNumber *)latitude;
 - (NSNumber *)longitude;

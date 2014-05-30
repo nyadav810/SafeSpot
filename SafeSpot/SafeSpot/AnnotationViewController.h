@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endDayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 
 
 @end
