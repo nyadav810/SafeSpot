@@ -335,6 +335,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
 
                 // if last != null &&, or set boolean to show last != null
                 //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
+                /*
                 if(clust){
                     //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
                     if(last !=NULL && ![rest.title isEqualToString:last.title] ){
@@ -353,18 +354,19 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         // problem, streets are flippin floppin, aka
                          //OTHER bug where it combines the wrong streets
                         
-                         /*
+                 
                         if([rest.title isEqualToString:[[clusteredAnnotations lastObject] title]] || [rest.title isEqualToString:last.title] ){
                             [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
                         }else{
                             [clusteredAnnotations addObject:rest];
                         }
-                       */
+                 
                         [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
 
                     }
                         
                 }else{// bool false
+                 */
                     if( rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude ==  [[clusteredAnnotations lastObject] longitude]){// doesnt work cause of miss match, maybe sort by lat OR longr
                         NSLog(@"This was called cause 2 signs are on same spot rawr");
                         [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
@@ -375,7 +377,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     [clusteredAnnotations addObject:rest];
                     
 
-                }
+                
                 
                 // Add setting to ONLY show where you cant park?
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){

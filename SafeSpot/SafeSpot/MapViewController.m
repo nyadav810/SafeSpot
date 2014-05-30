@@ -242,41 +242,55 @@
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
             //NSLog(@"%@",annotations);
-            NSArray *trim; // Might not want Array
+            NSMutableArray *trim = [[NSMutableArray alloc] init]; // Might not want Array
             
             //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
 
             for(Restrictions *restriction in annotations){
                 //NSLog(@"%@",restriction);
+                
                 if(YES){
                     // NSMapTable;
+                    
                 } // find way to keep track of same lat/long, then add
-                [restriction clusterRestriction];
+                [[restriction clusterRestriction] addObject:restriction];
                 
+                //[trim addObject:restriction];
             }
             
-            
+            // change to trim
             [self updateMapViewAnnotationsWithAnnotations:annotations];
+            
         }else if(zoomScale > 0.065){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             
             // Do clustering here
+            //NSMapTable *rawr = [[NSMapTable alloc] init];
+            NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init];
+            
             //NSLog(@" all signs? test %@", annotations);
             for(Restrictions *restriction in annotations){
                 //NSLog(@"%@",restriction);
-                if(YES){
-                    NSMapTable *rawr = [[NSMapTable alloc] init];
-                    NSDictionary *rawr2 = [[NSDictionary alloc] init];
-                    
+                
+               
+                if([clusterSigns objectForKey:restriction.title] == NULL){
+                    NSLog(@"CAPSTONE IS ALMOST OVER! COLLEGE");
+                    [clusterSigns setValue:restriction forKey:restriction.title];
                     //NSMapTable
                     
-                } // find way to keep track of same locations, then add
-                [restriction clusterRestriction];
+                }else{
+                     NSLog(@"CAPSTONE does exist idk what to do");
+                    // change to the getter first
+                    [[[clusterSigns objectForKey:restriction.title] clusterRestriction] addObject:restriction];
+                    //[rawr2 setValue:restriction forKey:restriction.title];
+
+                }// find way to keep track of same locations, then add
+                 // might not need :D
             
             }
-            
-            [self updateMapViewAnnotationsWithAnnotations:annotations];
+            NSLog(@"%@",[clusterSigns allValues]);
+            [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
             
             
