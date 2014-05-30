@@ -71,6 +71,9 @@
         
         self.startDayLabel.text = startDay;
         self.endDayLabel.text = endDay;
+        
+        self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
+        self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
     }
 }
 
