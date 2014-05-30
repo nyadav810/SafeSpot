@@ -237,56 +237,61 @@
         int day = [self getDay];
         // NSLog(@"today is %d day",[self getDay]);
         
-        // add global for current time and day
+
         if(zoomScale > 0.256){ //zoom level affects clustering
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
-            //NSLog(@"%@",annotations);
-            NSMutableArray *trim = [[NSMutableArray alloc] init]; // Might not want Array
+
+            NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init]; // Might not want Array
             
             //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
 
             for(Restrictions *restriction in annotations){
-                //NSLog(@"%@",restriction);
+               // NSLog(@"%@",restriction.location);
+                NSString *loc = [NSString stringWithFormat:@"%f%f",[restriction.longitude floatValue],[restriction.longitude floatValue]];
                 
-                if(YES){
+                //NSLog(@"%@",[clusterSigns objectForKey:loc] );
+                 NSLog(@"%@",loc );
+                if([clusterSigns objectForKey:loc] == NULL){
                     // NSMapTable;
+                    [clusterSigns setValue:restriction forKey:loc];
+                    //[[restriction clusterRestriction] addObject:restriction];
+                    //NEED to find way to combine all, CLUSTER doesnt work
+                    NSLog(@" HARDAA %@",loc);
+                }else{
                     
-                } // find way to keep track of same lat/long, then add
-                [[restriction clusterRestriction] addObject:restriction];
+                    [[[clusterSigns objectForKey:loc] clusterRestriction] addObject:restriction];
+                    
+                    
+                }// find way to keep track of same lat/long, then add
                 
                 //[trim addObject:restriction];
             }
             
-            // change to trim
-            [self updateMapViewAnnotationsWithAnnotations:annotations];
-            
+            // change to clusterSigns
+             [self updateMapViewAnnotationsWithAnnotations:annotations];
+            //[self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
         }else if(zoomScale > 0.065){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             
-            // Do clustering here
-            //NSMapTable *rawr = [[NSMapTable alloc] init];
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init];
             
-            //NSLog(@" all signs? test %@", annotations);
             for(Restrictions *restriction in annotations){
                 //NSLog(@"%@",restriction);
                 
-               
                 if([clusterSigns objectForKey:restriction.title] == NULL){
-                    NSLog(@"CAPSTONE IS ALMOST OVER! COLLEGE");
+                    // NSLog(@"CAPSTONE IS ALMOST OVER! COLLEGE");
                     [clusterSigns setValue:restriction forKey:restriction.title];
                     //NSMapTable
                     
                 }else{
-                     NSLog(@"CAPSTONE does exist idk what to do");
+                    //NSLog(@"CAPSTONE does exist idk what to do");
                     // change to the getter first
                     [[[clusterSigns objectForKey:restriction.title] clusterRestriction] addObject:restriction];
-                    //[rawr2 setValue:restriction forKey:restriction.title];
+          
 
-                }// find way to keep track of same locations, then add
-                 // might not need :D
+                }
             
             }
             NSLog(@"%@",[clusterSigns allValues]);
