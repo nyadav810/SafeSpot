@@ -169,7 +169,12 @@
 //http://stackoverflow.com/questions/5861686/help-with-mapkit-three-annotations-with-three-different-pin-colors 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
-
+    // Get rid of pin for user location
+    if (annotation == mapView.userLocation)
+    {
+        return nil;
+    }
+    
     NSString *reuseIdentifier = @"pin";
     
     //MKAnnotationView for own pics
@@ -368,13 +373,8 @@
         [self.locationManager startUpdatingLocation];
         CLLocation *location  = [self.locationManager location];
         CLLocationCoordinate2D coordinate = [location coordinate];
-        MKCoordinateRegion region;
-        region.center = coordinate;
-        MKCoordinateSpan span;
-        span.latitudeDelta = 0.0125;
-        span.longitudeDelta = 0.0125;
-        region.span = span;
-        [self.mapView setRegion:region animated:YES];
+
+        [self.mapView setCenterCoordinate:coordinate animated:NO];
         
         self.mapView.showsUserLocation = YES;
         [self updateNearbyAnnotations];
