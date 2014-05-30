@@ -32,6 +32,29 @@
     // Do any additional setup after loading the view.
     self.appDelegate = [[UIApplication sharedApplication] delegate];
     [self configureView];
+    [self configureMap];
+}
+
+- (void)configureMap
+{
+    if (self.restriction)
+    {
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        [annotation setCoordinate:self.restriction.coordinate];
+        [self.mapView addAnnotation:annotation];
+        
+        MKCoordinateRegion region;
+        MKCoordinateSpan span;
+        
+        span.latitudeDelta = 0.01;
+        span.longitudeDelta = 0.01;
+        region.span = span;
+        region.center = self.restriction.coordinate;
+        [self.mapView setRegion:region animated:YES];
+        [self.mapView regionThatFits:region];
+        
+        //[self.mapView setCenterCoordinate:self.restriction.coordinate animated:NO];
+    }
 }
 
 - (void)configureView

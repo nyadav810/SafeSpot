@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 @class Restrictions;
 
@@ -15,6 +17,7 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UINavigationItem *detailTitle;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDayLabel;

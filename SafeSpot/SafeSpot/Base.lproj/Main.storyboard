@@ -333,6 +333,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="SfJ-5j-d5B">
+                                <rect key="frame" x="20" y="290" width="280" height="173"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -342,6 +346,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="detailTitle" destination="hQh-dQ-86Q" id="Jax-je-ytd"/>
                         <outlet property="endDayLabel" destination="QO8-Qg-mnW" id="LK1-iT-hQU"/>
                         <outlet property="endTimeLabel" destination="jGF-Mn-Q8X" id="5TI-aJ-6Bd"/>
+                        <outlet property="mapView" destination="SfJ-5j-d5B" id="Nlk-of-wdN"/>
                         <outlet property="removeFromFavoritesButton" destination="XHL-de-NsG" id="SCk-S1-0hF"/>
                         <outlet property="startDayLabel" destination="VKL-hO-2l2" id="ixk-bX-Lia"/>
                         <outlet property="startTimeLabel" destination="9cI-oQ-I5i" id="JvH-9a-AM6"/>

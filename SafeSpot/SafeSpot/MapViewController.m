@@ -360,11 +360,13 @@
 
 #pragma mark - Button actions
 
+// Search bar cancel button
 - (IBAction)didClickCancelButton:(id)sender
 {
     [self searchBarCancelButtonClicked:self.searchBar];
 }
 
+// Get user location
 - (IBAction)locationButtonClicked:(id)sender
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)
@@ -374,13 +376,14 @@
         CLLocation *location  = [self.locationManager location];
         CLLocationCoordinate2D coordinate = [location coordinate];
 
-        [self.mapView setCenterCoordinate:coordinate animated:NO];
+        [self.mapView setCenterCoordinate:coordinate animated:YES];
         
         self.mapView.showsUserLocation = YES;
         [self updateNearbyAnnotations];
     }
 }
 
+// Segue to park car
 - (IBAction)parkButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"parkSegue" sender:sender];
 }
