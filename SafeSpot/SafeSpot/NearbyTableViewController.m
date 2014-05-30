@@ -133,6 +133,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailViewController *destination = [segue destinationViewController];
         destination.restriction = self.nearbyList.signs[indexPath.row];
+        destination.nearby = YES;
     }
 }
 

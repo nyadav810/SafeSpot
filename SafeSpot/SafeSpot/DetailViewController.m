@@ -78,6 +78,7 @@
         self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
     }
     
+    // Hide remove from Favorites button if segue came from Nearby
     if (self.nearby == YES)
     {
         self.removeFromFavoritesButton.hidden = YES;

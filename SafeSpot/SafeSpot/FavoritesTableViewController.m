@@ -126,6 +126,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailViewController *destination = [segue destinationViewController];
         destination.restriction = self.favoritesList.signs[indexPath.row];
+        destination.nearby = NO;
     }
     
 }
