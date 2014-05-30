@@ -331,20 +331,16 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 }
                 rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                 
-                    //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
+                //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
 
-                
                 // if last != null &&, or set boolean to show last != null
                 //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
-
                 if(clust){
                     //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
-                    
-                    if( ![rest.title isEqualToString:[[clusteredAnnotations lastObject] title]] ){
+                    if(last !=NULL && ![rest.title isEqualToString:last.title] ){
                         // maybe use total instead of data
                         //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                         //rest.coordinate = coordinate;
-                        
                         [clusteredAnnotations addObject:rest];
                         // [clusteredAnnotations addObject:rest];
                     }else { // Maybe use # of signs for icon clustering?
@@ -353,6 +349,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         //NSLog(@"%@",rest.title);
                         //NSLog(@"last  %@",last.title); //ending up as null, not really understanding the loop/blocks
                         //NSLog(@"this is the other last%@", [clusteredAnnotations lastObject]);
+                        
                         // problem, streets are flippin floppin, aka
                          //OTHER bug where it combines the wrong streets
                         
@@ -363,10 +360,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                             [clusteredAnnotations addObject:rest];
                         }
                        */
-                        
                         [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
-                        // maybe have NINJA way of holding onto 1st restriction(parent) reference
-                        
+
                     }
                         
                 }else{// bool false

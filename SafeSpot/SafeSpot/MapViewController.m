@@ -237,11 +237,18 @@
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
             //NSLog(@"%@",annotations);
-            NSArray *trim; // 
+            NSArray *trim; // Might not want Array
+            
             //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
-            
-            //maybe make new array
-            
+
+            for(Restrictions *restriction in annotations){
+                //NSLog(@"%@",restriction);
+                if(YES){
+                    // NSMapTable;
+                } // find way to keep track of same lat/long, then add
+                [restriction clusterRestriction];
+                
+            }
             
             
             [self updateMapViewAnnotationsWithAnnotations:annotations];
@@ -251,11 +258,16 @@
             
             // Do clustering here
             //NSLog(@" all signs? test %@", annotations);
-            
-            
             for(Restrictions *restriction in annotations){
                 //NSLog(@"%@",restriction);
-                
+                if(YES){
+                    NSMapTable *rawr = [[NSMapTable alloc] init];
+                    NSDictionary *rawr2 = [[NSDictionary alloc] init];
+                    
+                    //NSMapTable
+                    
+                } // find way to keep track of same locations, then add
+                [restriction clusterRestriction];
             
             }
             
