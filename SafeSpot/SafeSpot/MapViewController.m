@@ -237,12 +237,32 @@
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
             //NSLog(@"%@",annotations);
+            NSArray *trim; // 
+            //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
+            
+            //maybe make new array
+            
+            
+            
             [self updateMapViewAnnotationsWithAnnotations:annotations];
         }else if(zoomScale > 0.065){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             
+            // Do clustering here
+            //NSLog(@" all signs? test %@", annotations);
+            
+            
+            for(Restrictions *restriction in annotations){
+                //NSLog(@"%@",restriction);
+                
+            
+            }
+            
             [self updateMapViewAnnotationsWithAnnotations:annotations];
+            
+            
+            
         }
         
     }];

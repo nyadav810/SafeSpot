@@ -340,30 +340,25 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 if(clust){
                     //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
                     
-                    if(last != NULL && ![rest.title isEqualToString:last.title]){
+                    if( ![rest.title isEqualToString:[[clusteredAnnotations lastObject] title]] ){
                         // maybe use total instead of data
                         //CLLocationCoor dinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                         //rest.coordinate = coordinate;
+                        
                         [clusteredAnnotations addObject:rest];
                         // [clusteredAnnotations addObject:rest];
                     }else { // Maybe use # of signs for icon clustering?
                         //problem with else, not clustering x.x
                         //NSLog(@"how long are these %@, and long %@",rest.longitude  ,rest.longitude);
                         //NSLog(@"%@",rest.title);
-                        NSLog(@"last  %@",last.title); //ending up as null, not really understanding the loop/blocks
+                        //NSLog(@"last  %@",last.title); //ending up as null, not really understanding the loop/blocks
                         //NSLog(@"this is the other last%@", [clusteredAnnotations lastObject]);
                         // problem, streets are flippin floppin, aka
-                        /*
-                         2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MINOR AVE & MARION ST
-                         2014-05-27 13:50:27.726 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MINOR AVE & MARION ST
-                         2014-05-27 13:50:27.727 SafeSpot[65737:3c03] MARION ST & BOREN AVE
-                         
-                         OTHER bug where it combines the wrong streets
+                         //OTHER bug where it combines the wrong streets
+                        
                          /*
                         if([rest.title isEqualToString:[[clusteredAnnotations lastObject] title]] || [rest.title isEqualToString:last.title] ){
                             [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
-
                         }else{
                             [clusteredAnnotations addObject:rest];
                         }
