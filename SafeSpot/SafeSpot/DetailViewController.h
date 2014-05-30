@@ -15,6 +15,17 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) Restrictions *restriction;
 @property (weak, nonatomic) IBOutlet UINavigationItem *detailTitle;
+
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startDayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endDayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
+
+
 - (IBAction)removeFavoriteButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *removeFromFavoritesButton;
+
+@property BOOL nearby;
 
 @end

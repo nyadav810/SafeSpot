@@ -40,7 +40,47 @@
     
     if (self.restriction)
     {
+        
+        NSMutableArray *numbers = [NSMutableArray array];
+        
+        for (NSInteger i = 1; i <= 7; i++)
+        {
+            [numbers addObject:[NSNumber numberWithInteger:i]];
+        }
+        
+        // Day of Week Array
+        NSMutableArray *days = [NSMutableArray array];
+        [days addObject:@"Sunday"];
+        [days addObject:@"Monday"];
+        [days addObject:@"Tuesday"];
+        [days addObject:@"Wednesday"];
+        [days addObject:@"Thursday"];
+        [days addObject:@"Friday"];
+        [days addObject:@"Saturday"];
+        
+        NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
+        
         self.detailTitle.title = self.restriction.title;
+        self.commentLabel.text = self.restriction.comment;
+
+//        self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
+//        //NSLog(@"%d",[self.restriction.clusterRestriction count]);
+//        
+//        NSLog(@"%@",self.restriction.clusterRestriction );
+        
+        NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
+        NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
+        
+        self.startDayLabel.text = startDay;
+        self.endDayLabel.text = endDay;
+        
+        self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
+        self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
+    }
+    
+    if (self.nearby == YES)
+    {
+        self.removeFromFavoritesButton.hidden = YES;
     }
 }
 
