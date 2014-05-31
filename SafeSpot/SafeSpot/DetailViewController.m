@@ -73,13 +73,14 @@
         
         // Day of Week Array
         NSMutableArray *days = [NSMutableArray array];
-        [days addObject:@"Sunday"];
+       
         [days addObject:@"Monday"];
         [days addObject:@"Tuesday"];
         [days addObject:@"Wednesday"];
         [days addObject:@"Thursday"];
         [days addObject:@"Friday"];
         [days addObject:@"Saturday"];
+        [days addObject:@"Sunday"]; // is day 7
         
         NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
         

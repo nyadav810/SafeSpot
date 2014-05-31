@@ -269,6 +269,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 rest.coordinate = coordinate;
+                NSLog(@"%f", data.x);
                 
                 rest.location = [[CLLocation alloc] initWithLatitude:data.x longitude:data.y];
                 
@@ -305,11 +306,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // NSLog(@"purple PDIS  ");
                     
                 } //
-                // need other icons, so probably add another property
-                //THIRD TEST, PRZ/? under category
-                // cant if PNP, PNS
-
-            
 
                 // split text
                 NSArray * split = [rest.title componentsSeparatedByString:@" "];
@@ -333,8 +329,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
 
-                // if last != null &&, or set boolean to show last != null
-                //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
+                              //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
                 /*
                 if(clust){
                     //[rest.title isEqualToString:([[clusteredAnnotations lastObject] title]) ]
@@ -367,11 +362,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         
                 }else{// bool false
                  */
-                    if( rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude ==  [[clusteredAnnotations lastObject] longitude]){// doesnt work cause of miss match, maybe sort by lat OR longr
-                        NSLog(@"This was called cause 2 signs are on same spot rawr");
-                        [[[clusteredAnnotations lastObject] clusterRestriction]  addObject:rest];
-
-                    }
                    
                      
                     [clusteredAnnotations addObject:rest];
@@ -383,16 +373,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                       // NSLog(@"%s",info.parkType);
                     // NSLog(@"%@",last.title);
-                
-                    last = rest;
+
                     // sometimes null
                 
                 });
-            
-                //TBClusterAnnotation *annotation = [[TBClusterAnnotation alloc] initWithCoordinate:coordinate count:count];
-                //annotation.title = [names lastObject];
-                //annotation.subtitle = [phoneNumbers lastObject];
-                //[clusteredAnnotations addObject:annotation];
+
                 
             }
     }

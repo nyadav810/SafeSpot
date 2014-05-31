@@ -247,7 +247,9 @@
             //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
 
             for(Restrictions *restriction in annotations){
-               // NSLog(@"%@",restriction.location);
+                NSLog(@"%@",restriction);
+                NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
+                
                 //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
                 NSString *loc = [NSString stringWithFormat:@"%f",restriction.coordinate.longitude ];
                 restriction.coordinate.latitude;
@@ -261,7 +263,7 @@
                     //NEED to find way to combine all, CLUSTER doesnt work
                     NSLog(@" HARDAA %@",loc);
                 }else{
-                    NSLog(@"%@",loc );
+                    //NSLog(@"%@",loc );
                     [[[clusterSigns objectForKey:loc] clusterRestriction] addObject:restriction];
                     
                     
@@ -273,7 +275,7 @@
             // change to clusterSigns
             [self updateMapViewAnnotationsWithAnnotations:annotations];
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
-        }else if(zoomScale > 0.065){
+        }else if(zoomScale > 0.06){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             
@@ -296,7 +298,7 @@
                 }
             
             }
-            NSLog(@"%@",[clusterSigns allValues]);
+            // NSLog(@"%@",[clusterSigns allValues]);
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
             
