@@ -52,8 +52,6 @@
         region.center = self.restriction.coordinate;
         [self.mapView setRegion:region animated:YES];
         [self.mapView regionThatFits:region];
-        
-        //[self.mapView setCenterCoordinate:self.restriction.coordinate animated:NO];
     }
 }
 
@@ -98,8 +96,10 @@
         self.startDayLabel.text = startDay;
         self.endDayLabel.text = endDay;
         
-        self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
-        self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
+        //self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
+        //self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
+        self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
+        self.endTimeLabel.text = [self convertTimeFromMilitary:self.restriction.endTime];
     }
     
     // Hide remove from Favorites button if segue came from Nearby
@@ -107,6 +107,34 @@
     {
         self.removeFromFavoritesButton.hidden = YES;
     }
+}
+
+- (NSString *)convertTimeFromMilitary:(int)x
+{
+    NSString *time;
+	// convert military time to AM/PM
+    if (x < 1000)
+    {
+        time = [NSString stringWithFormat:@"0%d", x];
+    } else
+    {
+        time = [NSString stringWithFormat:@"%d", x];
+    }
+    
+	int mHr = [[time substringWithRange:NSMakeRange(0,2)] intValue];
+	int min = [[time substringWithRange:NSMakeRange(2,2)] intValue];
+    
+	int hr;
+	if(mHr == 0)
+    {
+		hr = 12;
+	}
+    else
+    {
+		hr = mHr % 12;
+	}
+    
+	return [NSString stringWithFormat:@"%d:%.2d %@", hr, min, (mHr >= 12 ? @"PM" : @"AM")];
 }
 
 - (void)didReceiveMemoryWarning

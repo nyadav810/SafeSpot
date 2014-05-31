@@ -345,7 +345,8 @@
     MKMapPoint curr;
     MKMapRect rect;
 
-    if (location != nil) {
+    if (location != nil)
+    {
         curr = MKMapPointForCoordinate(coordinate);
         rect = MKMapRectMake(curr.x, curr.y, 0.0025, 0.0025);
         
