@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSDate *date; // Might not need
 
 @property (nonatomic, copy) NSString *title; // Steet Name
+@property (nonatomic, copy) NSString *parkingType;
+
 @property  (nonatomic) MKPinAnnotationColor pinColor; // pin color
 
 @property (nonatomic, copy) NSString *comment; //Restrictions

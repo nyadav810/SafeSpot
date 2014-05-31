@@ -7,6 +7,8 @@
 //
 
 #import "ParkCarViewController.h"
+#import "ParkingLocation.h"
+
 #import "AppDelegate.h"
 #import "Restrictions.h"
 #import "MapViewController.h"
@@ -34,12 +36,23 @@
     
     self.textView.delegate = self;
     
-    Restrictions; // Pass in signs within the mapview
+    //Restrictions; // Pass in signs within the mapview
+    CLLocation *currentLocation = [self.appDelegate.locationManager location];
+    
+    NSLog(@"%@",currentLocation);
+    
+    if(YES){// change to  currentLocation
+        //do stuff
+        
+    }//die
+    [self main];
+    // if location is not shared, idgaf, juts make sure it doesnt crash
+    
+    // Get location
     
     
-    // Get location / street?
-    // Maybe ask to confirm street?
-    // compare to street signs at SAME/(.0001 closest? fiddle0
+    // compare to street signs at SAME/(.0001 closest? fiddle
+    // LOOK at the clustered signs as well aka when zoomed out also look at sign.clusterRestriction and iterate through it
     
     // use day/hour comparator
     
@@ -54,22 +67,62 @@
     [self.view addGestureRecognizer:tap];
 }
 
+// Main  method
+- (void) main{
+    
+    NSLog(@"the end is near");
+    // call
+    ParkingLocation *car = [[ParkingLocation alloc]init];
+    car.location;
+    car.notes;
+    car.title;
+    car.duration;
+    
+//    _location = location;
+//    _notes = notes;
+//    _coordinate = coordinate;
+//    _title = title;
+//    _duration = duration;
+    
+}
+-(int)getTime{
+    // get current time
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    
+    int current = (hour * 100) + minute;
+    
+    return current;
+}
+
+-(int)getDay{
+    // get todays day
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    
+    int weekday = (int) [comps weekday];
+    return weekday;
+}
 
 // compares current hour to restriction hour
-- (Boolean)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
+- (BOOL)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
     
     //have to change start/end if its -100 aka null
     if(current == -100){
-        return false;
+        return NO;
     }
     
     if(endHour < current){
-        return true;
+        return YES;
     } else if(current >= start){ // its its after restriction
-        return true;
+        return YES;
     }
     
-    return false;
+    return YES;
 }
 
 // Possibly debug current hour
@@ -79,18 +132,17 @@
 
 // pass in todays date
 // compares current day to restriction days
-- (Boolean) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
+- (BOOL) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay{ // if start date exists compare it
     
     if(currentDay == -100){
-        return false;
+        return NO;
     }
     
     //have to change start/end if its -100 aka null
     if(currentDay < startDay && currentDay > endDay ){
-        return true;
+        return YES;
     }
-    
-    return false;
+    return NO;
 }
 
 

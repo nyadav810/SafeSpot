@@ -29,7 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *locationButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *parkButton;
 
-
+-(int)getDay;
 - (IBAction)locationButtonClicked:(id)sender;
 - (IBAction)parkButtonClicked:(id)sender;
 

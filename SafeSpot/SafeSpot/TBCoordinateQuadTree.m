@@ -284,6 +284,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 rest.endDay = info.endDay;
                 rest.startTime = info.startHour;
                 rest.endTime = info.endHour;
+                rest.parkingType = parkingType;
                 
                 // http://stackoverflow.com/questions/13522198/setting-map-pin-colour-dynamically-for-ios
                 if([parkingType isEqual: @"PPP"] || [parkingType  isEqual: @"PTIML"] ){ //

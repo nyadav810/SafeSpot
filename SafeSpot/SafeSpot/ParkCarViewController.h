@@ -17,4 +17,7 @@
 - (IBAction)cancelButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+
+@property (weak,nonatomic) UIDatePicker *datePicker;
+
 @end

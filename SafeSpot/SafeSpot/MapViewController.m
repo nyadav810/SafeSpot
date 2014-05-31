@@ -240,7 +240,7 @@
         // Called when zoomed in enough to show all signs
         if(zoomScale > 0.256){ //zoom level affects clustering
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
-            
+            /*
 
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init]; // Might not want Array
             
@@ -267,7 +267,7 @@
 
                 }// find way to keep track of same lat/long, then add
             }
-            
+            */
             // change to clusterSigns
             [self updateMapViewAnnotationsWithAnnotations:annotations];
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
@@ -297,7 +297,9 @@
     double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
     
     if(zoomScale <0.06){
+        // Might want to keep car annotation,
         [mapView removeAnnotations:self.mapView.annotations];
+
     }
     
 }
