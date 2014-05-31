@@ -293,10 +293,10 @@
         }else{
             // Delete annotations
             NSLog(@"lets delete stuff");
+            // NSLog(@" do this %d",[self.mapView.annotations count]);
+            sleep(.01);
             NSLog(@" do this %d",[self.mapView.annotations count]);
-            sleep(10);
-            
-            NSLog(@" do this %d",[self.mapView.annotations count]);
+            //NSLog(@" do this %d",[self.mapView.annotations count]);
             [mapView removeAnnotations:self.mapView.annotations];
         }
         
