@@ -20,13 +20,13 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *parkingStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endDayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *middleTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *middleDayLabel;
-
 
 - (IBAction)removeFavoriteButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *removeFromFavoritesButton;

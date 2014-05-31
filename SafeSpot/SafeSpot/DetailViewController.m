@@ -96,6 +96,10 @@
             self.middleDayLabel.hidden = YES;
             self.startDayLabel.hidden = YES;
             self.endDayLabel.hidden = YES;
+        } else if (self.restriction.startDay == 1 && self.restriction.endDay == 7) {
+            self.startDayLabel.hidden = YES;
+            self.endDayLabel.hidden = YES;
+            self.middleDayLabel.text = @"Every Day";
         } else
         {
             self.startDayLabel.text = startDay;
@@ -103,11 +107,16 @@
         }
         
         // Format Time Labels
+        
+        // Case 1: Parking Available at all times
         if (self.restriction.startTime == 0 && self.restriction.endTime == 2359)
         {
             self.startTimeLabel.hidden = YES;
             self.endTimeLabel.hidden = YES;
             self.middleTimeLabel.text = @"All day";
+            
+            self.parkingStatusLabel.textColor = [UIColor greenColor];
+            self.parkingStatusLabel.text = @"It is ok to park here at this time.";
         } else if (self.restriction.startTime == 0 && self.restriction.endTime == 0)
         {
             self.startTimeLabel.hidden = YES;
@@ -117,6 +126,15 @@
         {
             self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
             self.endTimeLabel.text = [self convertTimeFromMilitary:self.restriction.endTime];
+        }
+        
+        if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]])
+        {
+            self.parkingStatusLabel.textColor = [UIColor greenColor];
+            self.parkingStatusLabel.text = @"It is ok to park here at this time.";
+        } else {
+            self.parkingStatusLabel.textColor = [UIColor redColor];
+            self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
         }
     }
     
@@ -153,6 +171,70 @@
 	}
     
 	return [NSString stringWithFormat:@"%d:%.2d %@", hr, min, (mHr >= 12 ? @"PM" : @"AM")];
+}
+
+// compares current hour to restriction hour
+- (BOOL)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
+    
+    //have to change start/end if its -100 aka null
+    if (current == -100)
+    {
+        return NO;
+    }
+    
+    if (endHour < current)
+    {
+        return YES;
+    } else if (current >= start)
+    {
+        // its its after restriction
+        return YES;
+    }
+    
+    return NO;
+}
+
+// pass in todays date
+// compares current day to restriction days
+- (BOOL) dayComparator:(NSUInteger)startDay end:(NSUInteger)endDay today:(NSUInteger)currentDay
+{
+    // if start date exists compare it
+    
+    if (currentDay == -100)
+    {
+        return NO;
+    }
+    
+    //have to change start/end if its -100 aka null
+    if (currentDay < startDay && currentDay > endDay )
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(int)getTime{
+    // get current time
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    
+    int current = (hour * 100) + minute;
+    
+    return current;
+}
+
+-(int)getDay{
+    // get todays day
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    
+    int weekday = (int) [comps weekday];
+    return weekday;
 }
 
 - (void)didReceiveMemoryWarning
