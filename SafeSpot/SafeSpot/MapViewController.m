@@ -237,18 +237,16 @@
         int day = [self getDay];
         // NSLog(@"today is %d day",[self getDay]);
         
-
+        // Called when zoomed in enough to show all signs
         if(zoomScale > 0.256){ //zoom level affects clustering
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             
 
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init]; // Might not want Array
             
-            //rest.latitude == [[clusteredAnnotations lastObject] latitude] && rest.longitude
-
             for(Restrictions *restriction in annotations){
                 NSLog(@"%@",restriction);
-                NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
+                // NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
                 
                 //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
                 NSString *loc = [NSString stringWithFormat:@"%f",restriction.coordinate.longitude ];
@@ -265,11 +263,8 @@
                 }else{
                     //NSLog(@"%@",loc );
                     [[[clusterSigns objectForKey:loc] clusterRestriction] addObject:restriction];
-                    
-                    
+
                 }// find way to keep track of same lat/long, then add
-                
-                //[trim addObject:restriction];
             }
             
             // change to clusterSigns
@@ -278,22 +273,16 @@
         }else if(zoomScale > 0.06){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
-            
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init];
             
             for(Restrictions *restriction in annotations){
-                //NSLog(@"%@",restriction);
-                
+
                 if([clusterSigns objectForKey:restriction.title] == NULL){
-                    // NSLog(@"CAPSTONE IS ALMOST OVER! COLLEGE");
                     [clusterSigns setValue:restriction forKey:restriction.title];
-                    //NSMapTable
-                    
+
                 }else{
-                    //NSLog(@"CAPSTONE does exist idk what to do");
                     // change to the getter first
                     [[[clusterSigns objectForKey:restriction.title] clusterRestriction] addObject:restriction];
-          
 
                 }
             
@@ -301,12 +290,20 @@
             // NSLog(@"%@",[clusterSigns allValues]);
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
+        }else{
+            // Delete annotations
+            NSLog(@"lets delete stuff");
+            NSLog(@" do this %d",[self.mapView.annotations count]);
+            sleep(10);
             
-            
+            NSLog(@" do this %d",[self.mapView.annotations count]);
+            [mapView removeAnnotations:self.mapView.annotations];
         }
         
     }];
 }
+
+
 
 - (double)zoomScale {
     return self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;

@@ -49,13 +49,14 @@
         
         // Day of Week Array
         NSMutableArray *days = [NSMutableArray array];
-        [days addObject:@"Sunday"];
+        
         [days addObject:@"Monday"];
         [days addObject:@"Tuesday"];
         [days addObject:@"Wednesday"];
         [days addObject:@"Thursday"];
         [days addObject:@"Friday"];
         [days addObject:@"Saturday"];
+        [days addObject:@"Sunday"];
         
         NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
                                        
@@ -64,7 +65,7 @@
         self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
         //NSLog(@"%d",[self.restriction.clusterRestriction count]);
         
-        NSLog(@"%@",self.restriction.clusterRestriction );
+        // NSLog(@"%@",self.restriction.clusterRestriction );
         
         NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
         NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];

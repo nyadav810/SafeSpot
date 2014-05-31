@@ -89,7 +89,7 @@
 
 //        self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
 //        //NSLog(@"%d",[self.restriction.clusterRestriction count]);
-//        
+//        might need to add custom text
 //        NSLog(@"%@",self.restriction.clusterRestriction );
         
         NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];

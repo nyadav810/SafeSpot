@@ -269,7 +269,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 
                 CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(data.x, data.y);
                 rest.coordinate = coordinate;
-                NSLog(@"%f", data.x);
+                
+                //NSLog(@"%f", data.x);
                 
                 rest.location = [[CLLocation alloc] initWithLatitude:data.x longitude:data.y];
                 
