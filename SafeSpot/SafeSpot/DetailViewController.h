@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *endDayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *middleTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *middleDayLabel;
 
 
 - (IBAction)removeFavoriteButtonClicked:(id)sender;

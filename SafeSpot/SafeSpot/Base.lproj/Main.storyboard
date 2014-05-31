@@ -308,20 +308,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pkm-8d-LwG">
-                                <rect key="frame" x="150" y="222" width="20" height="21"/>
+                                <rect key="frame" x="125" y="222" width="71" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="startTime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9cI-oQ-I5i">
-                                <rect key="frame" x="70" y="222" width="72" height="21"/>
+                                <rect key="frame" x="75" y="222" width="72" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="endTime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jGF-Mn-Q8X">
-                                <rect key="frame" x="178" y="222" width="67" height="21"/>
+                                <rect key="frame" x="173" y="222" width="67" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -347,6 +347,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="endDayLabel" destination="QO8-Qg-mnW" id="LK1-iT-hQU"/>
                         <outlet property="endTimeLabel" destination="jGF-Mn-Q8X" id="5TI-aJ-6Bd"/>
                         <outlet property="mapView" destination="SfJ-5j-d5B" id="Nlk-of-wdN"/>
+                        <outlet property="middleDayLabel" destination="41a-ao-lkV" id="zaA-gW-2qo"/>
+                        <outlet property="middleTimeLabel" destination="Pkm-8d-LwG" id="7Go-z6-bap"/>
                         <outlet property="removeFromFavoritesButton" destination="XHL-de-NsG" id="SCk-S1-0hF"/>
                         <outlet property="startDayLabel" destination="VKL-hO-2l2" id="ixk-bX-Lia"/>
                         <outlet property="startTimeLabel" destination="9cI-oQ-I5i" id="JvH-9a-AM6"/>

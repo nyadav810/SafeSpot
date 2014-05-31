@@ -35,6 +35,7 @@
     [self configureMap];
 }
 
+// Set up mini map
 - (void)configureMap
 {
     if (self.restriction)
@@ -46,8 +47,8 @@
         MKCoordinateRegion region;
         MKCoordinateSpan span;
         
-        span.latitudeDelta = 0.01;
-        span.longitudeDelta = 0.01;
+        span.latitudeDelta = 0.005;
+        span.longitudeDelta = 0.005;
         region.span = span;
         region.center = self.restriction.coordinate;
         [self.mapView setRegion:region animated:YES];
@@ -84,29 +85,39 @@
         
         self.detailTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
-
-//        self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs combined on this street",self.restriction.clusterRestriction.count];
-//        //NSLog(@"%d",[self.restriction.clusterRestriction count]);
-//        might need to add custom text
-//        NSLog(@"%@",self.restriction.clusterRestriction );
         
         NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
         NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
         
-        self.startDayLabel.text = startDay;
-        self.endDayLabel.text = endDay;
         
+        // Format Day Labels
+        if (!startDay && !endDay)
+        {
+            self.middleDayLabel.hidden = YES;
+            self.startDayLabel.hidden = YES;
+            self.endDayLabel.hidden = YES;
+        } else
+        {
+            self.startDayLabel.text = startDay;
+            self.endDayLabel.text = endDay;
+        }
+        
+        // Format Time Labels
         if (self.restriction.startTime == 0 && self.restriction.endTime == 2359)
         {
             self.startTimeLabel.hidden = YES;
             self.endTimeLabel.hidden = YES;
-            
+            self.middleTimeLabel.text = @"All day";
+        } else if (self.restriction.startTime == 0 && self.restriction.endTime == 0)
+        {
+            self.startTimeLabel.hidden = YES;
+            self.endTimeLabel.hidden = YES;
+            self.middleTimeLabel.hidden = YES;
+        } else
+        {
+            self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
+            self.endTimeLabel.text = [self convertTimeFromMilitary:self.restriction.endTime];
         }
-        
-        //self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
-        //self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
-        self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
-        self.endTimeLabel.text = [self convertTimeFromMilitary:self.restriction.endTime];
     }
     
     // Hide remove from Favorites button if segue came from Nearby
