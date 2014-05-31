@@ -248,10 +248,12 @@
 
             for(Restrictions *restriction in annotations){
                // NSLog(@"%@",restriction.location);
-                NSString *loc = [NSString stringWithFormat:@"%f%f",[restriction.longitude floatValue],[restriction.longitude floatValue]];
-                
+                //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
+                NSString *loc = [NSString stringWithFormat:@"%f",restriction.coordinate.longitude ];
+                restriction.coordinate.latitude;
+                restriction.coordinate.longitude;
                 //NSLog(@"%@",[clusterSigns objectForKey:loc] );
-                 NSLog(@"%@",loc );
+                 //NSLog(@"%@",loc );
                 if([clusterSigns objectForKey:loc] == NULL){
                     // NSMapTable;
                     [clusterSigns setValue:restriction forKey:loc];
@@ -259,7 +261,7 @@
                     //NEED to find way to combine all, CLUSTER doesnt work
                     NSLog(@" HARDAA %@",loc);
                 }else{
-                    
+                    NSLog(@"%@",loc );
                     [[[clusterSigns objectForKey:loc] clusterRestriction] addObject:restriction];
                     
                     
@@ -269,8 +271,8 @@
             }
             
             // change to clusterSigns
-             [self updateMapViewAnnotationsWithAnnotations:annotations];
-            //[self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
+            [self updateMapViewAnnotationsWithAnnotations:annotations];
+            // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
         }else if(zoomScale > 0.065){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
