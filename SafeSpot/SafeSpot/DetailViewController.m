@@ -96,6 +96,13 @@
         self.startDayLabel.text = startDay;
         self.endDayLabel.text = endDay;
         
+        if (self.restriction.startTime == 0 && self.restriction.endTime == 2359)
+        {
+            self.startTimeLabel.hidden = YES;
+            self.endTimeLabel.hidden = YES;
+            
+        }
+        
         //self.startTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.startTime];
         //self.endTimeLabel.text = [NSString stringWithFormat:@"%d", self.restriction.endTime];
         self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
