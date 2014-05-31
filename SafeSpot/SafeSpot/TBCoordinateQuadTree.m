@@ -366,9 +366,6 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                    
                      
                     [clusteredAnnotations addObject:rest];
-                    
-
-                
                 
                 // Add setting to ONLY show where you cant park?
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){

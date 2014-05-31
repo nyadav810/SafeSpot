@@ -252,6 +252,7 @@
                 NSString *loc = [NSString stringWithFormat:@"%f",restriction.coordinate.longitude ];
                 restriction.coordinate.latitude;
                 restriction.coordinate.longitude;
+                
                 //NSLog(@"%@",[clusterSigns objectForKey:loc] );
                  //NSLog(@"%@",loc );
                 if([clusterSigns objectForKey:loc] == NULL){
@@ -283,26 +284,23 @@
                 }else{
                     // change to the getter first
                     [[[clusterSigns objectForKey:restriction.title] clusterRestriction] addObject:restriction];
-
                 }
             
             }
             // NSLog(@"%@",[clusterSigns allValues]);
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
-        }else{
-            // Delete annotations
-            NSLog(@"lets delete stuff");
-            // NSLog(@" do this %d",[self.mapView.annotations count]);
-            sleep(.01);
-            NSLog(@" do this %d",[self.mapView.annotations count]);
-            //NSLog(@" do this %d",[self.mapView.annotations count]);
-            [mapView removeAnnotations:self.mapView.annotations];
-        }
         
+        }
     }];
+    
+    double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
+    
+    if(zoomScale <0.06){
+        [mapView removeAnnotations:self.mapView.annotations];
+    }
+    
 }
-
 
 
 - (double)zoomScale {
