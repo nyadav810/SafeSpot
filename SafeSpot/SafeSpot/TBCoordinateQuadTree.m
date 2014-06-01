@@ -278,8 +278,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 // rest.longitude = data.y;
                 rest.title =  [NSString stringWithFormat:@"%s", info.streetName]; // street signs might be moving around
                 rest.comment = [NSString stringWithFormat:@"%s", info.restrictions];
-                NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
                 
+                NSString *parkingType = [NSString stringWithFormat:@"%s",info.parkType];
+                // NSLog(@"%@", parkingType);
                 rest.startDay = info.startDay;
                 rest.endDay = info.endDay;
                 rest.startTime = info.startHour;
@@ -307,7 +308,9 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple PDIS  ");
                     
-                } //
+                }else{
+                    rest.pinColor = MKPinAnnotationColorRed;
+                }//
 
                 // split text
                 NSArray * split = [rest.title componentsSeparatedByString:@" "];

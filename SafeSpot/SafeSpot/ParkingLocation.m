@@ -32,4 +32,18 @@
     return self;
 }
 
++ (instancetype)postWithTitle:(NSString *)title latitude:(double)latitude longitude:(double)longitude
+{
+    
+    ParkingLocation *result = [[ParkingLocation alloc] init];
+    result.title = title;
+    result.location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    
+    result.coordinate =  CLLocationCoordinate2DMake(latitude, longitude);
+    
+    //some where if/else for geo location
+    
+    return result;
+}
+
 @end

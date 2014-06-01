@@ -277,7 +277,7 @@
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init];
             
             for(Restrictions *restriction in annotations){
-
+                // NSLog(@"%@", restriction.parkingType);
                 if([clusterSigns objectForKey:restriction.title] == NULL){
                     [clusterSigns setValue:restriction forKey:restriction.title];
 

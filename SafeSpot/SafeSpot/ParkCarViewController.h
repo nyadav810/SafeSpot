@@ -17,7 +17,10 @@
 - (IBAction)cancelButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePickerOutlet;
 
-@property (weak,nonatomic) UIDatePicker *datePicker;
+- (IBAction)parkCar:(id)sender;
+
+- (IBAction)parkCarButton:(id)sender;
 
 @end

@@ -17,5 +17,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *duration;
 
++ (instancetype)postWithTitle:(NSString *)title latitude:(double)latitude longitude:(double)longitude;
 
 @end

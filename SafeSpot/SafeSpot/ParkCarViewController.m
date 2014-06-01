@@ -37,14 +37,7 @@
     self.textView.delegate = self;
     
     //Restrictions; // Pass in signs within the mapview
-    CLLocation *currentLocation = [self.appDelegate.locationManager location];
-    
-    NSLog(@"%@",currentLocation);
-    
-    if(YES){// change to  currentLocation
-        //do stuff
-        
-    }//die
+  
     [self main];
     // if location is not shared, idgaf, juts make sure it doesnt crash
     
@@ -73,16 +66,31 @@
     NSLog(@"the end is near");
     // call
     ParkingLocation *car = [[ParkingLocation alloc]init];
+    
     car.location;
-    car.notes;
-    car.title;
+    CLLocation *currentLocation = [self.appDelegate.locationManager location];
+    
+    NSLog(@"%@",currentLocation);
+    
+    if(YES){// change to  currentLocation
+        //do stuff
+        currentLocation;
+        //car.location = currentLocation;
+        // OR coordinate; 
+    }//die
+    
+    
+    car.title = @"I parked"; //?
+    NSLog(@"%@", [self.datePickerOutlet date]);
     car.duration;
+    car.notes;
+    self.textView;
+    
     
 //    _location = location;
 //    _notes = notes;
 //    _coordinate = coordinate;
-//    _title = title;
-//    _duration = duration;
+
     
 }
 -(int)getTime{
@@ -263,4 +271,18 @@
                                                   object:nil];
 }
 
+// UIDate Picker action
+- (IBAction)parkCar:(id)sender {
+     // NSLog(@"heya you presseed the wheel");
+    [self.datePickerOutlet date];
+    NSLog(@"%@", [self.datePickerOutlet date]);
+}
+
+// Park button action
+- (IBAction)parkCarButton:(id)sender {
+   
+    NSLog(@"park until %@", [self.datePickerOutlet date]);
+    // call main here or at least save DURATION
+    // car.duration;
+}
 @end
