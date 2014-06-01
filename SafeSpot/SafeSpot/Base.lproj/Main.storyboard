@@ -287,7 +287,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XHL-de-NsG">
-                                <rect key="frame" x="79" y="436" width="163" height="30"/>
+                                <rect key="frame" x="137" y="436" width="163" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Remove From Favorites">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -352,6 +352,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wkB-Jr-jbm">
+                                <rect key="frame" x="20" y="437" width="98" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Get Directions">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getDirectionsButtonClicked:" destination="XTb-SJ-YU0" eventType="touchUpInside" id="Hbm-lu-gQi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -361,6 +371,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="detailTitle" destination="hQh-dQ-86Q" id="Jax-je-ytd"/>
                         <outlet property="endDayLabel" destination="QO8-Qg-mnW" id="LK1-iT-hQU"/>
                         <outlet property="endTimeLabel" destination="jGF-Mn-Q8X" id="5TI-aJ-6Bd"/>
+                        <outlet property="getDirectionsButton" destination="wkB-Jr-jbm" id="hD0-yd-OJV"/>
                         <outlet property="mapView" destination="SfJ-5j-d5B" id="Nlk-of-wdN"/>
                         <outlet property="middleDayLabel" destination="41a-ao-lkV" id="zaA-gW-2qo"/>
                         <outlet property="middleTimeLabel" destination="Pkm-8d-LwG" id="7Go-z6-bap"/>
@@ -493,7 +504,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hiq-z0-PRh">
-                                <rect key="frame" x="104" y="436" width="113" height="30"/>
+                                <rect key="frame" x="160" y="436" width="127" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add to Favorites">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -551,6 +562,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pqD-X6-7vI">
+                                <rect key="frame" x="39" y="436" width="98" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Get Directions">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getDirectionsButtonClicked:" destination="uyN-sZ-Psd" eventType="touchUpInside" id="b4c-Yw-dPZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -561,6 +582,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="commentLabel" destination="ezM-we-1W9" id="mBe-rj-9fK"/>
                         <outlet property="endDayLabel" destination="LAs-pc-Vlf" id="GKu-sn-Mrr"/>
                         <outlet property="endTimeLabel" destination="a5H-pc-b37" id="aW6-zw-dFN"/>
+                        <outlet property="getDirectionsButton" destination="pqD-X6-7vI" id="dVP-hr-lEA"/>
                         <outlet property="mapView" destination="5GB-Gm-t1H" id="BxW-v1-VD3"/>
                         <outlet property="middleDayLabel" destination="goK-G0-7PU" id="HAd-ze-C25"/>
                         <outlet property="middleTimeLabel" destination="W9c-CY-18L" id="VJa-Ai-dod"/>

@@ -32,6 +32,9 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
+@property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
+- (IBAction)getDirectionsButtonClicked:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIButton *removeFromFavoritesButton;
 - (IBAction)removeFavoriteButtonClicked:(id)sender;
 

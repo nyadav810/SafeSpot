@@ -290,4 +290,18 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+- (IBAction)getDirectionsButtonClicked:(id)sender {
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:self.restriction.coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    
+    // Create a region centered on the starting point with a 5km span
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.restriction.coordinate, 5000, 5000);
+    
+    // Open the item in Maps, specifying the map region to display.
+    [MKMapItem openMapsWithItems:[NSArray arrayWithObject:mapItem]
+                   launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:
+                                  MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsDirectionsModeKey,
+                                  [NSValue valueWithMKCoordinate:region.center], MKLaunchOptionsMapCenterKey,
+                                  [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
+}
 @end
