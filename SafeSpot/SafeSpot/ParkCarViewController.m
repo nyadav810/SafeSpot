@@ -282,7 +282,7 @@
 - (IBAction)parkCarButton:(id)sender {
    
     NSLog(@"park until %@", [self.datePickerOutlet date]);
-    NSLog(@"park until %@", [self.datePickerOutlet date]);
+    NSLog(@"park until %@", [self.textView text]);
     // call main here or at least save DURATION
     // car.duration;
     
