@@ -304,7 +304,8 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple RPZZZ one");
                     
-                }else if([parkingType  isEqual: @"PDIS"]){
+                }else if([parkingType  isEqual: @"PDIS"] || [parkingType isEqual:@"PPEAK"]){
+                    // PPEAK is SOMETIMES
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple PDIS  ");
                     
