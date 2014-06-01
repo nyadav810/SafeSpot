@@ -73,24 +73,7 @@
         
         [self formatDateTime];
         
-        NSLog(@"%@: %@", self.restriction.comment, self.restriction.parkingType);
-        
-        // Check Parking Type
-        // NSString *pType = self.restriction.parkingType;
-        if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]])
-        {
-            if (self.restriction.pinColor == MKPinAnnotationColorRed) // if changed to logo
-            {
-                self.parkingStatusLabel.textColor = [UIColor redColor];
-                self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
-            } else {
-                self.parkingStatusLabel.textColor = [UIColor greenColor];
-                self.parkingStatusLabel.text = @"It is ok to park here at this time.";
-            }
-        } else {
-            self.parkingStatusLabel.textColor = [UIColor redColor];
-            self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
-        }
+        [self formatParkingStatus];
     }
 }
 
@@ -125,7 +108,25 @@
 
 - (void)formatParkingStatus
 {
+    NSLog(@"%@: %@", self.restriction.comment, self.restriction.parkingType);
     
+    // Check Parking Type
+    if ([[[self parkingDictionary] objectForKey:self.restriction.parkingType] boolValue] == NO)
+    {
+        self.parkingStatusLabel.textColor = [UIColor redColor];
+        self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
+    } else
+    {
+        // Check time restrictions
+        if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]] && [self hourComparator:self.restriction.startTime hour:self.restriction.endTime ct:[self getTime]])
+        {
+            self.parkingStatusLabel.textColor = [UIColor redColor];
+            self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
+        } else {
+            self.parkingStatusLabel.textColor = [UIColor greenColor];
+            self.parkingStatusLabel.text = @"It is ok to park here at this time.";
+        }
+    }
 }
 
 - (void)formatDateTime
