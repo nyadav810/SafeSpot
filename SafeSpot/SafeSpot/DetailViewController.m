@@ -62,6 +62,8 @@
     
     if (self.restriction)
     {
+        self.detailTitle.title = self.restriction.title;
+        self.commentLabel.text = self.restriction.comment;
         
         NSMutableArray *numbers = [NSMutableArray array];
         
@@ -83,55 +85,65 @@
         
         NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
         
-        self.detailTitle.title = self.restriction.title;
-        self.commentLabel.text = self.restriction.comment;
-        
         NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
         NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
-        
         
         // Format Day Labels
         if (!startDay && !endDay)
         {
+            // Case 1: Not Specified
             self.middleDayLabel.hidden = YES;
             self.startDayLabel.hidden = YES;
             self.endDayLabel.hidden = YES;
         } else if (self.restriction.startDay == 1 && self.restriction.endDay == 7) {
+            // Case 2: All Week
             self.startDayLabel.hidden = YES;
             self.endDayLabel.hidden = YES;
             self.middleDayLabel.text = @"Every Day";
         } else
         {
+            // Case 3: Otherwise
             self.startDayLabel.text = startDay;
             self.endDayLabel.text = endDay;
         }
         
         // Format Time Labels
+        int startTime = self.restriction.startTime;
+        int endTime = self.restriction.endTime;
         
-        // Case 1: Parking Available at all times
-        if (self.restriction.startTime == 0 && self.restriction.endTime == 2359)
+        if (!startTime || !endTime || startTime == 0 || endTime == 0)
         {
-            self.startTimeLabel.hidden = YES;
-            self.endTimeLabel.hidden = YES;
-            self.middleTimeLabel.text = @"All day";
-            
-            self.parkingStatusLabel.textColor = [UIColor greenColor];
-            self.parkingStatusLabel.text = @"It is ok to park here at this time.";
-        } else if (self.restriction.startTime == 0 && self.restriction.endTime == 0)
-        {
+            // Case 1: Not Specified
             self.startTimeLabel.hidden = YES;
             self.endTimeLabel.hidden = YES;
             self.middleTimeLabel.hidden = YES;
+        } else if (startTime == 0 && endTime == 2359)
+        {
+            // Case 1: Parking Available at all times
+            self.startTimeLabel.hidden = YES;
+            self.endTimeLabel.hidden = YES;
+            self.middleTimeLabel.text = @"All day";
         } else
         {
-            self.startTimeLabel.text = [self convertTimeFromMilitary:self.restriction.startTime];
-            self.endTimeLabel.text = [self convertTimeFromMilitary:self.restriction.endTime];
+            // Case 3: Otherwise
+            self.startTimeLabel.text = [self convertTimeFromMilitary:startTime];
+            self.endTimeLabel.text = [self convertTimeFromMilitary:endTime];
         }
         
+        NSLog(@"%@: %@", self.restriction.comment, self.restriction.parkingType);
+        
+        // Check Parking Type
+        NSString *pType = self.restriction.parkingType;
         if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]])
         {
-            self.parkingStatusLabel.textColor = [UIColor greenColor];
-            self.parkingStatusLabel.text = @"It is ok to park here at this time.";
+            if ([pType isEqualToString:@"PBZ"] || [pType isEqualToString:@"PNS"])
+            {
+                self.parkingStatusLabel.textColor = [UIColor redColor];
+                self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
+            } else {
+                self.parkingStatusLabel.textColor = [UIColor greenColor];
+                self.parkingStatusLabel.text = @"It is ok to park here at this time.";
+            }
         } else {
             self.parkingStatusLabel.textColor = [UIColor redColor];
             self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
