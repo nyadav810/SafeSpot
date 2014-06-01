@@ -62,81 +62,24 @@
     
     if (self.restriction)
     {
+        // Hide remove from Favorites button if segue came from Nearby
+        if (self.nearby == YES)
+        {
+            self.removeFromFavoritesButton.hidden = YES;
+        }
+        
         self.detailTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
         
-        NSMutableArray *numbers = [NSMutableArray array];
-        
-        for (NSInteger i = 1; i <= 7; i++)
-        {
-            [numbers addObject:[NSNumber numberWithInteger:i]];
-        }
-        
-        // Day of Week Array
-        NSMutableArray *days = [NSMutableArray array];
-       
-        [days addObject:@"Monday"];
-        [days addObject:@"Tuesday"];
-        [days addObject:@"Wednesday"];
-        [days addObject:@"Thursday"];
-        [days addObject:@"Friday"];
-        [days addObject:@"Saturday"];
-        [days addObject:@"Sunday"]; // is day 7
-        
-        NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
-        
-        NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
-        NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
-        
-        // Format Day Labels
-        if (!startDay && !endDay)
-        {
-            // Case 1: Not Specified
-            self.middleDayLabel.hidden = YES;
-            self.startDayLabel.hidden = YES;
-            self.endDayLabel.hidden = YES;
-        } else if (self.restriction.startDay == 1 && self.restriction.endDay == 7) {
-            // Case 2: All Week
-            self.startDayLabel.hidden = YES;
-            self.endDayLabel.hidden = YES;
-            self.middleDayLabel.text = @"Every Day";
-        } else
-        {
-            // Case 3: Otherwise
-            self.startDayLabel.text = startDay;
-            self.endDayLabel.text = endDay;
-        }
-        
-        // Format Time Labels
-        int startTime = self.restriction.startTime;
-        int endTime = self.restriction.endTime;
-        
-        if (!startTime || !endTime || startTime == 0 || endTime == 0)
-        {
-            // Case 1: Not Specified
-            self.startTimeLabel.hidden = YES;
-            self.endTimeLabel.hidden = YES;
-            self.middleTimeLabel.hidden = YES;
-        } else if (startTime == 0 && endTime == 2359)
-        {
-            // Case 1: Parking Available at all times
-            self.startTimeLabel.hidden = YES;
-            self.endTimeLabel.hidden = YES;
-            self.middleTimeLabel.text = @"All day";
-        } else
-        {
-            // Case 3: Otherwise
-            self.startTimeLabel.text = [self convertTimeFromMilitary:startTime];
-            self.endTimeLabel.text = [self convertTimeFromMilitary:endTime];
-        }
+        [self formatDateTime];
         
         NSLog(@"%@: %@", self.restriction.comment, self.restriction.parkingType);
         
         // Check Parking Type
-        NSString *pType = self.restriction.parkingType;
+        // NSString *pType = self.restriction.parkingType;
         if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]])
         {
-            if ([pType isEqualToString:@"PBZ"] || [pType isEqualToString:@"PNS"])
+            if (self.restriction.pinColor == MKPinAnnotationColorRed) // if changed to logo
             {
                 self.parkingStatusLabel.textColor = [UIColor redColor];
                 self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
@@ -149,11 +92,109 @@
             self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
         }
     }
+}
+
+- (NSDictionary *)parkingDictionary
+{
+    NSDictionary *parkingTypes = [[NSDictionary alloc] init];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBZ"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PCARPL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PCVL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PDIS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PGA"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PINST"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PLU"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNP"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPEAK"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PPL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPP"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PR"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PRZ"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PSCH"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PTIML"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PTRKL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PZONE"];
     
-    // Hide remove from Favorites button if segue came from Nearby
-    if (self.nearby == YES)
+    return parkingTypes;
+}
+
+- (void)formatParkingStatus
+{
+    
+}
+
+- (void)formatDateTime
+{
+    NSMutableArray *numbers = [NSMutableArray array];
+    
+    for (NSInteger i = 1; i <= 7; i++)
     {
-        self.removeFromFavoritesButton.hidden = YES;
+        [numbers addObject:[NSNumber numberWithInteger:i]];
+    }
+    
+    // Day of Week Array
+    NSMutableArray *days = [NSMutableArray array];
+    
+    [days addObject:@"Monday"];
+    [days addObject:@"Tuesday"];
+    [days addObject:@"Wednesday"];
+    [days addObject:@"Thursday"];
+    [days addObject:@"Friday"];
+    [days addObject:@"Saturday"];
+    [days addObject:@"Sunday"]; // is day 7
+    
+    NSDictionary *dayDictionary = [NSDictionary dictionaryWithObjects:days forKeys:numbers];
+    
+    NSString *startDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.startDay]];
+    NSString *endDay = [dayDictionary objectForKey:[NSNumber numberWithInt:self.restriction.endDay]];
+    
+    // Format Day Labels
+    if (!startDay && !endDay)
+    {
+        // Case 1: Not Specified
+        self.middleDayLabel.hidden = YES;
+        self.startDayLabel.hidden = YES;
+        self.endDayLabel.hidden = YES;
+    } else if (self.restriction.startDay == 1 && self.restriction.endDay == 7) {
+        // Case 2: All Week
+        self.startDayLabel.hidden = YES;
+        self.endDayLabel.hidden = YES;
+        self.middleDayLabel.text = @"Every Day";
+    } else
+    {
+        // Case 3: Otherwise
+        self.startDayLabel.text = startDay;
+        self.endDayLabel.text = endDay;
+    }
+    
+    // Format Time Labels
+    int startTime = self.restriction.startTime;
+    int endTime = self.restriction.endTime;
+    
+    if (!startTime || !endTime || startTime == 0 || endTime == 0)
+    {
+        // Case 1: Not Specified
+        self.startTimeLabel.hidden = YES;
+        self.endTimeLabel.hidden = YES;
+        self.middleTimeLabel.hidden = YES;
+    } else if ((startTime == 0 || startTime == 1) && endTime == 2359)
+    {
+        // Case 1: Parking Available at all times
+        self.startTimeLabel.hidden = YES;
+        self.endTimeLabel.hidden = YES;
+        self.middleTimeLabel.text = @"All day";
+    } else
+    {
+        // Case 3: Otherwise
+        self.startTimeLabel.text = [self convertTimeFromMilitary:startTime];
+        self.endTimeLabel.text = [self convertTimeFromMilitary:endTime];
+//        self.startTimeLabel.text = [NSString stringWithFormat:@"%d", startTime];
+//        self.endTimeLabel.text = [NSString stringWithFormat:@"%d", endTime];
     }
 }
 
