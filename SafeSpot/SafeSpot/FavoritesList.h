@@ -20,7 +20,6 @@
 - (void)insertObjects:(NSArray *)array atIndexes:(NSIndexSet *)indexes;
 - (void)removeObjectsAtIndexes:(NSIndexSet *)indexes;
 
-
 - (void)fakeSomeSigns;
 
 @end

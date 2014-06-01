@@ -58,9 +58,9 @@
     
     self.appDelegate = [[UIApplication sharedApplication] delegate];
     self.locationManager = self.appDelegate.locationManager;
-    self.locationManager.delegate = self;
-    self.searchBar.delegate = self;
+    [self startStandardUpdates];
     
+    self.searchBar.delegate = self;
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
     
@@ -76,7 +76,23 @@
     [self updateNearbyAnnotations];
 }
 
-
+- (void)startStandardUpdates
+{
+    // Create the location manager if this object does not
+    // already have one.
+    if (nil == self.locationManager)
+    {
+        self.locationManager = [[CLLocationManager alloc] init];
+    }
+    
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    
+    // Set a movement threshold for new events.
+    self.locationManager.distanceFilter = 500; // meters
+    
+    [self.locationManager startMonitoringSignificantLocationChanges];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -340,7 +356,7 @@
 // Nearby Annotation stuff
 - (void)updateNearbyAnnotations
 {
-    CLLocation *location  = self.mapView.userLocation.location;
+    CLLocation *location  = [self.locationManager location];
     
     if (location != nil)
     {
@@ -395,8 +411,6 @@
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)
     {
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        [self.locationManager startUpdatingLocation];
         CLLocation *location  = [self.locationManager location];
         CLLocationCoordinate2D coordinate = [location coordinate];
 
@@ -413,6 +427,11 @@
 }
 
 #pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    // location updates
+}
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {

@@ -11,8 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "TBCoordinateQuadTree.h"
 
-//#import "AppDelegate.h"
-
 @class AppDelegate;
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate>

@@ -11,7 +11,7 @@
 #import "FavoritesList.h"
 #import "NearbyList.h"
 
-@implementation AppDelegate 
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -24,7 +24,6 @@
     if (!self.favoritesList)
     {
         self.favoritesList = [[FavoritesList alloc] init];
-        //[self.favoritesList fakeSomeSigns];
     }
     
     // Initialize Nearby List (needs to be done each time App starts)
@@ -68,7 +67,7 @@
     [NSKeyedArchiver archiveRootObject:self.favoritesList
                                 toFile:[self favoritesListStorageLocation]];
     NSLog(@"Favorites List archived");
-    [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopMonitoringSignificantLocationChanges];
 }
 
 // Archiving Directory
