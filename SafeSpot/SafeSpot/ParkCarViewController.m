@@ -69,28 +69,7 @@
 
     
 }
--(int)getTime{
-    // get current time
-    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
-                                                  fromDate: [NSDate date]];
-    
-    int minute = (int) [dateComps minute];
-    int hour = (int) [dateComps hour];
-    
-    int current = (hour * 100) + minute;
-    
-    return current;
-}
 
--(int)getDay{
-    // get todays day
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    
-    int weekday = (int) [comps weekday];
-    return weekday;
-}
 
 // compares current hour to restriction hour
 - (BOOL)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
@@ -251,8 +230,31 @@
 - (IBAction)parkCar:(id)sender {
      // NSLog(@"heya you presseed the wheel");
     [self.datePickerOutlet date];
-    NSLog(@"%@", [self.datePickerOutlet date]);
+    NSLog(@"will probably delete this lol %@", [self.datePickerOutlet date]);
     
+}
+
+-(int)getTime{
+    // get current time
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    
+    int current = (hour * 100) + minute;
+    
+    return current;
+}
+
+-(int)getDay{
+    // get todays day
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    
+    int weekday = (int) [comps weekday];
+    return weekday;
 }
 
 // Park button action
@@ -267,7 +269,25 @@
 
     NSLog(@"%@",currentLocation);
     car.title = @"I parked"; //?
+    
+    //Get current time
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    int current = (hour * 100) + minute;
+    
+
+    // get todays day
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    int weekday = (int) [comps weekday];
+  
     car.duration = [self.datePickerOutlet date];
+    
+    
     NSLog(@"park until %@", car.duration);
     
     car.notes = self.textView.text;
