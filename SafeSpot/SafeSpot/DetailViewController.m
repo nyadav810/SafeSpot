@@ -77,9 +77,9 @@
     }
 }
 
-- (NSDictionary *)parkingDictionary
+- (NSMutableDictionary *)parkingDictionary
 {
-    NSDictionary *parkingTypes = [[NSDictionary alloc] init];
+    NSMutableDictionary *parkingTypes = [[NSMutableDictionary alloc] init];
     [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];
     [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];
     [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];
