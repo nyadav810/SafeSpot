@@ -22,7 +22,8 @@
 // https://github.com/thoughtbot/TBAnnotationClustering/blob/master/TBAnnotationClustering/TBCoordinateQuadTree.m
 // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
 
-// To Do: Add non retina splash screen
+// To Do:
+// Add non retina splash screen
 // Create globals for current day/time
 // Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
 // implement CSV instead of JSON
@@ -32,8 +33,6 @@
 // TODO Naveen:
 // Park Car Feature
 // Map View Overlaid Search
-// Finish Favorites/Nearby
-// Improve location button
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
