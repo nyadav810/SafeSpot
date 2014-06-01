@@ -69,7 +69,7 @@
 
         if(numberOfSigns > 0)
         {
-            self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs on this street. Zoom in to see Individual signs",self.restriction.clusterRestriction.count];
+            self.arrayLabel.text = [NSString stringWithFormat:@"%d parking signs on this street. Zoom in to view them.", self.restriction.clusterRestriction.count];
         } else
         {
             self.arrayLabel.text = @"";

@@ -134,11 +134,8 @@
 
 // Main  method
 - (void) main{
-    
-
     // call build tree
     [self.coordinateQuadTree buildTree];
-
 }
 
 
@@ -302,14 +299,13 @@
     
     double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
     
-    if(zoomScale <0.06){
+    if(zoomScale < 0.06){
         // Might want to keep car annotation,
         [mapView removeAnnotations:self.mapView.annotations];
 
     }
     
 }
-
 
 - (double)zoomScale {
     return self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
@@ -345,23 +341,25 @@
 // Nearby Annotation stuff
 - (void)updateNearbyAnnotations
 {
-    CLLocation *location  = [self.locationManager location];
-    CLLocationCoordinate2D coordinate = [location coordinate];
+    CLLocation *location  = self.mapView.userLocation.location;
     
-    MKMapPoint curr;
-    MKMapRect rect;
-
     if (location != nil)
     {
-        curr = MKMapPointForCoordinate(coordinate);
-        rect = MKMapRectMake(curr.x, curr.y, 0.0025, 0.0025);
+        [self.appDelegate.nearbyList.signs removeAllObjects];
+        CLLocationCoordinate2D coordinate = [location coordinate];
+        
+        MKMapPoint curr = MKMapPointForCoordinate(coordinate);
+        MKMapRect rect = MKMapRectMake(curr.x, curr.y, 0.001, 0.001);
         
         // Change nearby list here
         int time =[self getTime];
         int day = [self getDay];
-        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:rect withZoomScale:[self zoomScale] c:time withDay:day b:NO];
+        NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:rect withZoomScale:0.035 c:time withDay:day b:NO];
         
-        self.appDelegate.nearbyList.signs = [NSMutableArray arrayWithArray:annotations];
+        [self.appDelegate.nearbyList.signs addObjectsFromArray:annotations];
+        [self.appDelegate.nearbyList.signs sortUsingComparator: ^(Restrictions *r1, Restrictions *r2){
+            return [r1.title caseInsensitiveCompare:r2.title];
+        }];
     }
 }
 
@@ -423,11 +421,6 @@
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    // TODO: Update Nearby List when user moves WITHOUT clearing the list
 }
 
 @end
