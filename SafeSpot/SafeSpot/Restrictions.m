@@ -56,22 +56,33 @@
 // Archiving
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeObject:self.title forKey:@"title"];
-    [encoder encodeObject:self.comment forKey:@"comment"];
     [encoder encodeObject:self.date forKey:@"date"];
+    [encoder encodeObject:self.title forKey:@"title"];
+    [encoder encodeObject:self.parkingType forKey:@"parkingType"];
+    [encoder encodeObject:self.comment forKey:@"comment"];
+    [encoder encodeInt:self.startDay forKey:@"startDay"];
+    [encoder encodeInt:self.endDay forKey:@"endDay"];
+    [encoder encodeInt:self.startTime forKey:@"startTime"];
+    [encoder encodeInt:self.endTime forKey:@"endTime"];
     [encoder encodeDouble:self.coordinate.latitude forKey:@"latitude"];
     [encoder encodeDouble:self.coordinate.longitude forKey:@"longitude"];
+    
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
     if (self = [super init]) {
+        _date = [decoder decodeObjectForKey:@"date"];
+        _title = [decoder decodeObjectForKey:@"title"];
+        _parkingType = [decoder decodeObjectForKey:@"parkingType"];
+        _comment = [decoder decodeObjectForKey:@"comment"];
+        _startDay = [decoder decodeIntForKey:@"startDay"];
+        _endDay = [decoder decodeIntForKey:@"endDay"];
+        _startTime = [decoder decodeIntForKey:@"startTime"];
+        _endTime = [decoder decodeIntForKey:@"endTime"];
+        
         double latitude = [decoder decodeDoubleForKey:@"latitude"];
         double longitude = [decoder decodeDoubleForKey:@"longitude"];
-        
-        _title = [decoder decodeObjectForKey:@"title"];
-        _comment = [decoder decodeObjectForKey:@"comment"];
-        _date = [decoder decodeObjectForKey:@"date"];
         _location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         _coordinate = CLLocationCoordinate2DMake(latitude, longitude);
     }
