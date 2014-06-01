@@ -18,4 +18,6 @@
 @property (strong, nonatomic) NearbyList *nearbyList;
 @property (strong, nonatomic) ParkingLocation *userParkLocation;
 
+- (NSMutableDictionary *)parkingDictionary;
+
 @end

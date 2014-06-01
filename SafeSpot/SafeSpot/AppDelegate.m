@@ -89,4 +89,33 @@
     return [[self applicationDocumentsFolderName] stringByAppendingString:@"userParkLocation"];
 }
 
+- (NSMutableDictionary *)parkingDictionary
+{
+    NSMutableDictionary *parkingTypes = [[NSMutableDictionary alloc] init];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBZ"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PCARPL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PCVL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PDIS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PGA"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PINST"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PLU"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNP"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPEAK"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PPL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPP"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PR"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PRZ"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PS"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PSCH"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PTIML"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PTRKL"];
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PZONE"];
+    
+    return parkingTypes;
+}
+
 @end
