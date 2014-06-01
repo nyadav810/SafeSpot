@@ -67,8 +67,12 @@
         
         int numberOfSigns =[self.restriction.clusterRestriction count];
 
-        if(numberOfSigns > 0){
-             self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs on this street. Zoom in to see Individual signs",self.restriction.clusterRestriction.count];
+        if(numberOfSigns > 0)
+        {
+            self.arrayLabel.text = [NSString stringWithFormat:@"%d Other Signs on this street. Zoom in to see Individual signs",self.restriction.clusterRestriction.count];
+        } else
+        {
+            self.arrayLabel.text = @"";
         }
        
         //NSLog(@"%d",[self.restriction.clusterRestriction count]);

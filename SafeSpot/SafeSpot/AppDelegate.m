@@ -71,7 +71,7 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-// Archiving Location
+// Archiving Directory
 - (NSString *)applicationDocumentsFolderName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -79,41 +79,44 @@
     return documentsDirectory;
 }
 
+// Favorites List
 - (NSString *)favoritesListStorageLocation
 {
     return [[self applicationDocumentsFolderName] stringByAppendingPathComponent:@"favoritesList"];
 }
 
+// User Location
 - (NSString *)userParkStorageLocation
 {
     return [[self applicationDocumentsFolderName] stringByAppendingString:@"userParkLocation"];
 }
 
+// Parking Categories with Boolean Values for Parking
 - (NSMutableDictionary *)parkingDictionary
 {
     NSMutableDictionary *parkingTypes = [[NSMutableDictionary alloc] init];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBZ"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PCARPL"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PCVL"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PDIS"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PGA"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PINST"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PLU"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNP"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNS"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPEAK"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PPL"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPP"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PR"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PRZ"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PS"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PSCH"];
-    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PTIML"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PTRKL"];
-    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PZONE"];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];  // Parking - 15 or 30 minutes
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];    // Parking - 1 Hour or more
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];    // Bus Layover Signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBZ"];     // Bus Zone
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PCARPL"]; // Carpool signed parking
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PCVL"];    // Commercial Vehicle Load Zones
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PDIS"];   // Disabled Parking Signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PGA"];     // Exempt vehicles, Police etc.
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PINST"];   // Geographic directional signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PLU"];     // 15 or 30 minute load zones, may be paid
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNP"];     // No Parking, but "standing" allowed
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNS"];     // No stopping, standing or parking
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPEAK"];  // Peaking Parking Restrictions, TOW
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PPL"];     // 3 minute passenger load zone
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPP"];    // short term paid parking btw 15 min - 4 hours
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PR"];      // Parking Regulatory
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PRZ"];    // Restricted Parking Zone permited parking
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PS"];      // Pay Stations
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PSCH"];    // School Bus or Load
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PTIML"];  // Short term parking 15, 30 minute or 1-4 hours
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PTRKL"];   // 30 minute truck load/unload zones
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PZONE"];   // Includes charter bus, event, etc.
     
     return parkingTypes;
 }
