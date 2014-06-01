@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 2.5 Asian Dudes. All rights reserved.
 //
 
+// http://www.icodeblog.com/2010/07/29/iphone-programming-tutorial-local-notifications/
+// [[UIApplication sharedApplication] cancelLocalNotification:<notifcationobject>; -- So you have to hold onto a pointer to whichever notification object you want to delete.
+
 #import "ParkCarViewController.h"
 #import "ParkingLocation.h"
 
@@ -38,7 +41,7 @@
     
     //Restrictions; // Pass in signs within the mapview
   
-    [self main];
+    // [self main];
     // if location is not shared, idgaf, juts make sure it doesnt crash
     
     // Get location
@@ -63,33 +66,6 @@
 // Main  method
 - (void) main{
     
-    NSLog(@"the end is near");
-    // call
-    ParkingLocation *car = [[ParkingLocation alloc]init];
-    
-    car.location;
-    CLLocation *currentLocation = [self.appDelegate.locationManager location];
-    
-    NSLog(@"%@",currentLocation);
-    
-    if(YES){// change to  currentLocation
-        //do stuff
-        currentLocation;
-        //car.location = currentLocation;
-        // OR coordinate; 
-    }//die
-    
-    
-    car.title = @"I parked"; //?
-    NSLog(@"%@", [self.datePickerOutlet date]);
-    car.duration;
-    car.notes;
-    self.textView;
-    
-    
-//    _location = location;
-//    _notes = notes;
-//    _coordinate = coordinate;
 
     
 }
@@ -271,20 +247,44 @@
                                                   object:nil];
 }
 
-// UIDate Picker action
+// UIDate Picker action, doesnt seem like we will need it
 - (IBAction)parkCar:(id)sender {
      // NSLog(@"heya you presseed the wheel");
     [self.datePickerOutlet date];
     NSLog(@"%@", [self.datePickerOutlet date]);
+    
 }
 
 // Park button action
 - (IBAction)parkCarButton:(id)sender {
    
-    NSLog(@"park until %@", [self.datePickerOutlet date]);
-    NSLog(@"park until %@", [self.textView text]);
-    // call main here or at least save DURATION
-    // car.duration;
+
+    NSLog(@"the park button was pressed");
+    // call
+    ParkingLocation *car = [[ParkingLocation alloc]init];
+    
+    CLLocation *currentLocation = [self.appDelegate.locationManager location];
+
+    NSLog(@"%@",currentLocation);
+    car.title = @"I parked"; //?
+    car.duration = [self.datePickerOutlet date];
+    NSLog(@"park until %@", car.duration);
+    
+    car.notes = self.textView.text;
+    NSLog(@"park notes %@", car.notes);
+
+    
+    if(YES){// change to  currentLocation
+        //do stuff
+         car.coordinate = [currentLocation coordinate];
+         car.location = currentLocation;
+         self.appDelegate.userParkLocation = car;
+        
+        // will add at TBcoor Or mapviews update region did change
+        
+        
+        // OR coordinate;
+    }//die
     
 }
 @end

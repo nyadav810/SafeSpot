@@ -9,7 +9,7 @@
 // - - - - - Notes about signs database - - -
 
 //https://data.seattle.gov/Transportation/Street-Parking-Signs/it8u-sznv
-
+// https://uw-informatics-498.beanstalkapp.com/session/new
 // - - - Zoom Notes
 // maybe at a certain zoom level we COULD use categories to make the lines?
 // might be useful for lines http://stackoverflow.com/questions/13013873/mapkit-make-route-line-follow-streets-when-map-zoomed-in
@@ -227,6 +227,8 @@
 // when map moves it calls this
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
+    NSLog(@"%@",self.appDelegate.userParkLocation);
+    
     [[NSOperationQueue new] addOperationWithBlock:^{
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
@@ -269,6 +271,8 @@
             }
             */
             // change to clusterSigns
+            
+            // Find way to add parked car here
             [self updateMapViewAnnotationsWithAnnotations:annotations];
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
         }else if(zoomScale > 0.06){
@@ -288,6 +292,8 @@
             
             }
             // NSLog(@"%@",[clusterSigns allValues]);
+            
+            // Find way to add parked car here
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
         
