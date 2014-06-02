@@ -23,16 +23,9 @@
 // http://stackoverflow.com/questions/7145797/ios-mapkit-custom-pins
 
 // To Do:
-// Add non retina splash screen
-//
-// Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
-// implement CSV instead of JSON
-// Find way to update restrictions, maybe with a button
-// find way to update ONLY new restrictions, but for NOW just replace ALL?
-
-// TODO Naveen:
 // Park Car Feature
 // Search
+// Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
