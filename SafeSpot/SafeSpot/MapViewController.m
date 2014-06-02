@@ -32,7 +32,7 @@
 
 // TODO Naveen:
 // Park Car Feature
-// Map View Overlaid Search
+// Search
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
