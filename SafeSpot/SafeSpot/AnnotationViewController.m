@@ -65,11 +65,11 @@
         self.annotationTitle.title = self.restriction.title;
         self.commentLabel.text = self.restriction.comment;
         
-        int numberOfSigns =[self.restriction.clusterRestriction count];
+        NSUInteger numberOfSigns = [self.restriction.clusterRestriction count];
 
-        if(numberOfSigns > 0)
+        if (numberOfSigns > 0)
         {
-            self.arrayLabel.text = [NSString stringWithFormat:@"%d parking signs on this street. Zoom in to view them.", self.restriction.clusterRestriction.count];
+            self.arrayLabel.text = [NSString stringWithFormat:@"%lu parking signs on this street. Zoom in to view them.", self.restriction.clusterRestriction.count];
         } else
         {
             self.arrayLabel.text = @"";

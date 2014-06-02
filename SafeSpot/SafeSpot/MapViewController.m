@@ -86,10 +86,6 @@
     }
     
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    
-    // Set a movement threshold for new events.
-    self.locationManager.distanceFilter = 500; // meters
     
     [self.locationManager startMonitoringSignificantLocationChanges];
 }
