@@ -318,21 +318,24 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                 int counterForStreet = 0;
 
                 // change end bounds later maybe
-                for (int i = (int)(split.count - 3); i > 4; i--) {
-                    if([split[i] length] > 1){
-                        NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
-                        // CAN use the part before/ to decide street side. COULD be hard cause of NW/SW
-                        if ([code isEqualToString:@"/O"] ) { // might not be the best
-                            
-                            counterForStreet = i;
-                            //maybe break/leave FOR loop
-                            break;
+                if(split.count > 5){
+                    for (int i = (int)(split.count - 3); i > 4; i--) {
+                        if([split[i] length] > 1){
+                            NSString *code = [split[i] substringFromIndex: [split[i] length] - 2];
+                            // CAN use the part before/ to decide street side. COULD be hard cause of NW/SW
+                            if ([code isEqualToString:@"/O"] ) { // might not be the best
+                                
+                                counterForStreet = i;
+                                //maybe break/leave FOR loop
+                                break;
+                            }
                         }
+                        // Things before / is side of street (for later)
                     }
-                    // Things before / is side of street (for later)
+                    rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                 }
-                rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2]];
                 
+                [clusteredAnnotations addObject:rest];
                 //rest.title = [NSString stringWithFormat:@"%@ %@ & %@ %@ %@", split[0], split[1], split[counterForStreet+1], split[counterForStreet+2], parkingType];
 
                               //[rest.title isEqualToString:last.title]; // Find way to add Restriction to restriction
@@ -368,15 +371,11 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                         
                 }else{// bool false
                  */
-                   
-                     
-                    [clusteredAnnotations addObject:rest];
-                
+
                 // Add setting to ONLY show where you cant park?
                 //if ( !([self dayComparator:info.startDay end:info.endDay today:day]) || !([self hourComparator:info.startHour hour:info.endHour ct:time]) ){
                       // NSLog(@"%s",info.parkType);
                     // NSLog(@"%@",last.title);
-
                     // sometimes null
                 
                 });

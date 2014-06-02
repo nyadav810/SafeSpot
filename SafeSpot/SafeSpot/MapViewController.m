@@ -25,7 +25,8 @@
 // To Do:
 // Park Car Feature
 // Search
-// Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
+// Add more pin colors
+// Combine restrictions on the same street into one
 
 #import "MapViewController.h"
 #import "AppDelegate.h"
@@ -34,6 +35,8 @@
 #import "AnnotationViewController.h"
 #import "NearbyList.h"
 #import "VisableAnnotationsList.h"
+#import "ParkingLocation.h"
+
 //#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
@@ -231,7 +234,7 @@
 // when map moves it calls this
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-    NSLog(@"%@",self.appDelegate.userParkLocation);
+    NSLog(@"%@",self.appDelegate.userParkLocation.location);
     
     [[NSOperationQueue new] addOperationWithBlock:^{
 
@@ -276,7 +279,9 @@
             */
             // change to clusterSigns
             
+            
             // Find way to add parked car here
+        
             [self updateMapViewAnnotationsWithAnnotations:annotations];
             
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
@@ -299,6 +304,7 @@
             // NSLog(@"%@",[clusterSigns allValues]);
             
             // Find way to add parked car here
+        
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
         
@@ -325,6 +331,8 @@
     NSMutableSet *before = [NSMutableSet setWithArray:self.mapView.annotations];
     NSSet *after = [NSSet setWithArray:annotations];
     
+
+    
     // Annotations circled in blue shared by both sets
     NSMutableSet *toKeep = [NSMutableSet setWithSet:before];
     [toKeep intersectSet:after];
@@ -333,11 +341,26 @@
     NSMutableSet *toAdd = [NSMutableSet setWithSet:after];
     [toAdd minusSet:toKeep];
     
+
+    
     // Annotations circled in red
     NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
     [toRemove minusSet:after];
     NSLog(@"update pins");
-    
+
+        if(self.appDelegate.userParkLocation){
+            Restrictions *theCar = [[Restrictions alloc] init];
+            ParkingLocation *p = self.appDelegate.userParkLocation;
+            theCar.location = p.location;
+            
+            theCar.coordinate = p.coordinate; //coordinate not location
+            theCar.title = p.title;
+            theCar.pinColor = p.pinColor;
+            // theCar.clusterRestriction; //causing problems
+            
+            [toAdd addObject:theCar]; //maybe to add
+          
+        }
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{

@@ -257,43 +257,7 @@
     return weekday;
 }
 
-// Park button action
-- (IBAction)parkCarButton:(id)sender {
-   
-
-    NSLog(@"the park button was pressed");
-    // call
-    ParkingLocation *car = [[ParkingLocation alloc]init];
-    
-    CLLocation *currentLocation = [self.appDelegate.locationManager location];
-    
-    NSLog(@"%@",currentLocation);
-    car.title = @"I parked"; //?
-    
-    //Get current time
-    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
-                                                  fromDate: [NSDate date]];
-    
-    int minute = (int) [dateComps minute];
-    int hour = (int) [dateComps hour];
-    int current = (hour * 100) + minute;
-    
-
-    // get todays day
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    int weekday = (int) [comps weekday];
-  
-    car.duration = [self.datePickerOutlet date];
-    
-    
-    NSLog(@"park until %@", car.duration);
-    
-    car.notes = self.textView.text;
-    NSLog(@"park notes %@", car.notes);
-
-    
+-(void)cantPark{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You cant park here"
                                                     message:@"You cant park here"
                                                    delegate:nil
@@ -302,30 +266,95 @@
     // alert.tag = 2;
     [alert show];
     
-    NSLog(@"%@",self.appDelegate.visableAnnotationsList);
+}
+
+// Park button action
+- (IBAction)parkCarButton:(id)sender {
+   
+
+    NSLog(@"the park button was pressed");
+
+    ParkingLocation *car = [[ParkingLocation alloc]init];
     
-    for(Restrictions *sign in self.appDelegate.visableAnnotationsList.signs){
-        
-        NSLog(@"%@",sign.title);
-        // for(){}
-        
-    }
-    // IF not by a sign then it IS OK park
-    if(YES){// change to  currentLocation
+    CLLocation *currentLocation = [self.appDelegate.locationManager location];
+    
+    NSLog(@"%@",currentLocation);
+    car.title = @"I parked";
+    
+    //Get current time
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                  fromDate: [NSDate date]];
+    int minute = (int) [dateComps minute];
+    int hour = (int) [dateComps hour];
+    int current = (hour * 100) + minute;
+
+    // get todays day
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    int weekday = (int) [comps weekday];
+  
+    car.duration = [self.datePickerOutlet date];
+
+    NSLog(@"park until %@", car.duration);
+    
+    car.notes = self.textView.text;
+
+    
+    // NSLog(@"%@",self.appDelegate.visableAnnotationsList);
+    
+    if(currentLocation != NULL){// change to  currentLocation
         //do stuff
          car.coordinate = [currentLocation coordinate];
          car.location = currentLocation;
+         car.pinColor = MKPinAnnotationColorGreen;
          self.appDelegate.userParkLocation = car;
         
+        // IF not by a sign then it IS OK park
+        for(MKAnnotationView *sign in self.appDelegate.visableAnnotationsList.signs){
+            if([sign isKindOfClass:[Restrictions class]]){
+                Restrictions *currentAnn = (Restrictions *)sign;
+                
+            // NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
+            
+            //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
+            
+            // NSString *loc = [NSString stringWithFormat:@"%f",sign.coordinate.longitude ];
+
+            NSLog(@"%@",currentAnn.title);
+                if(currentAnn.clusterRestriction.count > 0){
+                    for(int i = 0; i < (currentAnn.clusterRestriction.count-1); i++){
+                        Restrictions *clusterAnnotation = (Restrictions *)currentAnn.clusterRestriction[i];
+
+                         NSLog(@"in da clusta %@",currentAnn.clusterRestriction[i]);
+                         NSLog(@"hi %@", clusterAnnotation.title);
+                        clusterAnnotation.coordinate.latitude;
+                        clusterAnnotation.coordinate.longitude;
+                        
+                    }
+                    //add cluster restrictins iteration!!
+                   
+                    if(YES){ // cant park sign is close
+                        // self.cantPark;
+                    }
+                }
+            
+            }
+        }
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            nil;}];
         // will add at TBcoor Or mapviews update region did change
-        
-        
-        // OR coordinate;
     }else{
-        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please Share your location"
+                                                        message:@"We cannot check if you can park here"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        // alert.tag = 2;
+        [alert show];
      
-    } //die
-    
+    }
     
 }
 @end

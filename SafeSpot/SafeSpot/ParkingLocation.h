@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, readwrite) CLLocationCoordinate2D coordinate;
+
+@property  (nonatomic) MKPinAnnotationColor pinColor; // pin color
+
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *duration;
