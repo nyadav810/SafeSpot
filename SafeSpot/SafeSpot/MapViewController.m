@@ -405,11 +405,16 @@
 // Get user location
 - (IBAction)locationButtonClicked:(id)sender
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)
+    [self centerMapOnUser:[CLLocationManager authorizationStatus]];
+}
+
+- (void)centerMapOnUser:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusAuthorized)
     {
         CLLocation *location  = [self.locationManager location];
         CLLocationCoordinate2D coordinate = [location coordinate];
-
+        
         [self.mapView setCenterCoordinate:coordinate animated:YES];
         
         self.mapView.showsUserLocation = YES;
@@ -427,6 +432,11 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     // location updates
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    [self centerMapOnUser:status];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
