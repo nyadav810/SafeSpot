@@ -24,7 +24,7 @@
 
 // To Do:
 // Add non retina splash screen
-// Create globals for current day/time
+//
 // Combine restrictions on the same street into one (implement Qtree first to possibly save clustering/ninja skills)
 // implement CSV instead of JSON
 // Find way to update restrictions, maybe with a button
@@ -40,6 +40,7 @@
 #import "TBCoordinateQuadTree.h"
 #import "AnnotationViewController.h"
 #import "NearbyList.h"
+#import "VisableAnnotationsList.h"
 //#import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController ()
@@ -284,6 +285,7 @@
             
             // Find way to add parked car here
             [self updateMapViewAnnotationsWithAnnotations:annotations];
+            
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
         }else if(zoomScale > 0.06){
             
@@ -343,12 +345,21 @@
     [toRemove minusSet:after];
     NSLog(@"update pins");
     
+    
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [self.mapView addAnnotations:[toAdd allObjects]];
         
         [self.mapView removeAnnotations:[toRemove allObjects]];
+        
     }];
+    NSLog(@" testtt %d",[self.appDelegate.visableAnnotationsList.signs count]);
+    [self.appDelegate.visableAnnotationsList.signs removeAllObjects];
+    
+    [self.appDelegate.visableAnnotationsList.signs addObjectsFromArray: self.mapView.annotations];
+    // NSLog(@"%@",self.appDelegate.visableAnnotationsList.signs);
+    
+    NSLog(@"%d another test",[self.appDelegate.visableAnnotationsList.signs count]);
 }
 
 // Nearby Annotation stuff

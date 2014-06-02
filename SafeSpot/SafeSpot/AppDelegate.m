@@ -10,6 +10,7 @@
 #import "MapViewController.h"
 #import "FavoritesList.h"
 #import "NearbyList.h"
+#import "VisableAnnotationsList.h"
 
 @implementation AppDelegate
 
@@ -28,6 +29,8 @@
     
     // Initialize Nearby List (needs to be done each time App starts)
     self.nearbyList = [[NearbyList alloc] init];
+    // List of visable annotations;
+    self.visableAnnotationsList = [[VisableAnnotationsList alloc] init];
     
     return YES;
 }

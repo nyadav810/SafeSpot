@@ -11,7 +11,7 @@
 
 #import "ParkCarViewController.h"
 #import "ParkingLocation.h"
-
+#import "VisableAnnotationsList.h"
 #import "AppDelegate.h"
 #import "Restrictions.h"
 #import "MapViewController.h"
@@ -266,7 +266,7 @@
     ParkingLocation *car = [[ParkingLocation alloc]init];
     
     CLLocation *currentLocation = [self.appDelegate.locationManager location];
-
+    
     NSLog(@"%@",currentLocation);
     car.title = @"I parked"; //?
     
@@ -294,6 +294,15 @@
     NSLog(@"park notes %@", car.notes);
 
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You cant park here"
+                                                    message:@"You cant park here"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    NSLog(@"%@",self.appDelegate.visableAnnotationsList);
+    
+    // IF not by a sign then it IS OK park
     if(YES){// change to  currentLocation
         //do stuff
          car.coordinate = [currentLocation coordinate];
@@ -304,7 +313,11 @@
         
         
         // OR coordinate;
-    }//die
+    }else{
+        
+     
+    } //die
+    
     
 }
 @end
