@@ -74,6 +74,8 @@
     [self main];
     
     [self updateNearbyAnnotations];
+    
+    [self centerMapOnUser:[CLLocationManager authorizationStatus]];
 }
 
 - (void)startStandardUpdates
