@@ -244,7 +244,7 @@
         // NSLog(@"today is %d day",[self getDay]);
         
         // Called when zoomed in enough to show all signs
-        if(zoomScale > 0.256){ //zoom level affects clustering
+        if(zoomScale > 0.25){ //zoom level affects clustering
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:NO];
             /*
 
@@ -345,14 +345,16 @@
         
         [self.mapView removeAnnotations:[toRemove allObjects]];
         
+        
+        [self.appDelegate.visableAnnotationsList.signs removeAllObjects];
+        
+        [self.appDelegate.visableAnnotationsList.signs addObjectsFromArray: self.mapView.annotations];
+        // NSLog(@"%@",self.appDelegate.visableAnnotationsList.signs);
+        
+        NSLog(@"%d another test",[self.appDelegate.visableAnnotationsList.signs count]);
     }];
-    NSLog(@" testtt %d",[self.appDelegate.visableAnnotationsList.signs count]);
-    [self.appDelegate.visableAnnotationsList.signs removeAllObjects];
     
-    [self.appDelegate.visableAnnotationsList.signs addObjectsFromArray: self.mapView.annotations];
-    // NSLog(@"%@",self.appDelegate.visableAnnotationsList.signs);
-    
-    NSLog(@"%d another test",[self.appDelegate.visableAnnotationsList.signs count]);
+   
 }
 
 // Nearby Annotation stuff

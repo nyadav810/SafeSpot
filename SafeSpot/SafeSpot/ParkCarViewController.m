@@ -299,9 +299,17 @@
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
+    // alert.tag = 2;
     [alert show];
+    
     NSLog(@"%@",self.appDelegate.visableAnnotationsList);
     
+    for(Restrictions *sign in self.appDelegate.visableAnnotationsList.signs){
+        
+        NSLog(@"%@",sign.title);
+        // for(){}
+        
+    }
     // IF not by a sign then it IS OK park
     if(YES){// change to  currentLocation
         //do stuff
