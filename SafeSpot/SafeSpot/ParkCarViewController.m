@@ -318,19 +318,29 @@
             // NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
             
             //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
-            
-            // NSString *loc = [NSString stringWithFormat:@"%f",sign.coordinate.longitude ];
 
-            NSLog(@"%@",currentAnn.title);
+                //http://stackoverflow.com/questions/2480081/objective-c-iphone-comparing-2-cllocations-gps-coordinates
+  
+                
+                double distance = [currentLocation distanceFromLocation:currentAnn.location];
+                // NSLog(@"%f",distance);
+                if(distance < 10){
+                NSLog(@"%f",distance);
+                NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
+                    
+                    
+                    
+                }
+                
                 if(currentAnn.clusterRestriction.count > 0){
                     for(int i = 0; i < (currentAnn.clusterRestriction.count-1); i++){
                         Restrictions *clusterAnnotation = (Restrictions *)currentAnn.clusterRestriction[i];
-
-                         NSLog(@"in da clusta %@",currentAnn.clusterRestriction[i]);
-                         NSLog(@"hi %@", clusterAnnotation.title);
-                        clusterAnnotation.coordinate.latitude;
-                        clusterAnnotation.coordinate.longitude;
+                        double distanceC = [currentLocation distanceFromLocation:clusterAnnotation.location];
                         
+                        NSLog(@"hi %@", clusterAnnotation.title);
+                        NSLog(@"distance %f", distanceC);
+                        
+
                     }
                     //add cluster restrictins iteration!!
                    
@@ -338,7 +348,6 @@
                         // self.cantPark;
                     }
                 }
-            
             }
         }
         
