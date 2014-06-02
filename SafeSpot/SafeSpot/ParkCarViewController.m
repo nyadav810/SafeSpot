@@ -325,28 +325,55 @@
                 double distance = [currentLocation distanceFromLocation:currentAnn.location];
                 // NSLog(@"%f",distance);
                 if(distance < 10){
-                NSLog(@"%f",distance);
-                NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
-                    
-                    
-                    
+                    NSLog(@"%f",distance);
+                    NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
+                    if(
+                       ([[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == YES)
+                       && ([self dayComparator:currentAnn.startDay end:currentAnn.endDay today:weekday])
+                       && ([self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:current])
+                       )
+                    {
+                        
+                        NSLog(@"SUPER OK to park %f", distance);
+                        
+                    }else{
+                        NSLog(@"cant park");
+                        self.cantPark;
+                    }
+   
+ 
                 }
                 
                 if(currentAnn.clusterRestriction.count > 0){
                     for(int i = 0; i < (currentAnn.clusterRestriction.count-1); i++){
                         Restrictions *clusterAnnotation = (Restrictions *)currentAnn.clusterRestriction[i];
+                        
                         double distanceC = [currentLocation distanceFromLocation:clusterAnnotation.location];
                         
-                        NSLog(@"hi %@", clusterAnnotation.title);
                         NSLog(@"distance %f", distanceC);
-                        
+                        if(distance < 10){
+                            NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
+                            NSLog(@"distance %f", distanceC);
+                            
+                            if(
+                               ([[[self.appDelegate parkingDictionary] objectForKey:clusterAnnotation.parkingType] boolValue] == YES)
+                               && ([self dayComparator:clusterAnnotation.startDay end:clusterAnnotation.endDay today:weekday])
+                                && ([self hourComparator:clusterAnnotation.startTime hour:clusterAnnotation.endTime ct:current])
+                               )
+                            {
+                                
+                                NSLog(@"SUPER OK to park %f", distanceC);
+                                
+                            }else{
+                                NSLog(@"cant park");
+                                self.cantPark;
+                            }
 
+                        }
                     }
                     //add cluster restrictins iteration!!
                    
-                    if(YES){ // cant park sign is close
-                        // self.cantPark;
-                    }
+                    
                 }
             }
         }
