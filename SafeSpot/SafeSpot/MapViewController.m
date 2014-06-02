@@ -73,6 +73,13 @@
     [self updateNearbyAnnotations];
     
     [self centerMapOnUser:[CLLocationManager authorizationStatus]];
+    
+    // Tap stuff for search bar
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)startStandardUpdates
@@ -425,6 +432,46 @@
     [searchBar endEditing:YES];
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [self performSearch:searchBar];
+}
+
+- (void) performSearch:(UISearchBar *)searchBar
+{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [geocoder geocodeAddressString:searchBar.text completionHandler:^(NSArray *placemarks, NSError *error) {
+        //Error checking
+        
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        MKCoordinateRegion region;
+        region.center.latitude = placemark.region.center.latitude;
+        region.center.longitude = placemark.region.center.longitude;
+        MKCoordinateSpan span;
+        double radius = placemark.region.radius / 1000; // convert to km
+        
+        NSLog(@"[searchBarSearchButtonClicked] Radius is %f", radius);
+        span.latitudeDelta = radius / 112.0;
+        span.longitudeDelta = radius / 112.0;
+        
+        region.span = span;
+        
+        if (region.center.longitude == -180.00000000) {
+            NSLog(@"Invalid region!");
+        } else if (region.center.latitude > 47.8
+                   || region.center.latitude < 47.3
+                   || region.center.longitude < -122.5
+                   || region.center.longitude > -122.2) {
+            // Do nothing, out of Seattle
+        } else {
+            [self.mapView setRegion:region animated:YES];
+        }
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+}
+
 #pragma mark - Button actions
 
 // Search bar cancel button
@@ -476,6 +523,14 @@
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
+}
+
+
+#pragma mark - Keyboard Management
+
+- (void)dismissKeyboard
+{
+    [self.searchBar resignFirstResponder];
 }
 
 @end
