@@ -382,8 +382,6 @@
         
         NSLog(@"%d another test",[self.appDelegate.visableAnnotationsList.signs count]);
     }];
-    
-   
 }
 
 // Nearby Annotation stuff
