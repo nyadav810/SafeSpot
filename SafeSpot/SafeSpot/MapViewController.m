@@ -24,7 +24,6 @@
 
 // To Do:
 // Park Car Feature
-// Search
 // Add more pin colors
 // Combine restrictions on the same street into one
 
