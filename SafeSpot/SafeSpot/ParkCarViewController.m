@@ -300,32 +300,22 @@
     
     car.notes = self.textView.text;
 
-    
-    // NSLog(@"%@",self.appDelegate.visableAnnotationsList);
-    
     if(currentLocation != NULL){// change to  currentLocation
         //do stuff
          car.coordinate = [currentLocation coordinate];
          car.location = currentLocation;
          car.pinColor = MKPinAnnotationColorGreen;
-         self.appDelegate.userParkLocation = car;
+        
         
         // IF not by a sign then it IS OK park
         for(MKAnnotationView *sign in self.appDelegate.visableAnnotationsList.signs){
             if([sign isKindOfClass:[Restrictions class]]){
                 Restrictions *currentAnn = (Restrictions *)sign;
-                
-            // NSLog(@"%d and %d days are %d and %d", restriction.startTime, restriction.endTime,restriction.startDay ,restriction.endDay);
-            
-            //NSString *loc = [NSString stringWithFormat:@"%f %f",[restriction.longitude doubleValue],[restriction.longitude doubleValue]];
 
-                //http://stackoverflow.com/questions/2480081/objective-c-iphone-comparing-2-cllocations-gps-coordinates
-  
-                
                 double distance = [currentLocation distanceFromLocation:currentAnn.location];
-                // NSLog(@"%f",distance);
+               
                 if(distance < 10){
-                    NSLog(@"%f",distance);
+                    //NSLog(@"%f",distance);
                     NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
                     if(
                        ([[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == YES)
@@ -333,11 +323,12 @@
                        && ([self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:current])
                        )
                     {
-                        
+                        // ALSO need to check if the DATE duration returns is ok to park until? A little hard
                         NSLog(@"SUPER OK to park %f", distance);
+                        self.appDelegate.userParkLocation = car;
                         
                     }else{
-                        NSLog(@"cant park");
+                        // NSLog(@"cant park");
                         self.cantPark;
                     }
    
@@ -350,10 +341,10 @@
                         
                         double distanceC = [currentLocation distanceFromLocation:clusterAnnotation.location];
                         
-                        NSLog(@"distance %f", distanceC);
+                        // NSLog(@"distance %f", distanceC);
                         if(distance < 10){
                             NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
-                            NSLog(@"distance %f", distanceC);
+                            // NSLog(@"distance %f", distanceC);
                             
                             if(
                                ([[[self.appDelegate parkingDictionary] objectForKey:clusterAnnotation.parkingType] boolValue] == YES)
@@ -363,9 +354,9 @@
                             {
                                 
                                 NSLog(@"SUPER OK to park %f", distanceC);
-                                
+                                self.appDelegate.userParkLocation = car;
                             }else{
-                                NSLog(@"cant park");
+                                // NSLog(@"cant park");
                                 self.cantPark;
                             }
 
