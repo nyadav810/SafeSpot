@@ -30,6 +30,7 @@
 		01E43047192D7C6E00F98042 /* AnnotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E43046192D7C6E00F98042 /* AnnotationViewController.m */; };
 		01E4304A192DA5B000F98042 /* NearbyList.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E43049192DA5B000F98042 /* NearbyList.m */; };
 		494B3237192DB01500DAB855 /* signs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 494B3236192DB01500DAB855 /* signs.csv */; };
+		497A825D193EFF1B0092285A /* gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 497A825C193EFF1B0092285A /* gray.png */; };
 		49B68FBA19188005009A4EB5 /* TBCoordinateQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B68FB919188005009A4EB5 /* TBCoordinateQuadTree.m */; };
 		49E89C7C193BF968009D68FC /* VisableAnnotationsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E89C7B193BF968009D68FC /* VisableAnnotationsList.m */; };
 		49EB725B1902490C00F7BE6A /* Restrictions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EB725A1902490C00F7BE6A /* Restrictions.m */; };
@@ -87,6 +88,7 @@
 		01E43048192DA5B000F98042 /* NearbyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyList.h; sourceTree = "<group>"; };
 		01E43049192DA5B000F98042 /* NearbyList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyList.m; sourceTree = "<group>"; };
 		494B3236192DB01500DAB855 /* signs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = signs.csv; path = ../SafeSpot/signs.csv; sourceTree = "<group>"; };
+		497A825C193EFF1B0092285A /* gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray.png; sourceTree = "<group>"; };
 		49B68FB819188005009A4EB5 /* TBCoordinateQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBCoordinateQuadTree.h; sourceTree = "<group>"; };
 		49B68FB919188005009A4EB5 /* TBCoordinateQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBCoordinateQuadTree.m; sourceTree = "<group>"; };
 		49E89C7A193BF968009D68FC /* VisableAnnotationsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisableAnnotationsList.h; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				A5FA35A91915B32C004C7AE0 /* DetailViewController.m */,
 				014B584618C908A0005BCBE2 /* MapViewController.h */,
 				014B584718C908A0005BCBE2 /* MapViewController.m */,
+				497A825C193EFF1B0092285A /* gray.png */,
 				01D4D7FD18F67B780009C8AE /* NearbyTableViewController.h */,
 				01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */,
 				01C9060C191B79EB008FCE04 /* ParkCarViewController.h */,
@@ -328,6 +331,7 @@
 			files = (
 				C08019DF190A2C4200B4EDE4 /* rows.json in Resources */,
 				014B584D18C908A0005BCBE2 /* Images.xcassets in Resources */,
+				497A825D193EFF1B0092285A /* gray.png in Resources */,
 				014B583C18C908A0005BCBE2 /* InfoPlist.strings in Resources */,
 				494B3237192DB01500DAB855 /* signs.csv in Resources */,
 				014B584518C908A0005BCBE2 /* Main.storyboard in Resources */,
