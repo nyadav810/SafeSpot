@@ -41,4 +41,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
 
+@property BOOL userLocation;
+
 @end

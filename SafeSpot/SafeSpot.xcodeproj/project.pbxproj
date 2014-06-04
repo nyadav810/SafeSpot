@@ -177,6 +177,7 @@
 		014B583818C908A0005BCBE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				497A825C193EFF1B0092285A /* gray.png */,
 				C08019DE190A2C4200B4EDE4 /* rows.json */,
 				014B583918C908A0005BCBE2 /* SafeSpot-Info.plist */,
 				014B583A18C908A0005BCBE2 /* InfoPlist.strings */,
@@ -221,7 +222,6 @@
 				A5FA35A91915B32C004C7AE0 /* DetailViewController.m */,
 				014B584618C908A0005BCBE2 /* MapViewController.h */,
 				014B584718C908A0005BCBE2 /* MapViewController.m */,
-				497A825C193EFF1B0092285A /* gray.png */,
 				01D4D7FD18F67B780009C8AE /* NearbyTableViewController.h */,
 				01D4D7FE18F67B780009C8AE /* NearbyTableViewController.m */,
 				01C9060C191B79EB008FCE04 /* ParkCarViewController.h */,

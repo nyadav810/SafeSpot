@@ -380,7 +380,7 @@
         [self.appDelegate.visableAnnotationsList.signs addObjectsFromArray: self.mapView.annotations];
         // NSLog(@"%@",self.appDelegate.visableAnnotationsList.signs);
         
-        NSLog(@"%d another test",[self.appDelegate.visableAnnotationsList.signs count]);
+        NSLog(@"%lu another test", (unsigned long) [self.appDelegate.visableAnnotationsList.signs count]);
     }];
 }
 

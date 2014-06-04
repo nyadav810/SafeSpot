@@ -15,7 +15,6 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 
 - (IBAction)cancelButtonClicked:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePickerOutlet;
 
