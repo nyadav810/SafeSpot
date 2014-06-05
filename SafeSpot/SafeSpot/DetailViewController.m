@@ -90,8 +90,7 @@
     {
         self.parkingStatusLabel.textColor = [UIColor redColor];
         self.parkingStatusLabel.text = @"It is not ok to park here at this time.";
-    } else
-    {
+    } else if ([self.restriction.parkingType isEqualToString:@"PPEAK"]) {
         // Check time restrictions
         if ([self dayComparator:self.restriction.startDay end:self.restriction.endDay today:[self getDay]] && [self hourComparator:self.restriction.startTime hour:self.restriction.endTime ct:[self getTime]])
         {
@@ -101,6 +100,10 @@
             self.parkingStatusLabel.textColor = [UIColor greenColor];
             self.parkingStatusLabel.text = @"It is ok to park here at this time.";
         }
+    } else {
+        // Should be good to park
+        self.parkingStatusLabel.textColor = [UIColor greenColor];
+        self.parkingStatusLabel.text = @"It is ok to park here any time.";
     }
 }
 
