@@ -46,4 +46,30 @@
     return result;
 }
 
+// Archiving
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.notes forKey:@"notes"];
+    [encoder encodeObject:self.title forKey:@"title"];
+    [encoder encodeObject:self.duration forKey:@"duration"];
+    [encoder encodeDouble:self.coordinate.latitude forKey:@"latitude"];
+    [encoder encodeDouble:self.coordinate.longitude forKey:@"longitude"];
+    
+}
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    if (self = [super init]) {
+        _notes = [decoder decodeObjectForKey:@"notes"];
+        _title = [decoder decodeObjectForKey:@"title"];
+        _duration = [decoder decodeObjectForKey:@"decoder"];
+        
+        double latitude = [decoder decodeDoubleForKey:@"latitude"];
+        double longitude = [decoder decodeDoubleForKey:@"longitude"];
+        _location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        _coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    }
+    return self;
+}
+
 @end

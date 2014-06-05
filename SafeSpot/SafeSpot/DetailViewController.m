@@ -31,6 +31,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.appDelegate = [[UIApplication sharedApplication] delegate];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [self configureView];
     [self configureMap];
 }
@@ -202,19 +206,14 @@
 
 // compares current hour to restriction hour
 - (BOOL)hourComparator:(NSUInteger)start hour:(NSUInteger)endHour ct:(NSUInteger)current{
-    
     //have to change start/end if its -100 aka null
     if (current == -100)
     {
         return NO;
     }
     
-    if (endHour < current)
+    if (start < current && current < endHour)
     {
-        return YES;
-    } else if (current >= start)
-    {
-        // its its after restriction
         return YES;
     }
     
@@ -233,7 +232,7 @@
     }
     
     //have to change start/end if its -100 aka null
-    if (currentDay < startDay && currentDay > endDay )
+    if (currentDay >= startDay && currentDay <= endDay )
     {
         return YES;
     }
@@ -255,12 +254,21 @@
     return current;
 }
 
--(int)getDay{
+-(int)getDay
+{
     // get todays day
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+    
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
     int weekday = (int) [comps weekday];
+    if (weekday == 1)
+    {
+        weekday += 6;
+    } else {
+        weekday -= 1;
+    }
+    
     return weekday;
 }
 

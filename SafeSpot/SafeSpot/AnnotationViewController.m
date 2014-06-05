@@ -31,9 +31,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.appDelegate = [[UIApplication sharedApplication] delegate];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [self configureView];
     [self configureMap];
 }
+
 
 // Set up mini map
 - (void)configureMap
@@ -217,12 +222,8 @@
         return NO;
     }
     
-    if (endHour < current)
+    if (start < current && current < endHour)
     {
-        return YES;
-    } else if (current >= start)
-    {
-        // its its after restriction
         return YES;
     }
     
@@ -241,7 +242,7 @@
     }
     
     //have to change start/end if its -100 aka null
-    if (currentDay < startDay && currentDay > endDay )
+    if (currentDay >= startDay && currentDay <= endDay )
     {
         return YES;
     }
@@ -249,7 +250,8 @@
     return NO;
 }
 
--(int)getTime{
+-(int)getTime
+{
     // get current time
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
@@ -263,12 +265,21 @@
     return current;
 }
 
--(int)getDay{
+-(int)getDay
+{
     // get todays day
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     
+    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+
     int weekday = (int) [comps weekday];
+    if (weekday == 1)
+    {
+        weekday += 6;
+    } else {
+        weekday -= 1;
+    }
+    
     return weekday;
 }
 
@@ -307,11 +318,21 @@
     // Create a region centered on the starting point with a 5km span
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.restriction.coordinate, 5000, 5000);
     
-    // Open the item in Maps, specifying the map region to display.
-    [MKMapItem openMapsWithItems:[NSArray arrayWithObject:mapItem]
-                   launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:
-                                  MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsDirectionsModeKey,
-                                  [NSValue valueWithMKCoordinate:region.center], MKLaunchOptionsMapCenterKey,
-                                  [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
+    if (self.userLocation == YES)
+    {
+        // Open the item in Maps, specifying the map region to display.
+        [MKMapItem openMapsWithItems:[NSArray arrayWithObject:mapItem]
+                       launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:
+                                      MKLaunchOptionsDirectionsModeWalking, MKLaunchOptionsDirectionsModeKey,
+                                      [NSValue valueWithMKCoordinate:region.center], MKLaunchOptionsMapCenterKey,
+                                      [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
+    } else {
+        // Open the item in Maps, specifying the map region to display.
+        [MKMapItem openMapsWithItems:[NSArray arrayWithObject:mapItem]
+                       launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:
+                                      MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsDirectionsModeKey,
+                                      [NSValue valueWithMKCoordinate:region.center], MKLaunchOptionsMapCenterKey,
+                                      [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
+    }
 }
 @end

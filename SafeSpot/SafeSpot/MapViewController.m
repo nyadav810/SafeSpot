@@ -168,11 +168,15 @@
 {
     if([segue.identifier isEqualToString:@"annotationSegue"])
     {
-        //connect with property in destination controller class
-        //MKAnnotationView *view = sender;
-        //NSString *sign = [view.annotation title];
-        
-        [segue.destinationViewController setRestriction:sender];
+        AnnotationViewController *destination = [segue destinationViewController];
+        destination.restriction = sender;
+        if (sender == self.mapView.userLocation)
+        {
+            destination.userLocation = YES;
+        } else {
+            destination.userLocation = NO;
+        }
+//        [segue.destinationViewController setRestriction:sender];
     }
 }
 
@@ -354,19 +358,19 @@
     [toRemove minusSet:after];
     NSLog(@"update pins");
 
-        if(self.appDelegate.userParkLocation){
-            Restrictions *theCar = [[Restrictions alloc] init];
-            ParkingLocation *p = self.appDelegate.userParkLocation;
-            theCar.location = p.location;
-            
-            theCar.coordinate = p.coordinate; //coordinate not location
-            theCar.title = p.title;
-            theCar.pinColor = p.pinColor;
-            // theCar.clusterRestriction; //causing problems
-            
-            [toAdd addObject:theCar]; //maybe to add
-          
-        }
+    if (self.appDelegate.userParkLocation)
+    {
+        Restrictions *theCar = [[Restrictions alloc] init];
+        ParkingLocation *p = self.appDelegate.userParkLocation;
+        theCar.location = p.location;
+        
+        theCar.coordinate = p.coordinate; //coordinate not location
+        theCar.title = p.title;
+        theCar.pinColor = p.pinColor;
+        // theCar.clusterRestriction; //causing problems
+        
+        [toAdd addObject:theCar]; //maybe to add
+    }
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
