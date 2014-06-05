@@ -93,10 +93,11 @@
         return NO;
     }
     
-    //have to change start/end if its -100 aka null
+    //have to change current day. IF day = 1, day = 7, if day = 2 (day -1)
     if(currentDay < startDay && currentDay > endDay ){
         return YES;
     }
+    
     return NO;
 }
 
@@ -217,22 +218,23 @@
                        && ([self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:current]))
                        )
                     {
-                        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
+                        NSCalendar *g = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
                         //NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-                         NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:car.duration];
-                        int parkUntilDay = (int) [comps weekday];
+                         NSDateComponents *c = [g components:NSWeekdayCalendarUnit fromDate:car.duration];
+                        
+                        int parkUntilDay = (int) [c weekday]; // sunday is day 1, need to change this
                         
                         NSLog(@"%d", parkUntilDay);
                         
-                        NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-                        NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
-                                                                      fromDate: [NSDate date]];
+                        NSCalendar *gC = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+                        NSDateComponents *dC = [gC components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                                      fromDate: car.duration];
                         
-                        int minuteC = (int) [dateComps minute];
-                        int hourC = (int) [dateComps hour];
+                        int minuteC = (int) [dC minute];
+                        int hourC = (int) [dC hour];
                         
                         int currentC = (hourC * 100) + minuteC;
-                     
+                        NSLog(@"%d", currentC);
                         // La 47.675734
                         // Lo -122.311317
                         
