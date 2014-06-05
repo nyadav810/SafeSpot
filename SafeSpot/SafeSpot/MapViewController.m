@@ -174,10 +174,12 @@
 
 -(void)calloutTapped:(UITapGestureRecognizer *)recognizer
 {
-    NSLog(@"callout tapped");
     // To get the annotation associated with the callout that caused this event:
     id<MKAnnotation> annotation = ((MKAnnotationView *)recognizer.view).annotation;
-    [self performSegueWithIdentifier:@"annotationSegue" sender:annotation];
+    if (annotation != self.mapView.userLocation)
+    {
+        [self performSegueWithIdentifier:@"annotationSegue" sender:annotation];
+    }
 }
 
 //connection between sender and destination
