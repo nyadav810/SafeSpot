@@ -158,9 +158,26 @@
 
 #pragma mark - Map Annotation Segue
 
-// called when an annotation view is clicked on
+// called when an annotation view's accessory is tapped
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     [self performSegueWithIdentifier:@"annotationSegue" sender:view.annotation];
+}
+
+// called when annotation bubble is tapped
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(calloutTapped:)];
+    [view addGestureRecognizer:tapGesture];
+}
+
+-(void)calloutTapped:(UITapGestureRecognizer *)recognizer
+{
+    NSLog(@"callout tapped");
+    // To get the annotation associated with the callout that caused this event:
+    id<MKAnnotation> annotation = ((MKAnnotationView *)recognizer.view).annotation;
+    [self performSegueWithIdentifier:@"annotationSegue" sender:annotation];
 }
 
 //connection between sender and destination
@@ -214,7 +231,6 @@
 
     return result;
 }
-
 
 // annimation for pins
 - (void)addBounceAnnimationToView:(UIView *)view
