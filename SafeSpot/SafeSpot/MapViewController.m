@@ -208,6 +208,7 @@
     // Get rid of pin for user location
     if (annotation == mapView.userLocation)
     {
+        NSLog(@"car remove");
         return nil;
     }
     
@@ -326,10 +327,11 @@
                 theCar.coordinate = p.coordinate; //coordinate not location
                 theCar.title = p.title;
                 theCar.pinColor = p.pinColor;
+                
                 //theCar.image = @"pinGray.png";
                 // theCar.clusterRestriction; //causing problems
                 
-                // [mutableArray addObject:theCar];
+                [mutableArray addObject:theCar];
             }
             [self updateMapViewAnnotationsWithAnnotations:mutableArray];
             
