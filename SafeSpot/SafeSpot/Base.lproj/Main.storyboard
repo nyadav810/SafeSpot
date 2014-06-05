@@ -473,6 +473,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="Title" id="2eV-EG-8O8">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="PaA-VY-j6b">
+                                            <connections>
+                                                <action selector="clearLocationButtonTapped:" destination="uyN-sZ-Psd" id="ZS4-gl-EJR"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="bPI-39-2LK">
                                             <connections>
                                                 <action selector="doneButtonClicked:" destination="uyN-sZ-Psd" id="Paf-cB-LhK"/>
@@ -571,6 +576,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="addToFavoritesButton" destination="hiq-z0-PRh" id="h82-dj-YGt"/>
                         <outlet property="annotationTitle" destination="2eV-EG-8O8" id="2UJ-fK-g4W"/>
                         <outlet property="arrayLabel" destination="LYd-pf-UHe" id="0Dc-y2-QAc"/>
+                        <outlet property="clearLocationButton" destination="PaA-VY-j6b" id="Yj5-GN-LGm"/>
                         <outlet property="commentLabel" destination="ezM-we-1W9" id="mBe-rj-9fK"/>
                         <outlet property="endDayLabel" destination="LAs-pc-Vlf" id="GKu-sn-Mrr"/>
                         <outlet property="endTimeLabel" destination="a5H-pc-b37" id="aW6-zw-dFN"/>
@@ -578,6 +584,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="mapView" destination="5GB-Gm-t1H" id="BxW-v1-VD3"/>
                         <outlet property="middleDayLabel" destination="goK-G0-7PU" id="HAd-ze-C25"/>
                         <outlet property="middleTimeLabel" destination="W9c-CY-18L" id="VJa-Ai-dod"/>
+                        <outlet property="nav" destination="2eV-EG-8O8" id="T7q-1F-pF2"/>
                         <outlet property="parkingStatusLabel" destination="oC2-xR-WUd" id="HNV-Ry-m02"/>
                         <outlet property="startDayLabel" destination="xlS-ie-z26" id="Yek-o4-n3P"/>
                         <outlet property="startTimeLabel" destination="JVT-gt-u8U" id="O6m-aR-Nnp"/>

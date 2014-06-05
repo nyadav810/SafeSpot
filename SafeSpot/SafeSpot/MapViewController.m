@@ -189,7 +189,9 @@
     {
         AnnotationViewController *destination = [segue destinationViewController];
         destination.restriction = sender;
-        if (sender == self.mapView.userLocation)
+        if (
+            (((Restrictions *)sender).coordinate.latitude == self.appDelegate.userParkLocation.coordinate.latitude) &&
+            (((Restrictions *)sender).coordinate.longitude == self.appDelegate.userParkLocation.coordinate.longitude))
         {
             destination.userLocation = YES;
         } else {

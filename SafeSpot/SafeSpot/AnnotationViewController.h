@@ -42,5 +42,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *arrayLabel;
 
 @property BOOL userLocation;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *clearLocationButton;
+- (IBAction)clearLocationButtonTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UINavigationItem *nav;
 
 @end

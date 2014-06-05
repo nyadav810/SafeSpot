@@ -65,6 +65,13 @@
 {
     // Update the user interface for the detail item.
     
+    if (self.userLocation == NO)
+    {
+        [self.nav setLeftBarButtonItem:nil];
+    } else {
+        [self.nav setLeftBarButtonItem:self.clearLocationButton];
+    }
+    
     if (self.restriction)
     {
         self.annotationTitle.title = self.restriction.title;
@@ -337,5 +344,12 @@
                                       [NSValue valueWithMKCoordinate:region.center], MKLaunchOptionsMapCenterKey,
                                       [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
     }
+}
+
+
+
+- (IBAction)clearLocationButtonTapped:(id)sender {
+    self.appDelegate.userParkLocation = nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
