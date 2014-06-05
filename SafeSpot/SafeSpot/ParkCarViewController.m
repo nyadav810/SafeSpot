@@ -126,8 +126,8 @@
 // UIDate Picker action, doesnt seem like we will need it
 - (IBAction)parkCar:(id)sender {
      // NSLog(@"heya you presseed the wheel");
-    [self.datePickerOutlet date];
-    NSLog(@"will probably delete this lol %@", [self.datePickerOutlet date]);
+    // [self.datePickerOutlet date];
+    // NSLog(@"will probably delete this lol %@", [self.datePickerOutlet date]);
     
 }
 
@@ -169,14 +169,15 @@
 - (IBAction)parkCarButton:(id)sender {
    
 
-    NSLog(@"the park button was pressed");
+    // NSLog(@"the park button was pressed");
 
     ParkingLocation *car = [[ParkingLocation alloc]init];
     
     CLLocation *currentLocation = [self.appDelegate.locationManager location];
     
     NSLog(@"%@",currentLocation);
-    car.title = @"I parked";
+    car.title = @"You parked here";
+    // car.title = [NSString stringWithFormat:@"%@ %d",car.title,[self getTime]];
     
     //Get current time
     NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -200,7 +201,7 @@
          car.coordinate = [currentLocation coordinate];
          car.location = currentLocation;
          car.pinColor = MKPinAnnotationColorGreen;
-        
+         self.appDelegate.userParkLocation = car;
         
         // IF not by a sign then it IS OK park
         for(MKAnnotationView *sign in self.appDelegate.visableAnnotationsList.signs){
@@ -248,6 +249,7 @@
                     }else{
                         // NSLog(@"cant park");
                         self.cantPark;
+                        self.appDelegate.userParkLocation = NULL;
                         break;
                     }
    
@@ -267,9 +269,9 @@
                             
                             if(
                                ([[[self.appDelegate parkingDictionary] objectForKey:clusterAnnotation.parkingType] boolValue] == YES)
-                               && ([self dayComparator:clusterAnnotation.startDay end:clusterAnnotation.endDay today:weekday])
-                                && ([self hourComparator:clusterAnnotation.startTime hour:clusterAnnotation.endTime ct:current])
-                               )
+                               || (([self dayComparator:clusterAnnotation.startDay end:clusterAnnotation.endDay today:weekday])
+                                && [self hourComparator:clusterAnnotation.startTime hour:clusterAnnotation.endTime ct:current]) )
+                               
                             {
                                 
                                 if(YES){
@@ -277,10 +279,11 @@
                                 }
                                 
                                 NSLog(@"SUPER OK to park %f", distanceC);
-                                self.appDelegate.userParkLocation = car;
+                                
                             }else{
                                 // NSLog(@"cant park");
                                 self.cantPark;
+                                self.appDelegate.userParkLocation = NULL;
                                 break;
                             }
 

@@ -222,12 +222,28 @@
     
     //result.image = [UIImage imageNamed:@"pin2.png"];
     result.canShowCallout = YES;
-    
+
+  
+
     // result.pinColor = MKPinAnnotationColorGreen;
     if ([annotation isKindOfClass:[Restrictions class]]){
         Restrictions *currentAnn = (Restrictions *)annotation;
         result.pinColor = currentAnn.pinColor;
+        
+        if(currentAnn.image){
+            UIImage * image = [UIImage imageNamed:currentAnn.image];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            [result addSubview:imageView];
+            
+            
+        }
+        
     }
+    
+    
+    
+        
+    
     result.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
 
@@ -262,14 +278,14 @@
 // when map moves it calls this
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-    NSLog(@"%@",self.appDelegate.userParkLocation.location);
+    // NSLog(@"%@",self.appDelegate.userParkLocation.location);
     
     [[NSOperationQueue new] addOperationWithBlock:^{
 
         double zoomScale = self.mapView.bounds.size.width / self.mapView.visibleMapRect.size.width;
 
        
-         NSLog(@"%f",zoomScale);
+        // NSLog(@"%f",zoomScale);
         int time =[self getTime];
         int day = [self getDay];
         // NSLog(@"today is %d day",[self getDay]);
@@ -374,7 +390,7 @@
     // Annotations circled in red
     NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
     [toRemove minusSet:after];
-    NSLog(@"update pins");
+    // NSLog(@"update pins");
 
     if (self.appDelegate.userParkLocation)
     {
@@ -385,10 +401,11 @@
         theCar.coordinate = p.coordinate; //coordinate not location
         theCar.title = p.title;
         theCar.pinColor = p.pinColor;
+        theCar.image = @"pinGray.png";
         // theCar.clusterRestriction; //causing problems
         
         [toAdd addObject:theCar]; //maybe to add
-    }
+    
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -402,7 +419,7 @@
         [self.appDelegate.visableAnnotationsList.signs addObjectsFromArray: self.mapView.annotations];
         // NSLog(@"%@",self.appDelegate.visableAnnotationsList.signs);
         
-        NSLog(@"%lu another test", (unsigned long) [self.appDelegate.visableAnnotationsList.signs count]);
+        // NSLog(@"%lu another test", (unsigned long) [self.appDelegate.visableAnnotationsList.signs count]);
     }];
 }
 

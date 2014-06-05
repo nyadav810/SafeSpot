@@ -15,6 +15,7 @@
 
 @property (nonatomic, copy) NSString *title; // Steet Name
 @property (nonatomic, copy) NSString *parkingType;
+@property (nonatomic, copy) NSString *image;
 
 @property  (nonatomic) MKPinAnnotationColor pinColor; // pin color
 
