@@ -181,7 +181,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             
         }
         
-        NSLog(@"%d",i);
+        // NSLog(@"%d",i);
         
         TBBoundingBox world = TBBoundingBoxMake(19, -166, 72, -53);
         // not sure what the bounding box does :(
@@ -251,8 +251,7 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
             __block double totalY = 0;
             __block int count = 0;
             
-            __block Restrictions *last = NULL;
-            
+
             TBQuadTreeGatherDataInRange(self.root, TBBoundingBoxForMapRect(mapRect), ^(TBQuadTreeNodeData data) { // crashes
                 //need to pass in root
                 totalX += data.x;

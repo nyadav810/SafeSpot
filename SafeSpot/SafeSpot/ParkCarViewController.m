@@ -197,7 +197,7 @@
 //                self.cantPark;
 //                
 //            }
-            NSLog(@"cat");
+            
             self.appDelegate.userParkLocation = NULL;
             self.cantPark;
             
@@ -243,13 +243,13 @@
     
     CLLocation *currentLocation = [self.appDelegate.locationManager location];
     
-    NSLog(@"%@",currentLocation);
+    //NSLog(@"%@",currentLocation);
     car.title = @"You parked here";
     // car.title = [NSString stringWithFormat:@"%@ %d",car.title,[self getTime]];
     
     car.duration = [self.datePickerOutlet date];
 
-    NSLog(@"park until %@", car.duration);
+    //NSLog(@"park until %@", car.duration);
 
     if(currentLocation != NULL)
     {
@@ -270,7 +270,7 @@
                 double distance = [currentLocation distanceFromLocation:currentAnn.location];
             
                 if(distance < 10){
-                    NSLog(@"%f",distance);
+                    // NSLog(@"%f",distance);
                     //NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
                     [self canPark:currentAnn d:car.duration];
 
@@ -286,9 +286,9 @@
                         // NSLog(@"distance %f", distanceC);
 
                         if(distanceC < 10){
-                            NSLog(@"%@,park type %@",currentAnn.title, clusterAnnotation.parkingType);
+                            //NSLog(@"%@,park type %@",currentAnn.title, clusterAnnotation.parkingType);
 
-                            NSLog(@"%f",distanceC);
+                            // NSLog(@"%f",distanceC);
                             //NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
 //                            if(![self canPark:clusterAnnotation]){
 //                                self.cantPark;

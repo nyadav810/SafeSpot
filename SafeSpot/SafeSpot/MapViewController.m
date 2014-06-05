@@ -208,7 +208,7 @@
     // Get rid of pin for user location
     if (annotation == mapView.userLocation)
     {
-        NSLog(@"car remove");
+        // NSLog(@"car remove");
         return nil;
     }
     
