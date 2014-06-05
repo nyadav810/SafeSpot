@@ -222,31 +222,23 @@
     
     //result.image = [UIImage imageNamed:@"pin2.png"];
     result.canShowCallout = YES;
-
-  
-
+    
     // result.pinColor = MKPinAnnotationColorGreen;
     if ([annotation isKindOfClass:[Restrictions class]]){
         Restrictions *currentAnn = (Restrictions *)annotation;
         result.pinColor = currentAnn.pinColor;
+      
         
-        if(currentAnn.image){
-            UIImage * image = [UIImage imageNamed:currentAnn.image];
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            [result addSubview:imageView];
-            
-            
-        }
+//        if(![currentAnn.image  isEqual: @"null"]){
+//            UIImage * image = [UIImage imageNamed:currentAnn.image];
+//            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+//            [result addSubview:imageView];
+//            NSLog(@"%@ %@", currentAnn.title, currentAnn.image);
+//        }
         
     }
-    
-    
-    
-        
-    
     result.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
-
     return result;
 }
 
@@ -325,11 +317,24 @@
             
             
             // Find way to add parked car here
-        
-            [self updateMapViewAnnotationsWithAnnotations:annotations];
+            NSMutableArray *mutableArray = [annotations mutableCopy];
+            if (self.appDelegate.userParkLocation){
+                Restrictions *theCar = [[Restrictions alloc] init];
+                ParkingLocation *p = self.appDelegate.userParkLocation;
+                theCar.location = p.location;
+                
+                theCar.coordinate = p.coordinate; //coordinate not location
+                theCar.title = p.title;
+                theCar.pinColor = p.pinColor;
+                //theCar.image = @"pinGray.png";
+                // theCar.clusterRestriction; //causing problems
+                
+                // [mutableArray addObject:theCar];
+            }
+            [self updateMapViewAnnotationsWithAnnotations:mutableArray];
             
             // [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
-        }else if(zoomScale > 0.06){
+        }else if(zoomScale > 0.05){
             
             NSArray *annotations = [self.coordinateQuadTree clusteredAnnotationsWithinMapRect:mapView.visibleMapRect withZoomScale:zoomScale c:time withDay:day b:YES];
             NSMutableDictionary *clusterSigns = [[NSMutableDictionary alloc] init];
@@ -348,7 +353,20 @@
             // NSLog(@"%@",[clusterSigns allValues]);
             
             // Find way to add parked car here
-        
+            
+            if (self.appDelegate.userParkLocation){
+                Restrictions *theCar = [[Restrictions alloc] init];
+                ParkingLocation *p = self.appDelegate.userParkLocation;
+                theCar.location = p.location;
+                
+                theCar.coordinate = p.coordinate; //coordinate not location
+                theCar.title = p.title;
+                theCar.pinColor = p.pinColor;
+                // theCar.image = @"pinGray.png";
+                // theCar.clusterRestriction; //causing problems
+                
+                [clusterSigns setValue:theCar forKey:theCar.title];
+            }
             [self updateMapViewAnnotationsWithAnnotations:[clusterSigns allValues]];
             
         
@@ -391,21 +409,20 @@
     NSMutableSet *toRemove = [NSMutableSet setWithSet:before];
     [toRemove minusSet:after];
     // NSLog(@"update pins");
-
-    if (self.appDelegate.userParkLocation)
-    {
-        Restrictions *theCar = [[Restrictions alloc] init];
-        ParkingLocation *p = self.appDelegate.userParkLocation;
-        theCar.location = p.location;
-        
-        theCar.coordinate = p.coordinate; //coordinate not location
-        theCar.title = p.title;
-        theCar.pinColor = p.pinColor;
-        theCar.image = @"pinGray.png";
-        // theCar.clusterRestriction; //causing problems
-        
-        [toAdd addObject:theCar]; //maybe to add
-    
+//
+//    if (self.appDelegate.userParkLocation){
+//        Restrictions *theCar = [[Restrictions alloc] init];
+//        ParkingLocation *p = self.appDelegate.userParkLocation;
+//        theCar.location = p.location;
+//        
+//        theCar.coordinate = p.coordinate; //coordinate not location
+//        theCar.title = p.title;
+//        theCar.pinColor = p.pinColor;
+//        theCar.image = @"pinGray.png";
+//        // theCar.clusterRestriction; //causing problems
+//        
+//        [toAdd addObject:theCar]; //maybe to add
+//    }
     
     // These two methods must be called on the main thread
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{

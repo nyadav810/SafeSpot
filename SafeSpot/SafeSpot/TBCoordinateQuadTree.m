@@ -297,20 +297,24 @@ float TBCellSizeForZoomScale(MKZoomScale zoomScale)
                     // PRZ
                     // NSLog(@"%@",rest.pinColor);
                     // NSLog(@"Green paid ppp");
+                    rest.image = @"null";
                 }else if([parkingType  isEqual: @"P1530"] || [parkingType  isEqual: @"P1H"] ){
                     rest.pinColor = MKPinAnnotationColorPurple;
+                    // rest.image = @"pinYellow.png";
+                    
                     // NSLog(@"purple p15/timed? need to relook what this restriction is lol");
-                }else if([parkingType  isEqual: @"PRZ"]){
+                }else if([parkingType  isEqual: @"PRZ"] || [parkingType isEqual:@"PPEAK"] ){
                     rest.pinColor = MKPinAnnotationColorPurple;
                     // NSLog(@"purple RPZZZ one");
-                    
-                }else if([parkingType  isEqual: @"PDIS"] || [parkingType isEqual:@"PPEAK"]){
+                    rest.image = @"null";
+                }else if([parkingType  isEqual: @"PDIS"] ){
                     // PPEAK is SOMETIMES
                     rest.pinColor = MKPinAnnotationColorPurple;
-                    // NSLog(@"purple PDIS  ");
+                    //rest.image = @"pinOrange.png";
                     
                 }else{
                     rest.pinColor = MKPinAnnotationColorRed;
+                    rest.image = @"null";
                 }//
 
                 // split text
