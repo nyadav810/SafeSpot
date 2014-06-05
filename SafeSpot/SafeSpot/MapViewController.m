@@ -321,6 +321,7 @@
             NSMutableArray *mutableArray = [annotations mutableCopy];
             if (self.appDelegate.userParkLocation){
                 Restrictions *theCar = [[Restrictions alloc] init];
+                
                 ParkingLocation *p = self.appDelegate.userParkLocation;
                 theCar.location = p.location;
                 
