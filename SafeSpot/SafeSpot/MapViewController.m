@@ -558,8 +558,20 @@
     }
 }
 
+- (void)centerMapOnCar:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusAuthorized)
+    {
+        if (self.appDelegate.userParkLocation != NULL)
+        {
+            [self.mapView setCenterCoordinate:self.appDelegate.userParkLocation.coordinate animated:YES];
+        }
+    }
+}
+
 // Segue to park car
 - (IBAction)parkButtonClicked:(id)sender {
+    //[self centerMapOnCar:[CLLocationManager authorizationStatus]];
     [self performSegueWithIdentifier:@"parkSegue" sender:sender];
 }
 

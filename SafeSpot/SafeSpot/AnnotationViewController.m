@@ -349,7 +349,7 @@
 
 
 - (IBAction)clearLocationButtonTapped:(id)sender {
-    self.appDelegate.userParkLocation = nil;
+    self.appDelegate.userParkLocation = NULL;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
