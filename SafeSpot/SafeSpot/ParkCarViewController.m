@@ -73,8 +73,8 @@
     
     if(endHour < current){
         return YES;
-    } else if(current >= start){ // its its after restriction
-        return YES;
+    } else if(current >= start){ // its its after restriction start time
+        return YES; //can park for awhile
     }
     
     return YES;
@@ -93,8 +93,17 @@
         return NO;
     }
     
+    int parkUntilDay = (int) currentDay; // sunday is day 1, need to change this
+    if(parkUntilDay == 1){
+        parkUntilDay = 7;
+    }else if(parkUntilDay == 7){
+        parkUntilDay = 6;
+    }else{
+        parkUntilDay -= 1;
+    }
+    
     //have to change current day. IF day = 1, day = 7, if day = 2 (day -1)
-    if(currentDay < startDay && currentDay > endDay ){
+    if(parkUntilDay < startDay || parkUntilDay > endDay ){
         return YES;
     }
     
@@ -168,9 +177,7 @@
 // Park button action
 - (IBAction)parkCarButton:(id)sender {
    
-
     // NSLog(@"the park button was pressed");
-
     ParkingLocation *car = [[ParkingLocation alloc]init];
     
     CLLocation *currentLocation = [self.appDelegate.locationManager location];
@@ -180,18 +187,11 @@
     // car.title = [NSString stringWithFormat:@"%@ %d",car.title,[self getTime]];
     
     //Get current time
-    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComps = [gregorianCal components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
-                                                  fromDate: [NSDate date]];
-    int minute = (int) [dateComps minute];
-    int hour = (int) [dateComps hour];
-    int current = (hour * 100) + minute;
 
+    int current =  [self getTime];
     // get todays day
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    int weekday = (int) [comps weekday];
-  
+    int weekday = [self getDay];
+    
     car.duration = [self.datePickerOutlet date];
 
     NSLog(@"park until %@", car.duration);
@@ -209,24 +209,22 @@
                 Restrictions *currentAnn = (Restrictions *)sign;
 
                 double distance = [currentLocation distanceFromLocation:currentAnn.location];
-               
+            
                 if(distance < 10){
                     //NSLog(@"%f",distance);
                     NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
                     if(
                        ([[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == YES)
                        || (([self dayComparator:currentAnn.startDay end:currentAnn.endDay today:weekday])
-                       && ([self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:current]))
+                       || ([self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:current]))
                        )
                     {
                         NSCalendar *g = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
                         //NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-                         NSDateComponents *c = [g components:NSWeekdayCalendarUnit fromDate:car.duration];
+                        NSDateComponents *c = [g components:NSWeekdayCalendarUnit fromDate:car.duration];
                         
-                        int parkUntilDay = (int) [c weekday]; // sunday is day 1, need to change this
                         
-                        NSLog(@"%d", parkUntilDay);
-                        
+                        //NSLog(@"%d", parkUntilDay);
                         NSCalendar *gC = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
                         NSDateComponents *dC = [gC components: (NSHourCalendarUnit | NSMinuteCalendarUnit)
                                                                       fromDate: car.duration];
@@ -234,17 +232,41 @@
                         int minuteC = (int) [dC minute];
                         int hourC = (int) [dC hour];
                         
-                        int currentC = (hourC * 100) + minuteC;
-                        NSLog(@"%d", currentC);
+                        int later = (hourC * 100) + minuteC;
+                        // NSLog(@"%d", later);
                         // La 47.675734
                         // Lo -122.311317
-                        
+                        NSUInteger unitFlags = NSHourCalendarUnit;
+                        NSDateComponents *components = [gC components:unitFlags
+                                                                            fromDate:[NSDate date]
+                                                                              toDate:car.duration
+                                                                             options:0];
+                        int days = [components hour]/24;
+                        NSLog(@"%d",days);
                         // ALSO need to check if the DATE duration returns is ok to park until? A little hard
-                        if([self dayComparator:currentAnn.startDay end:currentAnn.endDay today:weekday]){
+                        if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO){
+                            if((days >= 7) || ![self dayComparator:currentAnn.startDay end:currentAnn.endDay today:days] ||
+                               ![self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:later]){
+                            
+                            
+                           self.appDelegate.userParkLocation = NULL;
+                            
+                        }else if(days > 6){
+                            
+                        }else if(days > 5){
+                            
+                        }else if(days > 4){
+                            
+                        }else if(days > 4){
+                            
+                        }else if(days > 3){
+                            
+                        }else if(days > 2){
                             
                         }
+                        
+                        
                         NSLog(@"SUPER OK to park %f", distance);
-                        self.appDelegate.userParkLocation = car;
                         
                     }else{
                         // NSLog(@"cant park");
@@ -269,12 +291,14 @@
                             
                             if(
                                ([[[self.appDelegate parkingDictionary] objectForKey:clusterAnnotation.parkingType] boolValue] == YES)
-                               || (([self dayComparator:clusterAnnotation.startDay end:clusterAnnotation.endDay today:weekday])
-                                && [self hourComparator:clusterAnnotation.startTime hour:clusterAnnotation.endTime ct:current]) )
+                               || (([self dayComparator:clusterAnnotation.startDay end:clusterAnnotation.endDay today:weekday]) // No = cant park, yes = can
+                                || [self hourComparator:clusterAnnotation.startTime hour:clusterAnnotation.endTime ct:current]) )
                                
                             {
                                 
-                                if(YES){
+                                if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO){
+                                    
+                                }else{
                                     
                                 }
                                 
