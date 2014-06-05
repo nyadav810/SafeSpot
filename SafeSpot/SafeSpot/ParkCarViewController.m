@@ -175,8 +175,8 @@
 }
 
 // Park button action
-- (IBAction)parkCarButton:(id)sender {
-   
+- (IBAction)parkCarButton:(id)sender
+{
     // NSLog(@"the park button was pressed");
     ParkingLocation *car = [[ParkingLocation alloc]init];
     
@@ -196,7 +196,9 @@
 
     NSLog(@"park until %@", car.duration);
 
-    if(currentLocation != NULL){// change to  currentLocation
+    if(currentLocation != NULL)
+    {
+        // change to  currentLocation
         //do stuff
          car.coordinate = [currentLocation coordinate];
          car.location = currentLocation;
@@ -204,13 +206,16 @@
          self.appDelegate.userParkLocation = car;
         
         // IF not by a sign then it IS OK park
-        for(MKAnnotationView *sign in self.appDelegate.visableAnnotationsList.signs){
-            if([sign isKindOfClass:[Restrictions class]]){
+        for(MKAnnotationView *sign in self.appDelegate.visableAnnotationsList.signs)
+        {
+            if([sign isKindOfClass:[Restrictions class]])
+            {
                 Restrictions *currentAnn = (Restrictions *)sign;
 
                 double distance = [currentLocation distanceFromLocation:currentAnn.location];
             
-                if(distance < 10){
+                if(distance < 10)
+                {
                     //NSLog(@"%f",distance);
                     NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
                     if(
@@ -244,48 +249,48 @@
                         int days = [components hour]/24;
                         NSLog(@"%d",days);
                         // ALSO need to check if the DATE duration returns is ok to park until? A little hard
-                        if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO){
+                        if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO)
+                        {
                             if((days >= 7) || ![self dayComparator:currentAnn.startDay end:currentAnn.endDay today:days] ||
-                               ![self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:later]){
+                               ![self hourComparator:currentAnn.startTime hour:currentAnn.endTime ct:later])
+                            {
                             
+                                self.appDelegate.userParkLocation = NULL;
                             
-                           self.appDelegate.userParkLocation = NULL;
+                            }else if(days > 6){
                             
-                        }else if(days > 6){
-                            
-                        }else if(days > 5){
-                            
-                        }else if(days > 4){
-                            
-                        }else if(days > 4){
-                            
-                        }else if(days > 3){
-                            
-                        }else if(days > 2){
-                            
-                        }
-                        
-                        
+                            }else if(days > 5){
+                                
+                            }else if(days > 4){
+                                
+                            }else if(days > 4){
+                                
+                            }else if(days > 3){
+                                
+                            }else if(days > 2){
+                                
+                            }
                         NSLog(@"SUPER OK to park %f", distance);
-                        
-                    }else{
+                    } else
+                    {
                         // NSLog(@"cant park");
                         self.cantPark;
                         self.appDelegate.userParkLocation = NULL;
                         break;
                     }
-   
- 
                 }
                 
-                if(currentAnn.clusterRestriction.count > 0){
-                    for(int i = 0; i < (currentAnn.clusterRestriction.count-1); i++){
+                if(currentAnn.clusterRestriction.count > 0)
+                {
+                    for(int i = 0; i < (currentAnn.clusterRestriction.count-1); i++)
+                    {
                         Restrictions *clusterAnnotation = (Restrictions *)currentAnn.clusterRestriction[i];
                         
                         double distanceC = [currentLocation distanceFromLocation:clusterAnnotation.location];
                         
                         // NSLog(@"distance %f", distanceC);
-                        if(distance < 10){
+                        if(distance < 10)
+                        {
                             NSLog(@"%@,park type %@",currentAnn.title, currentAnn.parkingType);
                             // NSLog(@"distance %f", distanceC);
                             
@@ -296,7 +301,8 @@
                                
                             {
                                 
-                                if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO){
+                                if( [[[self.appDelegate parkingDictionary] objectForKey:currentAnn.parkingType] boolValue] == NO)
+                                {
                                     
                                 }else{
                                     
@@ -304,26 +310,25 @@
                                 
                                 NSLog(@"SUPER OK to park %f", distanceC);
                                 
-                            }else{
+                            } else
+                            {
                                 // NSLog(@"cant park");
                                 self.cantPark;
                                 self.appDelegate.userParkLocation = NULL;
                                 break;
                             }
-
                         }
                     }
                     //add cluster restrictins iteration!!
-                   
-                    
                 }
             }
         }
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            nil;}];
+    }
+        [self dismissViewControllerAnimated:YES completion:
+            nil];
         // will add at TBcoor Or mapviews update region did change
-    }else{
+    } else
+    {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please Share your location"
                                                         message:@"We cannot check if you can park here"
                                                        delegate:nil
@@ -333,6 +338,5 @@
         [alert show];
      
     }
-    
 }
 @end
